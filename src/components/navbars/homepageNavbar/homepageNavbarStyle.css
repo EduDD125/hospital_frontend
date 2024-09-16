@@ -1,0 +1,12 @@
+.nav {
+    display: flex;
+    justify-content: space-between;
+    background-color: black;
+    padding: 8px 32px 8px 32px;
+    align-items: center;
+}
+
+.nav__buttons-container {
+    display: flex;
+    gap: 24px
+}

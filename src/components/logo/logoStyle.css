@@ -1,0 +1,15 @@
+.logo {
+    padding: 16px 8px 16px 8px;
+    width: min-content;
+    background-color: black;
+}
+
+h1 {
+    color: white;
+    font-size: 24px;
+    padding: inherit;
+    width: inherit;
+    margin: inherit;
+    width: 200px;
+
+}
