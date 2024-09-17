@@ -1,6 +1,6 @@
 import "./homepageNavbarStyle.css"
 import Logo from "../../logo/logo";
-import NavButton from "./subcomponents/navButton";
+import NavButton from "../subcomponents/navButton";
 import { useState } from "react";
 import LoginModal from "../../modais/login/loginModal";
 import SignInModal from "../../modais/signIn/signInModal";
