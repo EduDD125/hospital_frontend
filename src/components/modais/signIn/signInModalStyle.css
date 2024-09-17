@@ -1,4 +1,4 @@
-.signin-modal__backgroud{
+.signin-modal__background{
     position: absolute;
     z-index: 1;
     top: 0;
@@ -19,4 +19,11 @@
     justify-content: center;
     align-items: center;
     background-color: white;
+}
+
+.signin-modal__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
