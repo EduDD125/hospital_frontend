@@ -2,35 +2,25 @@ import { useEffect, useState } from "react";
 
 export default function Doctor({data}) {
     const [nome, setNome] = useState(data.nome);
-    const [email, setEmail] = useState(data.email);
     const [sexo, setSexo] = useState(data.sexo);
-    const [cri, setCri] = useState(data.cri);
+    const [cri, setCri] = useState(data.CRI);
     const [dataNascimento, setDataNascimento] = useState(data.dataNascimento)
     const [especialidade, setEspecialidade] = useState(data.especialidade);
-    const [cpf, setCpf] = useState(data.CPF);
-    const [estadoCivil, setEstadoCivil] = useState(data.estadoCivil);
     
     useEffect( () => {
         setNome(data.nome);
-        setEmail(data.email);
         setSexo(data.sexo);
-        setCri(data.cri);
-        setDataNascimento(data.dataNascimento)
+        setCri(data.CRI);
         setEspecialidade(data.especialidade);
-        setCpf(data.cpf);
-        setEstadoCivil(data.estadoCivil);
     },[data] )
     
 
     function handleRestore() {
         setNome(data.nome);
-        setEmail(data.email);
         setSexo(data.sexo);
-        setCri(data.cri);
+        setCri(data.CRI);
         setDataNascimento(data.dataNascimento)
         setEspecialidade(data.especialidade);
-        setCpf(data.cpf);
-        setEstadoCivil(data.estadoCivil);
     }
 
     function handleEdition() {
@@ -50,10 +40,6 @@ export default function Doctor({data}) {
                     <input type="text" name="nome" required value={nome} onChange={(e) => setNome(e.target.value)} />
                 </label>
 
-                <label>email:
-                    <input type="email" name="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
-                </label>
-
                 <label>sexo:
                     <select name="sexo" id="sexo" value={sexo} onChange={(e) => setSexo(e.target.value)} required>
                         <option value="">Selecione...</option>
@@ -66,7 +52,7 @@ export default function Doctor({data}) {
                     <input type="date" value={dataNascimento} onChange={(e) => setDataNascimento(e.target.value)} />
                 </label>
                         <label>CRI:
-                    <input type="text" name="cri" value={cpf} onChange={(e) => setCri(e.target.value)} required />
+                    <input type="text" name="cri" value={cri} onChange={(e) => setCri(e.target.value)} required />
                 </label>
 
                 <label>especialidade:

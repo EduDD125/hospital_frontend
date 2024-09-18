@@ -11,7 +11,7 @@ export default function UserArea() {
     const fetchAllData = useFetchAllData();
     const [option, setOption] = useState("");
     const [painel, setPainel] = useState(<></>); 
-    const tipo = "medico"
+    const tipo = "administrador"
     const [item, setItem] = useState("");
     const [data, setData] = useState(null);
 

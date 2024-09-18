@@ -3,7 +3,7 @@
       "id": 1,
       "nome": "Dr. João Silva",
       "CRI": "123456",
-      "sexo": "Masculino",
+      "sexo": "masculino",
       "dataNascimento": "1980-05-15",
       "especialidade": "Cardiologia"
     },
@@ -11,7 +11,7 @@
       "id": 2,
       "nome": "Dra. Maria Oliveira",
       "CRI": "654321",
-      "sexo": "Feminino",
+      "sexo": "feminino",
       "dataNascimento": "1985-10-23",
       "especialidade": "Dermatologia"
     },
@@ -19,7 +19,7 @@
       "id": 3,
       "nome": "Dr. Carlos Pereira",
       "CRI": "789012",
-      "sexo": "Masculino",
+      "sexo": "masculino",
       "dataNascimento": "1978-08-12",
       "especialidade": "Ortopedia"
     },
@@ -27,7 +27,7 @@
       "id": 4,
       "nome": "Dra. Fernanda Souza",
       "CRI": "345678",
-      "sexo": "Feminino",
+      "sexo": "feminino",
       "dataNascimento": "1990-02-18",
       "especialidade": "Pediatria"
     },
@@ -35,7 +35,7 @@
       "id": 5,
       "nome": "Dr. Roberto Lima",
       "CRI": "890123",
-      "sexo": "Masculino",
+      "sexo": "masculino",
       "dataNascimento": "1975-07-30",
       "especialidade": "Neurologia"
     }
