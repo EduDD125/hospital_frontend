@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Pacient from "../../components/painels/pacient";
 import Doctor from "../../components/painels/doctor";
+import Exam from "../../components/painels/exam";
+import Appointment from "../../components/painels/appoitment";
 import UserNavbar from "../../components/navbars/userNavbar/userNavbar";
 import DynamicTable from "../../components/tables/dynamicTable";
 import useFetchAllData from "../../hooks/entities/fetchAllData"
@@ -26,9 +28,9 @@ export default function UserArea() {
   
       setItem("");
       switch (option) {
-        case "exames": setPainel(<>exame</>);
+        case "exames": setPainel(<Exam data={item}/>);
           break;
-        case "consultas": setPainel(<>consultas</>);
+        case "consultas": setPainel(<Appointment data={item}/>);
           break;
         case "pacientes": setPainel(<Pacient data={item}/>);
           break;
@@ -42,9 +44,9 @@ export default function UserArea() {
 
     useEffect(() => {
       switch (option) {
-        case "exames": setPainel(<>exame</>);
+        case "exames": setPainel(<Exam data={item}/>);
           break;
-        case "consultas": setPainel(<>consultas</>);
+        case "consultas": setPainel(<Appointment data={item}/>);
           break;
         case "pacientes": setPainel(<Pacient data={item}/>);
           break;
