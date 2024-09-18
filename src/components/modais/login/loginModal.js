@@ -1,11 +1,13 @@
 import { useState } from "react";
 import "./loginModalStyle.css"
+import useLogin from "../../../hooks/login/useLogin";
 
 export default function LoginModal({setIsModalLoginOpen}) {
 
     const [email, setEmail] = useState("");
     const [userType, setUserType ] = useState("");
     const [password, setPassword] = useState("");
+    const login = useLogin();
 
 
 
@@ -15,7 +17,7 @@ export default function LoginModal({setIsModalLoginOpen}) {
 
     function handleLogin() {
         console.log("email: ", email, "| tipo: ", userType, " | password: ", password);
-        console.log("fazer hook login");
+        //login(email, password, userType);
     }
 
     return (

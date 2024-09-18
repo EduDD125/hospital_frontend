@@ -25,7 +25,7 @@ export default function SignInModal({ setIsModalSignInOpen }) {
 
     function handleFormSubmit(event) {
         event.preventDefault();
-            console.log({ nome, email, sexo, userType, dataNascimento, cri, especialidade, password, cpf, estadoCivil });
+        console.log({ nome, email, sexo, userType, dataNascimento, cri, especialidade, password, cpf, estadoCivil });
     }
 
     return (
