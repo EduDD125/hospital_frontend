@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function DynamicTable({data}) {
+export default function DynamicTable({data, setItem}) {
 
     const [atributos, setAtributos] = useState([]);
 
@@ -9,8 +9,6 @@ export default function DynamicTable({data}) {
             setAtributos(Object.keys(data[0]));
         }
     },[data])
-
-    console.log(data);
 
     return(
         <table>
@@ -21,7 +19,7 @@ export default function DynamicTable({data}) {
             </thead>
             <tbody>
                 {data.map((item, index) => (
-                    <tr key={index}>
+                    <tr key={index} onClick={() => setItem(item)}>
                         {Object.values(item).map((atributo, index) => (
                             <td key={index}>{atributo}</td>
                         ))}

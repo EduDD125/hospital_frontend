@@ -1,28 +1,28 @@
 import "./userNavbarStyle.css"
 import NavButton from "../subcomponents/navButton";
 
-export default function UserNavbar({tipo}) {
+export default function UserNavbar({tipo, setOption}) {
 
     const userName = "nome usuário - mudar";
 
     function seeUserExams () {
-        console.log("exames")
+        setOption("exames")
     }
 
     function seeUserAppoitments () {
-        console.log("agendamentos")
+        setOption("consultas")
     }
     
     function seePacients () {
-        console.log("pacientes")
+        setOption("pacientes")
     }
     
     function seeDoctors () {
-        console.log("medicos")
+        setOption("medicos")
     }
 
     function seeUserData () {
-        console.log("dados usuário")
+        setOption("dadosPessoais")
     }
     
     if (tipo == "paciente")
