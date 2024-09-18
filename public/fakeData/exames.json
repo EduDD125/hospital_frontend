@@ -1,0 +1,92 @@
+[
+    {
+      "id": "1",
+      "idMedico": "1",
+      "idPaciente": "1",
+      "resultado": "Exame de sangue - Normal"
+    },
+    {
+      "id": "2",
+      "idMedico": "2",
+      "idPaciente": "2",
+      "resultado": "Exame de pele - Dermatite"
+    },
+    {
+      "id": "3",
+      "idMedico": "3",
+      "idPaciente": "3",
+      "resultado": "Raio-X - Fratura no braço"
+    },
+    {
+      "id": "4",
+      "idMedico": "4",
+      "idPaciente": "4",
+      "resultado": "Exame de glicemia - Alterado"
+    },
+    {
+      "id": "5",
+      "idMedico": "5",
+      "idPaciente": "5",
+      "resultado": "Eletrocardiograma - Normal"
+    },
+    {
+      "id": "6",
+      "idMedico": "1",
+      "idPaciente": "6",
+      "resultado": "Exame de colesterol - Elevado"
+    },
+    {
+      "id": "7",
+      "idMedico": "2",
+      "idPaciente": "7",
+      "resultado": "Biópsia de pele - Negativo"
+    },
+    {
+      "id": "8",
+      "idMedico": "3",
+      "idPaciente": "8",
+      "resultado": "Raio-X de coluna - Desgaste ósseo"
+    },
+    {
+      "id": "9",
+      "idMedico": "4",
+      "idPaciente": "9",
+      "resultado": "Teste de alergia - Positivo"
+    },
+    {
+      "id": "10",
+      "idMedico": "5",
+      "idPaciente": "10",
+      "resultado": "Ressonância magnética - Normal"
+    },
+    {
+      "id": "11",
+      "idMedico": "1",
+      "idPaciente": "11",
+      "resultado": "Teste de esforço - Normal"
+    },
+    {
+      "id": "12",
+      "idMedico": "2",
+      "idPaciente": "12",
+      "resultado": "Exame de pele - Psoríase"
+    },
+    {
+      "id": "13",
+      "idMedico": "3",
+      "idPaciente": "13",
+      "resultado": "Raio-X de joelho - Desgaste cartilaginoso"
+    },
+    {
+      "id": "14",
+      "idMedico": "4",
+      "idPaciente": "14",
+      "resultado": "Exame de glicemia - Controlado"
+    },
+    {
+      "id": "15",
+      "idMedico": "5",
+      "idPaciente": "15",
+      "resultado": "Exame neurológico - Normal"
+    }
+]  

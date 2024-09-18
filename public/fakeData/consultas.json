@@ -1,0 +1,77 @@
+[
+    {
+      "id": "1",
+      "idMedico": "1",
+      "idPaciente": "1"
+    },
+    {
+      "id": "2",
+      "idMedico": "2",
+      "idPaciente": "2"
+    },
+    {
+      "id": "3",
+      "idMedico": "3",
+      "idPaciente": "3"
+    },
+    {
+      "id": "4",
+      "idMedico": "4",
+      "idPaciente": "4"
+    },
+    {
+      "id": "5",
+      "idMedico": "5",
+      "idPaciente": "5"
+    },
+    {
+      "id": "6",
+      "idMedico": "1",
+      "idPaciente": "6"
+    },
+    {
+      "id": "7",
+      "idMedico": "2",
+      "idPaciente": "7"
+    },
+    {
+      "id": "8",
+      "idMedico": "3",
+      "idPaciente": "8"
+    },
+    {
+      "id": "9",
+      "idMedico": "4",
+      "idPaciente": "9"
+    },
+    {
+      "id": "10",
+      "idMedico": "5",
+      "idPaciente": "10"
+    },
+    {
+      "id": "11",
+      "idMedico": "1",
+      "idPaciente": "11"
+    },
+    {
+      "id": "12",
+      "idMedico": "2",
+      "idPaciente": "12"
+    },
+    {
+      "id": "13",
+      "idMedico": "3",
+      "idPaciente": "13"
+    },
+    {
+      "id": "14",
+      "idMedico": "4",
+      "idPaciente": "14"
+    },
+    {
+      "id": "15",
+      "idMedico": "5",
+      "idPaciente": "15"
+    }
+]  
