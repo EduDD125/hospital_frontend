@@ -3,40 +3,55 @@ import Pacient from "../../components/painels/pacient";
 import Doctor from "../../components/painels/doctor";
 import UserNavbar from "../../components/navbars/userNavbar/userNavbar";
 import DynamicTable from "../../components/tables/dynamicTable";
+import useFetchAllData from "../../hooks/entities/fetchAllData"
 
 export default function UserArea() {
+    const fetchAllData = useFetchAllData();
     const [option, setOption] = useState("");
-    const [painel, setPainel] = useState(<></>);
-    const data = [{
-      "id": "1",
-      "nome": "Ana Clara Silva",
-      "CPF": "123.456.789-00",
-      "sexo": "feminino",
-      "dataNascimento": "1990-05-14",
-      "estadoCivil": "solteiro",
-      "email": "ana.clara@example.com",
-      "senha": "senhaSegura123"
-    }]
+    const [painel, setPainel] = useState(<></>); 
     const tipo = "medico"
     const [item, setItem] = useState("");
+    const [data, setData] = useState(null);
 
-    console.log("option: ", option);
 
     useEffect(() => {
+      async function fetchData() {
+          if(option) {
+              const result = await fetchAllData(`/fakeData/${option}.json`);
+              setData(result);
+          }
+      }
+
+      fetchData(); // Chama a função de busca
+  
       setItem("");
       switch (option) {
         case "exames": setPainel(<>exame</>);
           break;
         case "consultas": setPainel(<>consultas</>);
           break;
-        case "pacientes": setPainel(<Pacient data={data}/>);
+        case "pacientes": setPainel(<Pacient data={item}/>);
           break;
-        case "medicos": setPainel(<Doctor data={data}/>);
+        case "medicos": setPainel(<Doctor data={item}/>);
           break;
-      }
+        }
 
     },[option])
 
+    console.log("item: ", item)
+
+    useEffect(() => {
+      switch (option) {
+        case "exames": setPainel(<>exame</>);
+          break;
+        case "consultas": setPainel(<>consultas</>);
+          break;
+        case "pacientes": setPainel(<Pacient data={item}/>);
+          break;
+        case "medicos": setPainel(<Doctor data={item}/>);
+          break;
+        }
+    },[item])
 
 
     return (
@@ -53,8 +68,12 @@ export default function UserArea() {
                         </>
                         :
                         <>
-                          <DynamicTable data={data} setItem={setItem} />
-                          {item && painel}
+                          {data && 
+                            <>
+                              <DynamicTable data={data} setItem={setItem} />
+                              {painel}
+                            </>
+                          }
                         </>
                     }
                     

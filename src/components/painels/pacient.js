@@ -4,9 +4,7 @@ export default function Pacient({data}) {
     const [nome, setNome] = useState(data.nome);
     const [email, setEmail] = useState(data.email);
     const [sexo, setSexo] = useState(data.sexo);
-    const [cri, setCri] = useState(data.cri);
     const [dataNascimento, setDataNascimento] = useState(data.dataNascimento)
-    const [especialidade, setEspecialidade] = useState(data.especialidade);
     const [cpf, setCpf] = useState(data.CPF);
     const [estadoCivil, setEstadoCivil] = useState(data.estadoCivil);
     
@@ -14,10 +12,8 @@ export default function Pacient({data}) {
         setNome(data.nome);
         setEmail(data.email);
         setSexo(data.sexo);
-        setCri(data.cri);
         setDataNascimento(data.dataNascimento)
-        setEspecialidade(data.especialidade);
-        setCpf(data.cpf);
+        setCpf(data.CPF);
         setEstadoCivil(data.estadoCivil);
     },[data] )
     
@@ -26,9 +22,7 @@ export default function Pacient({data}) {
         setNome(data.nome);
         setEmail(data.email);
         setSexo(data.sexo);
-        setCri(data.cri);
         setDataNascimento(data.dataNascimento)
-        setEspecialidade(data.especialidade);
         setCpf(data.cpf);
         setEstadoCivil(data.estadoCivil);
     }
@@ -37,7 +31,7 @@ export default function Pacient({data}) {
         console.log("editando");
     }
 
-    console.log(nome)
+    console.log("data: ", data);
 
     return(
         <div className="item__container">
