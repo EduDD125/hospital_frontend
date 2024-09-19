@@ -5,7 +5,11 @@
       "CRI": "123456",
       "sexo": "masculino",
       "dataNascimento": "1980-05-15",
-      "especialidade": "Cardiologia"
+      "senha": "123456",
+      "email": "med_1@gmail.com",
+      "especialidade": "Cardiologia",
+      "role": "medico"
+
     },
     {
       "id": 2,
@@ -13,7 +17,11 @@
       "CRI": "654321",
       "sexo": "feminino",
       "dataNascimento": "1985-10-23",
-      "especialidade": "Dermatologia"
+      "senha": "123456",
+      "email": "med_2@gmail.com",
+      "especialidade": "Dermatologia",
+      "role": "medico"
+
     },
     {
       "id": 3,
@@ -21,7 +29,11 @@
       "CRI": "789012",
       "sexo": "masculino",
       "dataNascimento": "1978-08-12",
-      "especialidade": "Ortopedia"
+      "senha": "123456",
+      "email": "med_3@gmail.com",
+      "especialidade": "Ortopedia",
+      "role": "medico"
+
     },
     {
       "id": 4,
@@ -29,7 +41,11 @@
       "CRI": "345678",
       "sexo": "feminino",
       "dataNascimento": "1990-02-18",
-      "especialidade": "Pediatria"
+      "senha": "123456",
+      "email": "med_4@gmail.com",
+      "especialidade": "Pediatria",
+      "role": "medico"
+
     },
     {
       "id": 5,
@@ -37,6 +53,9 @@
       "CRI": "890123",
       "sexo": "masculino",
       "dataNascimento": "1975-07-30",
-      "especialidade": "Neurologia"
+      "senha": "123456",
+      "email": "med_5@gmail.com",
+      "especialidade": "Neurologia",
+      "role": "medico"
     }
 ]
