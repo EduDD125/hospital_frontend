@@ -1,31 +1,57 @@
 import { useState } from "react";
-import "./signInModalStyle.css";
+import "./signUpModalStyle.css";
+import { useCreatePaciente } from "../../../hooks/signUp/useSignUp";
 
 export default function SignInModal({ setIsModalSignInOpen }) {
 
     const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
     const [sexo, setSexo] = useState("");
-    const [userType, setUserType] = useState("");
-    const [cri, setCri] = useState("");
-    const [dataNascimento, setDataNascimento] = useState("")
+    const [tipoUsuario, setTipoUsuario] = useState("");
+    const [CRI, setCRI] = useState("");
+    const [dataNaoTratada, setDataNaoTratada] = useState("")
     const [especialidade, setEspecialidade] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
-    const [cpf, setCpf] = useState("");
+    const [senha, setSenha] = useState("");
+    const [confirmsenha, setConfirmsenha] = useState("");
+    const [CPF, setCPF] = useState("");
     const [estadoCivil, setEstadoCivil] = useState("");
+
+    const { createUser, data, loading, error } = useCreatePaciente();
 
     function handleClose(event) {
         setIsModalSignInOpen(false);
     }
 
     function handleTypeSelection(event) {
-        setUserType(event.target.value);
+        setTipoUsuario(event.target.value);
     }
 
     function handleFormSubmit(event) {
         event.preventDefault();
-        console.log({ nome, email, sexo, userType, dataNascimento, cri, especialidade, password, cpf, estadoCivil });
+
+        let userData = {};
+        const dataNascimento = new Date(dataNaoTratada);
+
+        
+        if (tipoUsuario === "paciente") {
+            userData = {nome, CPF, sexo, dataNascimento, estadoCivil, email, senha};
+        }
+        else if (tipoUsuario === "medico") {
+            userData ={nome, CRI, sexo, dataNascimento, especialidade, email, senha};
+        }
+        else {
+            alert("tipo de usuário indefinido")
+            return;
+        }
+
+        if (senha !== confirmsenha){ 
+            alert("senhas e senha de confirmação incompativeis");
+            return;
+        }
+
+        createUser(userData, tipoUsuario);
+        if (data) console.log(data);
+        else if (error) console.log(error);
     }
 
     return (
@@ -52,22 +78,22 @@ export default function SignInModal({ setIsModalSignInOpen }) {
                         </label>
 
                         <label>data de nascimento:
-                            <input type="date" value={dataNascimento} onChange={(e) => setDataNascimento(e.target.value)} />
+                            <input type="date" value={dataNaoTratada} onChange={(e) => setDataNaoTratada(e.target.value)} />
                         </label>
 
 
                         <label>tipo de usuário:
-                            <select name="user_type" id="user_type" onChange={handleTypeSelection} value={userType} required>
+                            <select name="user_type" id="user_type" onChange={handleTypeSelection} value={tipoUsuario} required>
                                 <option value="">Selecione...</option>
                                 <option value="paciente">paciente</option>
                                 <option value="medico">médico</option>
                             </select>
                         </label>
 
-                        {userType === "medico" && (
+                        {tipoUsuario === "medico" && (
                             <>
                                 <label>CRI:
-                                    <input type="text" name="cri" value={cri} onChange={(e) => setCri(e.target.value)} required />
+                                    <input type="text" name="CRI" value={CRI} onChange={(e) => setCRI(e.target.value)} required />
                                 </label>
 
                                 <label>especialidade:
@@ -81,10 +107,10 @@ export default function SignInModal({ setIsModalSignInOpen }) {
                             </>
                         )}
 
-                        {userType === "paciente" && (
+                        {tipoUsuario === "paciente" && (
                             <>
                                 <label>CPF:
-                                    <input type="text" name="cpf" value={cpf} onChange={(e) => setCpf(e.target.value)} required />
+                                    <input type="text" name="CPF" value={CPF} onChange={(e) => setCPF(e.target.value)} required />
                                 </label>
 
                                 <label>estado civil:
@@ -99,14 +125,14 @@ export default function SignInModal({ setIsModalSignInOpen }) {
                             </>
                         )}
 
-                        {userType != "" && (
+                        {tipoUsuario != "" && (
                             <>
                                 <label>senha:
-                                    <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                                    <input type="senha" name="senha" value={senha} onChange={(e) => setSenha(e.target.value)} required />
                                 </label>
 
                                 <label>confirme a senha:
-                                    <input type="password" name="confirm_password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
+                                    <input type="senha" name="confirm_senha" value={confirmsenha} onChange={(e) => setConfirmsenha(e.target.value)} required />
                                 </label>
                             </>
                         )}

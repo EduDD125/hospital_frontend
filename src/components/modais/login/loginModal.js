@@ -5,7 +5,7 @@ import useLogin from "../../../hooks/login/useLogin";
 export default function LoginModal({setIsModalLoginOpen}) {
 
     const [email, setEmail] = useState("");
-    const [userType, setUserType ] = useState("");
+    const [tipo, setTipo ] = useState("");
     const [password, setPassword] = useState("");
     const login = useLogin();
 
@@ -16,8 +16,8 @@ export default function LoginModal({setIsModalLoginOpen}) {
     }
 
     function handleLogin() {
-        console.log("email: ", email, "| tipo: ", userType, " | password: ", password);
-        //login(email, password, userType);
+        console.log("email: ", email, "| tipo: ", tipo, " | password: ", password);
+        login(email, password, tipo);
     }
 
     return (
@@ -30,7 +30,7 @@ export default function LoginModal({setIsModalLoginOpen}) {
                     <input type="text" name="email" onChange={(e) => setEmail(e.target.value)} required />
                 </label>
                 <label> tipo de usuário:
-                    <select name="user_type" onChange={(e) => setUserType(e.target.value)}>
+                    <select name="tipo" onChange={(e) => setTipo(e.target.value)}>
                         <option value="paciente">paciente</option>
                         <option value="medico">médico</option>
                         <option value="administrador">administrador</option>

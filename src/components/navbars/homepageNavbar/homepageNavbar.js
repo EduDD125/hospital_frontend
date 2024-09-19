@@ -3,7 +3,7 @@ import Logo from "../../logo/logo";
 import NavButton from "../subcomponents/navButton";
 import { useState } from "react";
 import LoginModal from "../../modais/login/loginModal";
-import SignInModal from "../../modais/signIn/signInModal";
+import SignUpModal from "../../modais/signUp/signUpModal";
 
 export default function HomepageNavbar() {
     const [isModalLoginOpen, setIsModalLoginOpen] = useState(false);
@@ -35,7 +35,7 @@ export default function HomepageNavbar() {
             }
 
             {isModalSignInOpen ?
-                <SignInModal setIsModalSignInOpen={setIsModalSignInOpen}/>
+                <SignUpModal setIsModalSignInOpen={setIsModalSignInOpen}/>
                 :
                 <></>
             }
