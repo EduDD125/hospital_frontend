@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./signUpModalStyle.css";
-import { useCreatePaciente } from "../../../hooks/signUp/useSignUp";
+import { useCreateUser } from "../../../hooks/signUp/useSignUp";
 
 export default function SignInModal({ setIsModalSignInOpen }) {
 
@@ -16,7 +16,7 @@ export default function SignInModal({ setIsModalSignInOpen }) {
     const [CPF, setCPF] = useState("");
     const [estadoCivil, setEstadoCivil] = useState("");
 
-    const { createUser, data, loading, error } = useCreatePaciente();
+    const { createUser, data, error } = useCreateUser();
 
     function handleClose(event) {
         setIsModalSignInOpen(false);
@@ -125,7 +125,7 @@ export default function SignInModal({ setIsModalSignInOpen }) {
                             </>
                         )}
 
-                        {tipoUsuario != "" && (
+                        {tipoUsuario !== "" && (
                             <>
                                 <label>senha:
                                     <input type="senha" name="senha" value={senha} onChange={(e) => setSenha(e.target.value)} required />

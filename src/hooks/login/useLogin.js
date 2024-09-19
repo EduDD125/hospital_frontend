@@ -1,37 +1,28 @@
 import { useState } from 'react';
-import apiClient from '../../axios/apiClient'
+import apiClient from "../../axios/apiClient"
 
-export default function useLogin() {
-    const [endpoint, setEndpoint] = useState();
+export const useLogin = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [data, setData] = useState(null);
+  const [endpoint, setEndPoint] = useState(null);
 
+  const login = async (userData, tipo) => {
 
-    async function login(email, senha, tipo) {
+    let endpoint = `/login/${tipo}`
 
-        console.log("tipo: ", tipo, " email: ", email, " senha: ", senha)
-        if (tipo == "medico") setEndpoint("/login/medico");
-        else if (tipo == "paciente") setEndpoint("/login/paciente");
-        else if (tipo == "administrador") setEndpoint("/login/admin");
-        else {
-            console.log("tipo de usuário desconhecido");
-            //return
-        }
+    setLoading(true);
 
-        apiClient.post(endpoint, {
-            email: email,
-            senha: senha
-        } )
-            .then( response => {
-                console.log("Login bem sucedido: ", response.data);
-                const token = response.data.token;
-                localStorage.setItem("token", token)
-            })
-            .catch(error => {
-                if(error.response)
-                    console.log("Error ao fazer login:", error.response.data.message)
-                else
-                    console.log("Erro de rede ou outro: ", error.message)
-            })
+    try {
+      const response = await apiClient.post(endpoint, userData);
+      setData(response.data);
+      localStorage.setItem("token", data.token)
+      setLoading(false);
+    } catch (err) {
+      setError(err.response ? err.response.data : 'Erro ao criar paciente');
+      setLoading(false);
     }
+  };
 
-    return login;
-}
+  return { login, data, loading, error };
+};

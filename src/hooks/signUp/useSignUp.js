@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import apiClient from "../../axios/apiClient"
-import axios from 'axios';
 
-export const useCreatePaciente = () => {
+export const useCreateUser = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
