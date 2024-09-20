@@ -6,6 +6,7 @@ import Appointment from "../../components/painels/appoitment";
 import UserNavbar from "../../components/navbars/userNavbar/userNavbar";
 import DynamicTable from "../../components/tables/dynamicTable";
 import useFetchData from "../../hooks/entities/fetchData"
+import ControlPainel from "../../components/painels/controlPainel";
 
 export default function UserArea() {
     const fetchData = useFetchData();
@@ -73,6 +74,7 @@ export default function UserArea() {
                         </>
                         :
                         <>
+                          <ControlPainel />
                           <DynamicTable data={data} setItem={setItem} option={option} />
                           {Array.isArray(data) && data.length> 0 && painel}
                         </>
