@@ -12,7 +12,7 @@ export default function UserArea() {
     const [option, setOption] = useState("");
     const [painel, setPainel] = useState(<></>); 
     const [item, setItem] = useState("");
-    const [data, setData] = useState(null);
+    const [data, setData] = useState("");
     const tipo = localStorage.getItem("role")
 
 
@@ -36,6 +36,8 @@ export default function UserArea() {
           break;
         case "medicos": setPainel(<Doctor data={item}/>);
           break;
+        case "": setPainel("");
+          break
         }
 
     },[option])
@@ -58,7 +60,7 @@ export default function UserArea() {
 
     return (
         <div>
-            <UserNavbar tipo={tipo} setOption={setOption}/>
+            <UserNavbar tipo={tipo} setOption={setOption} option={option}/>
             <main>
                 {!option ?
                     <p>Escolha uma das opções na barra de navegação.</p>
@@ -70,12 +72,8 @@ export default function UserArea() {
                         </>
                         :
                         <>
-                          {data && 
-                            <>
-                              <DynamicTable data={data} setItem={setItem} />
-                              {painel}
-                            </>
-                          }
+                          <DynamicTable data={data} setItem={setItem} option={option} />
+                          {Array.isArray(data) && data.length> 0 && painel}
                         </>
                     }
                     
