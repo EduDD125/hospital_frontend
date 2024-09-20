@@ -27,8 +27,6 @@ export default function Doctor({data}) {
         console.log("editando");
     }
 
-    console.log(nome)
-
     return(
         <div className="item__container">
             <div className="item__title">

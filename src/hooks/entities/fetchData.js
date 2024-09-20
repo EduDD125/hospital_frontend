@@ -9,8 +9,6 @@ export default function useFetchData() {
       if (tipo === "admin") endpoint = option;
       else if (option === "dadosPessoais") endpoint = `${tipo}s/${userId}`;
       else endpoint = `${tipo}s/${userId}/${option}`;
-      
-      console.log("endpoint: ", endpoint);
 
         try {
             const response = await apiClient.get("http://localhost:3000/" + endpoint);

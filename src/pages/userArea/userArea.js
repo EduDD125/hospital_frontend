@@ -44,8 +44,6 @@ export default function UserArea() {
 
     },[option])
 
-    console.log("item: ", item)
-
     useEffect(() => {
       switch (option) {
         case "exames": setPainel(<Exam data={item}/>);
