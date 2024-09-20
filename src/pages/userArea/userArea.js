@@ -11,15 +11,15 @@ export default function UserArea() {
     const fetchAllData = useFetchAllData();
     const [option, setOption] = useState("");
     const [painel, setPainel] = useState(<></>); 
-    const tipo = "administrador"
     const [item, setItem] = useState("");
     const [data, setData] = useState(null);
+    const tipo = localStorage.getItem("role")
 
 
     useEffect(() => {
       async function fetchData() {
           if(option) {
-              const result = await fetchAllData(`/fakeData/${option}.json`);
+              const result = await fetchAllData(option);
               setData(result);
           }
       }

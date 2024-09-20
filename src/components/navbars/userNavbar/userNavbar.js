@@ -58,4 +58,5 @@ export default function UserNavbar({tipo, setOption}) {
                 </div>
             </nav>
         );
+    return("Tipo de usuário indefinido")
 }
