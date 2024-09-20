@@ -5,26 +5,27 @@ import Exam from "../../components/painels/exam";
 import Appointment from "../../components/painels/appoitment";
 import UserNavbar from "../../components/navbars/userNavbar/userNavbar";
 import DynamicTable from "../../components/tables/dynamicTable";
-import useFetchAllData from "../../hooks/entities/fetchAllData"
+import useFetchData from "../../hooks/entities/fetchData"
 
 export default function UserArea() {
-    const fetchAllData = useFetchAllData();
+    const fetchData = useFetchData();
     const [option, setOption] = useState("");
     const [painel, setPainel] = useState(<></>); 
     const [item, setItem] = useState("");
     const [data, setData] = useState("");
     const tipo = localStorage.getItem("role")
+    const userId = localStorage.getItem("id");
 
 
     useEffect(() => {
-      async function fetchData() {
+      async function fetchDataFromHook() {
           if(option) {
-              const result = await fetchAllData(option);
+              const result = await fetchData(option, tipo, userId);
               setData(result);
           }
       }
 
-      fetchData(); // Chama a função de busca
+      fetchDataFromHook(); // Chama a função de busca
   
       setItem("");
       switch (option) {

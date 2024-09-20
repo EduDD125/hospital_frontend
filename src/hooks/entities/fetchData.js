@@ -1,15 +1,22 @@
-import { token } from "./../authentificationToken/getToken"
-import apiClient from "./../../axios/apiClient"
+import { token } from "../authentificationToken/getToken"
+import apiClient from "../../axios/apiClient"
 
-export default function useFetchAllData() {
+export default function useFetchData() {
 
-    async function fetchAllData(option) {
+    async function fetchData(option, tipo, userId) {
 
-        const endpoint = `/${option}`;
-        console.log(endpoint);
+      let endpoint = "";
+
+      if (tipo === "admin") endpoint = option;
+      else if (option === "dadosPessoais") endpoint = `${tipo}s/${userId}`;
+      else endpoint = `${tipo}s/${userId}/${option}`;
+
+
+      
+      console.log("endpoint: ", endpoint);
 
         try {
-            const response = await apiClient.get("http://localhost:3000/"+option);
+            const response = await apiClient.get("http://localhost:3000/" + endpoint);
             console.log(response);
             return response.data;
         } catch (error) {
@@ -25,7 +32,9 @@ export default function useFetchAllData() {
                 console.log("Erro desconhecido: ", error.message);
               }
         }
+              
     }
+    
+    return fetchData;
 
-    return fetchAllData;
 }

@@ -17,6 +17,7 @@ export const useLogin = () => {
       setData(response.data);
       localStorage.setItem("token", response.data.token)
       localStorage.setItem("role", response.data.role)
+      localStorage.setItem("id", response.data.id)
       setLoading(false);
     } catch (err) {
       setError(err.response ? err.response.data : 'Erro ao criar paciente');
