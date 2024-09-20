@@ -5,18 +5,18 @@ export const useLogin = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
-  const [endpoint, setEndPoint] = useState(null);
 
-  const login = async (userData, tipo) => {
+  const login = async (userData) => {
 
-    let endpoint = `/login/${tipo}`
+    let endpoint = `/login`
 
     setLoading(true);
 
     try {
       const response = await apiClient.post(endpoint, userData);
       setData(response.data);
-      localStorage.setItem("token", data.token)
+      localStorage.setItem("token", response.data.token)
+      localStorage.setItem("role", response.data.role)
       setLoading(false);
     } catch (err) {
       setError(err.response ? err.response.data : 'Erro ao criar paciente');

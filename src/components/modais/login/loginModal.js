@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./loginModalStyle.css"
 import { useLogin } from "../../../hooks/login/useLogin";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginModal({setIsModalLoginOpen}) {
 
     const [email, setEmail] = useState("");
-    const [tipo, setTipo ] = useState("");
     const [senha, setSenha] = useState("");
     const {login, data, error} = useLogin();
+    const navigate = useNavigate();
 
 
 
@@ -15,20 +16,25 @@ export default function LoginModal({setIsModalLoginOpen}) {
         setIsModalLoginOpen(false);
     }
 
-    function handleLogin() {
-        let userData = {};
-        if (tipo === "paciente" || tipo === "medico" || tipo === "admin") {
-            userData = {email, senha};
-        }
-        else {
-            alert("tipo de usuário indefinido")
-            return;
-        }
+    async function handleLogin(e) {
+        e.preventDefault()
 
-        login(userData, tipo);
-        if (data) console.log(data);
-        else if (error) console.log(error);
+        let userData = {email, senha};
+
+        try {
+            await login(userData); // Aguarda o login ser processado
+        } catch (err) {
+            console.log(error || err); // Captura e exibe erros
+        }
     }
+
+    useEffect(() => {
+        if (data) {
+            navigate("/user"); // Redireciona se login bem-sucedido
+        } else if (error) {
+            console.log("Login falhou: ", error); // Exibe erro se houver
+        }
+    },[data,error, navigate])
 
     return (
         <div className="login-modal__backgroud" onClick={() => {handleClose()}}>
@@ -36,24 +42,18 @@ export default function LoginModal({setIsModalLoginOpen}) {
             <div className="modal-title">
                     <h2>Login</h2>
                 </div>
-                <label> email:
-                    <input type="text" name="email" onChange={(e) => setEmail(e.target.value)} required />
-                </label>
-                <label> tipo de usuário:
-                    <select name="tipo" onChange={(e) => setTipo(e.target.value)}>
-                        <option value="">Selecione...</option>
-                        <option value="paciente">paciente</option>
-                        <option value="medico">médico</option>
-                        <option value="admin">administrador</option>
-                    </select>
-                </label>
-                <label> senha:
-                    <input type="password" name="senha" onChange={(e) => setSenha(e.target.value)} required />
-                </label>
-                <div className="button-area">
-                    <button onClick={handleClose}>cancel</button>
-                    <button onClick={handleLogin}>login</button>
-                </div>
+                <form onSubmit={(e) => handleLogin(e)}>
+                    <label> email:
+                        <input type="text" name="email" onChange={(e) => setEmail(e.target.value)} required />
+                    </label>
+                    <label> senha:
+                        <input type="password" name="senha" onChange={(e) => setSenha(e.target.value)} required />
+                    </label>
+                    <div className="button-area">
+                        <button onClick={handleClose}>cancel</button>
+                        <button type="submit">login</button>
+                    </div>
+                </form>
             </div>
         </div>
     )

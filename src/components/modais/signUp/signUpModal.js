@@ -18,7 +18,7 @@ export default function SignInModal({ setIsModalSignInOpen }) {
 
     const { createUser, data, error } = useCreateUser();
 
-    function handleClose(event) {
+    function handleClose() {
         setIsModalSignInOpen(false);
     }
 
@@ -50,12 +50,15 @@ export default function SignInModal({ setIsModalSignInOpen }) {
         }
 
         createUser(userData, tipoUsuario);
-        if (data) console.log(data);
+        if (data) {
+            console.log(data);
+            handleClose();
+        }
         else if (error) console.log(error);
     }
 
     return (
-        <div className="signin-modal__background" onClick={(event) => handleClose(event)}>
+        <div className="signin-modal__background" onClick={() => handleClose()}>
             <div className="signin-modal__container" onClick={e => e.stopPropagation()}>
                 <div className="modal-title">
                     <h2>Sign in</h2>
