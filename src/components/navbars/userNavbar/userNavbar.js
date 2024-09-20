@@ -47,7 +47,7 @@ export default function UserNavbar({tipo, setOption}) {
                 <NavButton text={userName} tipo="user_section" action={seeUserData}/>
             </nav>
         );
-    else if (tipo === "administrador")
+    else if (tipo === "admin")
         return (
             <nav className="nav">
                 <div className="nav__buttons-container">
