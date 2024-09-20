@@ -1,28 +1,48 @@
 import { useEffect, useState } from "react";
+import DeleteButton from "../buttons/deleteButton";
 
 export default function DynamicTable({data, setItem, option}) {
-
+    const [tableItensList, setTableItensList] = useState([]);
     const [atributos, setAtributos] = useState([]);
 
     useEffect(() => {
         if(data && data.length > 0) {
             setAtributos(Object.keys(data[0]));
+            setTableItensList(data);
         }
     },[data])
+
+    function handleDelete(id) {
+        console.log("deletou | id: ", id)
+        console.log(tableItensList.length);
+        console.log(tableItensList)
+        setTableItensList((prevItens) => {prevItens.filter(item => item.id !== id)});
+        console.log(tableItensList.length);
+        console.log("passou")
+
+    }
 
     if (Array.isArray(data) && data.length > 0)
         return(
             <table>
                 <thead>
                     {atributos.map( (atributo, index) => (
-                        <th key={index}>{atributo}</th>
+                        <>
+                            {atributo === "id" ? <></> : <th key={index++}>{atributo}</th>}
+                        </>
                     ))}
                 </thead>
                 <tbody>
                     {data.map((item, index) => (
                         <tr key={index} onClick={() => setItem(item)}>
                             {Object.values(item).map((atributo, index) => (
-                                <td key={index}>{atributo}</td>
+                                <>
+                                    {index === 0 ? 
+                                    <td><DeleteButton entityType={option} id={item.id} onDelete={handleDelete}/></td>
+                                    :
+                                    <td key={index++}>{atributo}</td>
+                                    }
+                                </>
                             ))}
                         </tr>
                     ))}
