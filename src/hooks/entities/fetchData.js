@@ -6,12 +6,14 @@ export default function useFetchData() {
 
       let endpoint = "";
 
+
       if (tipo === "admin") endpoint = `/${option}`;
       else if (option === "dadosPessoais") endpoint = `${tipo}s/${userId}`;
-      else if (option === "exames" || option === "consultas") endpoint = `${option}/${userId}`;
+      else if (option === "exames" || option === "consultas") endpoint = `${option}/${tipo}s/${userId}`;
       else endpoint = `${tipo}s/${userId}/${option}`;
 
-      console.log(endpoint)
+      console.log(endpoint);
+      console.log(option, tipo, userId)
 
         try {
             const response = await apiClient.get(endpoint);

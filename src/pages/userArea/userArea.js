@@ -72,7 +72,7 @@ export default function UserArea() {
                         </>
                         :
                         <>
-                          <ControlPainel />
+                          {option==="exames" || option==="consultas"  ? <ControlPainel option={option}/> : <></>}
                           <DynamicTable data={data} setItem={setItem} option={option} />
                           {Array.isArray(data) && data.length> 0 && painel}
                         </>

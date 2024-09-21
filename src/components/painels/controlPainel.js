@@ -1,5 +1,28 @@
-export default function ControlPainel() {
+import { useState } from "react";
+import AddAppointmentModal from "../modais/saveDataModal/addAppointment/addAppointmentModal";
+import AddExamModal from "../modais/saveDataModal/addExam/addExamModal";
+
+export default function ControlPainel({option}) {
+
+    const [openModal, setOpenModal] = useState(false);
+
+    function openAdditionModal() {
+        console.log(`adcionado ${option}`);
+        setOpenModal(true);
+    }
+
     return(
-        <>painel de controle</>
+        <>
+            <button className="add_button" onClick={openAdditionModal}>adicionar {option}</button>
+            {openModal && 
+            <>
+                {option === "exames" ? 
+                    <AddExamModal setIsExamModalOpen={setOpenModal}/> 
+                    : 
+                    <AddAppointmentModal setIsAppoitmentModalOpen={setOpenModal}/>
+                }
+            </>
+            }
+        </>
     );
 }
