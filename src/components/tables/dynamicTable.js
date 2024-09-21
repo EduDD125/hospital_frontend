@@ -13,7 +13,7 @@ export default function DynamicTable({data, setItem, option}) {
     },[data])
 
     function handleDelete(id) {
-        setTableItensList((prevItens) => {prevItens.filter(item => item.id !== id)});
+        setTableItensList(prevItems => prevItems.filter(item => item.id !== id));
         console.log(tableItensList.length);
 
     }
