@@ -1,17 +1,21 @@
 import { useEffect, useState } from "react";
+import useEditData from "../../hooks/entities/editData";
+import { tipo } from "../../hooks/getUserType";
 
 export default function Doctor({data}) {
     const [nome, setNome] = useState(data.nome);
     const [sexo, setSexo] = useState(data.sexo);
-    const [cri, setCri] = useState(data.CRI);
+    const [CRI, setCri] = useState(data.CRI);
     const [dataNascimento, setDataNascimento] = useState(data.dataNascimento)
     const [especialidade, setEspecialidade] = useState(data.especialidade);
+    const editData = useEditData();
     
     useEffect( () => {
         setNome(data.nome);
         setSexo(data.sexo);
         setCri(data.CRI);
         setEspecialidade(data.especialidade);
+        setDataNascimento(data.dataNascimento);
     },[data] )
     
 
@@ -23,8 +27,15 @@ export default function Doctor({data}) {
         setEspecialidade(data.especialidade);
     }
 
-    function handleEdition() {
-        console.log("editando");
+    async function handleEdition(event) {
+        event.preventDefault();
+        console.log(data.dataNascimento)
+        console.log(dataNascimento)
+        const newDoctorData = {nome, sexo, dataNascimento, especialidade};
+        console.log(newDoctorData)
+        const option = "medicos";
+        const response = await editData(option, tipo(), data.id, newDoctorData);
+        console.log(response);
     }
 
     return(
@@ -32,8 +43,8 @@ export default function Doctor({data}) {
             <div className="item__title">
                 <h3>Dados pacientes</h3>
             </div>
-            {data != "" ? 
-            <form onSubmit={handleEdition}>
+            {data !== "" ? 
+            <form onSubmit={(e) => handleEdition(e)}>
                 <label>nome:
                     <input type="text" name="nome" required value={nome} onChange={(e) => setNome(e.target.value)} />
                 </label>
@@ -50,7 +61,7 @@ export default function Doctor({data}) {
                     <input type="date" value={dataNascimento} onChange={(e) => setDataNascimento(e.target.value)} />
                 </label>
                         <label>CRI:
-                    <input type="text" name="cri" value={cri} onChange={(e) => setCri(e.target.value)} required />
+                    <input type="text" name="cri" value={CRI} onChange={(e) => setCri(e.target.value)} required />
                 </label>
 
                 <label>especialidade:

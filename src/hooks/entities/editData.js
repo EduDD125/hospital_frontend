@@ -6,6 +6,7 @@ export default function useEditData() {
 
         let endpoint = "";
 
+        console.log("option: ", option, "tipo: ", tipo, "itemId: ", itemId, "newItem: ", newItem)
         if (tipo === "admin") endpoint = `${option}/${itemId}`;
         else if (option === "dadosPessoais") endpoint = `${tipo}s/${itemId}`;
         else if (option === "exames" || option === "consultas") endpoint = `${option}/${tipo}s/${itemId}`;
@@ -14,7 +15,8 @@ export default function useEditData() {
         console.log(endpoint)
 
         try {
-            const response = apiClient.put(endpoint, newItem)
+            const response = await apiClient.put(endpoint, newItem)
+            console.log(response);
             return response;
 
         } catch (error) {

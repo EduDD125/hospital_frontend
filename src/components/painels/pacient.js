@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
+import useEditData from "../../hooks/entities/editData";
+import {tipo} from "../../hooks/getUserType"
 
 export default function Pacient({data}) {
     const [nome, setNome] = useState(data.nome);
     const [email, setEmail] = useState(data.email);
     const [sexo, setSexo] = useState(data.sexo);
     const [dataNascimento, setDataNascimento] = useState(data.dataNascimento)
-    const [cpf, setCpf] = useState(data.CPF);
+    const [CPF, setCpf] = useState(data.CPF);
     const [estadoCivil, setEstadoCivil] = useState(data.estadoCivil);
+    const editData = useEditData();
     
     useEffect( () => {
         setNome(data.nome);
@@ -23,12 +26,18 @@ export default function Pacient({data}) {
         setEmail(data.email);
         setSexo(data.sexo);
         setDataNascimento(data.dataNascimento)
-        setCpf(data.cpf);
+        setCpf(data.CPF);
         setEstadoCivil(data.estadoCivil);
     }
 
-    function handleEdition() {
-        console.log("editando");
+    async function handleEdition(event) {
+        event.preventDefault();
+        console.log(data.dataNascimento)
+        console.log(dataNascimento)
+        const newPacientData = {nome, email, sexo, dataNascimento, CPF, estadoCivil};
+        const option = "pacientes";
+        const response = await editData(option, tipo(), data.id, newPacientData);
+        console.log(response);
     }
 
     console.log("data: ", data);
@@ -38,8 +47,8 @@ export default function Pacient({data}) {
             <div className="item__title">
                 <h3>Dados pacientes</h3>
             </div>
-            {data != "" ? 
-            <form onSubmit={handleEdition}>
+            {data !== "" ? 
+            <form onSubmit={(e) => handleEdition(e)}>
                 <label>nome:
                     <input type="text" name="nome" required value={nome} onChange={(e) => setNome(e.target.value)} />
                 </label>
@@ -60,7 +69,7 @@ export default function Pacient({data}) {
                     <input type="date" value={dataNascimento} onChange={(e) => setDataNascimento(e.target.value)} />
                 </label>
                         <label>CPF:
-                    <input type="text" name="cpf" value={cpf} onChange={(e) => setCpf(e.target.value)} required />
+                    <input type="text" name="cpf" value={CPF} onChange={(e) => setCpf(e.target.value)} required />
                 </label>
 
                 <label>estado civil:
