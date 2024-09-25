@@ -4,9 +4,12 @@ import Doctor from "../../components/painels/doctor";
 import Exam from "../../components/painels/exam";
 import Appointment from "../../components/painels/appoitment";
 import UserNavbar from "../../components/navbars/userNavbar/userNavbar";
-import DynamicTable from "../../components/tables/dynamicTable";
 import useFetchData from "../../hooks/entities/fetchData"
 import ControlPainel from "../../components/painels/controlPainel";
+import ExamTable from "../../components/tables/examTable";
+import DoctorTable from "../../components/tables/doctorTable";
+import PacientTable from "../../components/tables/pacientTable";
+import AppoitmentTable from "../../components/tables/appoitmentTable";
 
 export default function UserArea() {
     const fetchData = useFetchData();
@@ -19,6 +22,7 @@ export default function UserArea() {
 
 
     useEffect(() => {
+      console.log(option, tipo, userId)
       async function fetchDataFromHook() {
           if(option) {
               const result = await fetchData(option, tipo, userId);
@@ -73,7 +77,13 @@ export default function UserArea() {
                         :
                         <>
                           {option==="exames" || option==="consultas"  ? <ControlPainel option={option}/> : <></>}
-                          <DynamicTable data={data} setItem={setItem} option={option} />
+
+
+                          {option === "exames" && <ExamTable data={data} option={option} setItem={setItem}/>}
+                          {option === "consultas" && <AppoitmentTable data={data} option={option} setItem={setItem}/>}
+                          {option === "medicos" && <DoctorTable data={data} option={option} setItem={setItem}/>}
+                          {option === "pacientes" && <PacientTable data={data} option={option} setItem={setItem}/>}
+
                           {Array.isArray(data) && data.length> 0 && painel}
                         </>
                     }

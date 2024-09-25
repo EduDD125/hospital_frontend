@@ -29,7 +29,7 @@ export default function Exam({data}) {
             <div className="item__title">
                 <h3>Dados Exame:</h3>
             </div>
-            {data != "" ? 
+            {data !== "" ? 
             <form onSubmit={handleEdition}>
                 <label>medico:
                     <input type="text" name="medico" required value={medico} onChange={(e) => setMedico(e.target.value)} />

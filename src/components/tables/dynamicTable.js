@@ -19,6 +19,7 @@ export default function DynamicTable({data, setItem, option}) {
     }
 
     if (Array.isArray(data) && data.length > 0) {
+        console.log("data: ", data)
         if (option !== "exames" && option !== "consultas")
             return(
                 <table>
@@ -63,8 +64,8 @@ export default function DynamicTable({data, setItem, option}) {
                         <tr key={index} onClick={() => setItem(item)}>
                             <td><DeleteButton entityType={option} id={item.id} onDelete={handleDelete}/></td>
                             <td>{item.dataHorario}</td>
-                            <td>{item.medico.nome}</td>
-                            <td>{item.paciente.nome}</td>
+                            <td></td>
+                            <td></td>
                         </tr>
                     ))}
                 </tbody>
