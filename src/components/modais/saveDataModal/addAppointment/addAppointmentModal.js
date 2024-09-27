@@ -11,7 +11,7 @@ export default function AddAppoitmentModal({setIsAppoitmentModalOpen}) {
     const [idPaciente, setPaciente] = useState("");
     const [medicosDisponiveis, setMedicoDisponiveis] = useState([]);
     const [pacienteDisponiveis, setPacienteDisponiveis] = useState([]);
-    const [dataHorario, setData] = useState("");
+    const [dataNaoFormatada, setData] = useState("");
     const fetchData = useFetchData();
     const saveData = useSaveData()
 
@@ -36,7 +36,7 @@ export default function AddAppoitmentModal({setIsAppoitmentModalOpen}) {
     async function handleAddition(e) {
         e.preventDefault()
 
-        const dataFormatada =  dataHorario.toLocaleString('pt-BR', {
+        const dataHorario =  dataNaoFormatada.toLocaleString('pt-BR', {
             day: '2-digit',
             month: '2-digit',
             year: 'numeric',
@@ -44,7 +44,7 @@ export default function AddAppoitmentModal({setIsAppoitmentModalOpen}) {
             minute: '2-digit'
         });
 
-        let novoAgendamento = {idMedico, idPaciente, dataFormatada};
+        let novoAgendamento = {idMedico, idPaciente, dataHorario};
 
         try {
             console.log("adicionando ", novoAgendamento);

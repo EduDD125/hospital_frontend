@@ -11,7 +11,7 @@ export default function AddExamModal({setIsExamModalOpen}) {
     const [idPaciente, setPaciente] = useState("");
     const [medicosDisponiveis, setMedicoDisponiveis] = useState([]);
     const [pacienteDisponiveis, setPacienteDisponiveis] = useState([]);
-    const [dataHorario, setData] = useState("");
+    const [dataNaoFormatada, setData] = useState("");
     const [nomeExame, setNomeExame] = useState("");
     const fetchData = useFetchData();
     const saveData = useSaveData();
@@ -35,7 +35,7 @@ export default function AddExamModal({setIsExamModalOpen}) {
     async function handleAddition(e) {
         e.preventDefault()
 
-        const dataFormatada =  dataHorario.toLocaleString('pt-BR', {
+        const dataHorario =  dataNaoFormatada.toLocaleString('pt-BR', {
             day: '2-digit',
             month: '2-digit',
             year: 'numeric',
@@ -43,7 +43,7 @@ export default function AddExamModal({setIsExamModalOpen}) {
             minute: '2-digit'
         });
 
-        let novoExame = {idMedico, idPaciente, dataFormatada, nomeExame};
+        let novoExame = {idMedico, idPaciente, dataHorario, nomeExame};
 
         try {
             console.log("adicionando ", novoExame);
