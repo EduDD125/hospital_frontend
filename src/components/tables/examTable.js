@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import DeleteButton from "../buttons/deleteButton";
+import tipo from "../../hooks/getUserType";
 
 export default function ExamTable ({data, setItem, option}) {
     const [tableItensList, setTableItensList] = useState([]);
@@ -20,7 +21,7 @@ export default function ExamTable ({data, setItem, option}) {
         return(
             <table>
                 <thead>
-                    <th key={0}></th>
+                    {tipo() == "admin" && <th key={0}></th>}
                     <th key={1}>Nome do Exame</th>
                     <th key={1}>Paciente</th>
                     <th key={2}>Medico</th>
@@ -30,7 +31,7 @@ export default function ExamTable ({data, setItem, option}) {
                 <tbody>
                     {data.map((item, index) => (
                         <tr key={index} onClick={() => setItem(item)}>
-                            <td><DeleteButton entityType={option} id={item.id} onDelete={handleDelete}/></td>
+                            {tipo() == "admin" && <td><DeleteButton entityType={option} id={item.id} onDelete={handleDelete}/></td>}
                             <td>{item.nomeExame}</td>
                             <td>{(item.paciente && item.paciente.nome)&& item.paciente.nome}</td>
                             <td>{(item.medico && item.medico.nome) && item.medico.nome}</td>

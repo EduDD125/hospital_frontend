@@ -65,12 +65,15 @@ export default function Exam({data}) {
                 {error && <p>Não doi possível editar os dados</p>}
                         
                 <div className="button-area">
-                    <button type="button" onClick={handleRestore}>restaurar</button>
-                    {loading ?
-                        <button readonly>Editando...</button>
-                    :
-                        <button type="submit">salvar edição</button>
-                    }
+                    {tipo() &&
+                   <> 
+                        <button type="button" onClick={handleRestore}>restaurar</button>
+                        {loading ?
+                            <button readonly>Editando...</button>
+                        :
+                            <button type="submit">salvar edição</button>
+                        }
+                    </>}
                 </div>
             </form>
             :

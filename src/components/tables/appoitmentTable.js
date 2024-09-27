@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import DeleteButton from "../buttons/deleteButton";
+import tipo from "../../hooks/getUserType"
 
 export default function AppoitmentTable ({data, setItem, option}) {
     const [tableItensList, setTableItensList] = useState([]);
@@ -22,7 +23,7 @@ export default function AppoitmentTable ({data, setItem, option}) {
         return(
             <table>
                 <thead>
-                    <th key={0}></th>
+                    {tipo() == "admin" &&  <th key={0}></th>}
                     <th key={1}>Paciente</th>
                     <th key={2}>Médico</th>
                     <th key={3}>Data e horário</th>
@@ -30,7 +31,7 @@ export default function AppoitmentTable ({data, setItem, option}) {
                 <tbody>
                     {data.map((item, index) => (
                         <tr key={index} onClick={() => setItem(item)}>
-                            <td><DeleteButton entityType={option} id={item.id} onDelete={handleDelete}/></td>
+                            {tipo() == "admin" && <td><DeleteButton entityType={option} id={item.id} onDelete={handleDelete}/></td>}
                             <td>{(item.paciente && item.paciente.nome)&& item.paciente.nome}</td>
                             <td>{(item.medico && item.medico.nome) && item.medico.nome}</td>
                             <td>{item.dataHorario&& item.dataHorario}</td>
