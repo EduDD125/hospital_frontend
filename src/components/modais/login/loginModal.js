@@ -7,7 +7,7 @@ export default function LoginModal({setIsModalLoginOpen}) {
 
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
-    const [login, data, loading, error] = useLogin();
+    const {login, data, loading, error} = useLogin();
     const navigate = useNavigate();
 
 

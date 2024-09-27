@@ -30,7 +30,14 @@ export default function SignInModal({ setIsModalSignInOpen }) {
         event.preventDefault();
 
         let userData = {};
-        const dataNascimento = new Date(dataNaoTratada);
+        console.log("dataNaoTratada: ", dataNaoTratada);
+        let dataNascimento = new Date(dataNaoTratada);
+
+        dataNascimento = Date.toString(dataNascimento);
+
+        console.log("dataNascimento: ", dataNascimento);
+
+
 
         
         if (tipoUsuario === "paciente") {
