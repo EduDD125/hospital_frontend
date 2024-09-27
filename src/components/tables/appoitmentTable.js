@@ -31,9 +31,9 @@ export default function AppoitmentTable ({data, setItem, option}) {
                     {data.map((item, index) => (
                         <tr key={index} onClick={() => setItem(item)}>
                             <td><DeleteButton entityType={option} id={item.id} onDelete={handleDelete}/></td>
-                            <td>{item.idPaciente}</td>
-                            <td>{item.idMedico}</td>
-                            <td>{item.dataHorario}</td>
+                            <td>{(item.paciente && item.paciente.nome)&& item.paciente.nome}</td>
+                            <td>{(item.medico && item.medico.nome) && item.medico.nome}</td>
+                            <td>{item.dataHorario&& item.dataHorario}</td>
                         </tr>
                     ))}
                 </tbody>

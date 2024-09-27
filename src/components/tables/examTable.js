@@ -32,8 +32,8 @@ export default function ExamTable ({data, setItem, option}) {
                         <tr key={index} onClick={() => setItem(item)}>
                             <td><DeleteButton entityType={option} id={item.id} onDelete={handleDelete}/></td>
                             <td>{item.nomeExame}</td>
-                            <td>{item.paciente.nome}</td>
-                            <td>{item.medico.nome}</td>
+                            <td>{(item.paciente && item.paciente.nome)&& item.paciente.nome}</td>
+                            <td>{(item.medico && item.medico.nome) && item.medico.nome}</td>
                             <td>{item.dataNascimento}</td>
                             <td>{item.resultado}</td>
                         </tr>
