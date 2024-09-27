@@ -41,5 +41,5 @@ export default function useEditData() {
         }
     }
     
-    return {editData, loading, error};
+    return {editData, loading, error, setError };
 }

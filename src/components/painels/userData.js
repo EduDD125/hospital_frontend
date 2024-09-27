@@ -11,7 +11,7 @@ export default function UserData({data}) {
     const [CRI, setCRI] = useState(data.CRI);
     const [estadoCivil, setEstadoCivil] = useState(data.estadoCivil);
     const [especialidade, setEspecialidade] = useState(data.especialidade);
-    const {editData, loading, error} = useEditData();
+    const {editData, loading, error, setError} = useEditData();
     
     useEffect( () => {
         setNome(data.nome);
@@ -38,6 +38,9 @@ export default function UserData({data}) {
 
     async function handleEdition(event) {
         event.preventDefault();
+
+        setError("");
+
         console.log(data.dataNascimento)
         console.log(dataNascimento)
 

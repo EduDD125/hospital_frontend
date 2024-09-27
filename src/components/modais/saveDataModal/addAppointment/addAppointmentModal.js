@@ -36,7 +36,15 @@ export default function AddAppoitmentModal({setIsAppoitmentModalOpen}) {
     async function handleAddition(e) {
         e.preventDefault()
 
-        let novoAgendamento = {idMedico, idPaciente, dataHorario};
+        const dataFormatada =  dataHorario.toLocaleString('pt-BR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+
+        let novoAgendamento = {idMedico, idPaciente, dataFormatada};
 
         try {
             console.log("adicionando ", novoAgendamento);

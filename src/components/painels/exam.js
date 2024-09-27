@@ -10,7 +10,7 @@ export default function Exam({data}) {
     const [paciente, setPaciente] = useState(data.idPaciente);
     const [dataHorario, setDataHorario] = useState(data.dataHorario);
     const [resultado, setResultado] = useState(data.resultado);
-    const {editData, loading, error} = useEditData();
+    const {editData, loading, error, setError} = useEditData();
     
     useEffect( () => {
         setId(data.id);
@@ -30,6 +30,8 @@ export default function Exam({data}) {
 
     async function handleEdition(event) {
         event.preventDefault();
+
+        setError("");
 
         const newExamData = {id, idMedico, idPaciente, dataHorario, medico, paciente};
         console.log(newExamData)

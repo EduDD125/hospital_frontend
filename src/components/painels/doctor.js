@@ -8,7 +8,7 @@ export default function Doctor({data}) {
     const [CRI, setCri] = useState(data.CRI);
     const [dataNascimento, setDataNascimento] = useState(data.dataNascimento)
     const [especialidade, setEspecialidade] = useState(data.especialidade);
-    const {editData, loading, error} = useEditData();
+    const {editData, loading, error, setError} = useEditData();
     
     useEffect( () => {
         setNome(data.nome);
@@ -29,6 +29,9 @@ export default function Doctor({data}) {
 
     async function handleEdition(event) {
         event.preventDefault();
+
+        setError("");
+
         console.log(data.dataNascimento)
         console.log(dataNascimento)
         const newDoctorData = {nome, sexo, dataNascimento, especialidade};

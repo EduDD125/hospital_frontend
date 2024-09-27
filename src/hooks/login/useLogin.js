@@ -28,5 +28,5 @@ export const useLogin = () => {
     }
   };
 
-  return { login, data, loading, error };
+  return { login, data, loading, error, setError };
 };

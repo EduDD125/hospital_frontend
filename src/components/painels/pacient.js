@@ -9,7 +9,7 @@ export default function Pacient({data}) {
     const [dataNascimento, setDataNascimento] = useState(data.dataNascimento)
     const [CPF, setCpf] = useState(data.CPF);
     const [estadoCivil, setEstadoCivil] = useState(data.estadoCivil);
-    const {editData, loading, error} = useEditData();
+    const {editData, loading, error, setError} = useEditData();
     
     useEffect( () => {
         setNome(data.nome);
@@ -32,6 +32,9 @@ export default function Pacient({data}) {
 
     async function handleEdition(event) {
         event.preventDefault();
+
+        setError("");
+
         console.log(data.dataNascimento)
         console.log(dataNascimento)
         const newPacientData = {nome, email, sexo, dataNascimento, CPF, estadoCivil};

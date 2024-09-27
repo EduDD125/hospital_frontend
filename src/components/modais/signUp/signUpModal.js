@@ -16,7 +16,7 @@ export default function SignInModal({ setIsModalSignInOpen }) {
     const [CPF, setCPF] = useState("");
     const [estadoCivil, setEstadoCivil] = useState("");
 
-    const { createUser, data, loading, error } = useCreateUser();
+    const { createUser, data, loading, error, setError } = useCreateUser();
 
     function handleClose() {
         setIsModalSignInOpen(false);
@@ -33,7 +33,12 @@ export default function SignInModal({ setIsModalSignInOpen }) {
         console.log("dataNaoTratada: ", dataNaoTratada);
         let dataNascimento = new Date(dataNaoTratada);
 
-        dataNascimento = Date.toString(dataNascimento);
+        dataNascimento = dataNascimento.toLocaleString('pt-BR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        });
+    
 
         console.log("dataNascimento: ", dataNascimento);
 
@@ -56,6 +61,7 @@ export default function SignInModal({ setIsModalSignInOpen }) {
             return;
         }
 
+        setError("");
         await createUser(userData, tipoUsuario);
         if (data) {
             console.log(data);

@@ -35,7 +35,15 @@ export default function AddExamModal({setIsExamModalOpen}) {
     async function handleAddition(e) {
         e.preventDefault()
 
-        let novoExame = {idMedico, idPaciente, dataHorario, nomeExame};
+        const dataFormatada =  dataHorario.toLocaleString('pt-BR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+
+        let novoExame = {idMedico, idPaciente, dataFormatada, nomeExame};
 
         try {
             console.log("adicionando ", novoExame);
@@ -73,7 +81,7 @@ export default function AddExamModal({setIsExamModalOpen}) {
                         </select>
                     </label>
                     <label> data:
-                        <input type="date" name="dataHorario" onChange={(e) => setData(new Date(e.target.value))} required />
+                        <input type="date" name="dataHorario" onChange={(e) => setData(e.target.value)} required />
                     </label>
                     <div className="button-area">
                         <button onClick={handleClose}>cancel</button>

@@ -10,7 +10,7 @@ export default function Appointment({data}) {
     const [medico, setMedico] = useState("");
     const [paciente, setPaciente] = useState("");
     const [dataHorario, setDataHorario] = useState(data.dataHorario);
-    const {editData, loading, error} = useEditData();
+    const {editData, loading, error, setError } = useEditData();
 
    console.log(id, idMedico, idPaciente, dataHorario, medico, paciente);
     
@@ -31,6 +31,8 @@ export default function Appointment({data}) {
     async function handleEdition(event) {
         event.preventDefault();
 
+
+        setError("")
         const newConsultData = {id, idMedico, idPaciente, dataHorario, medico, paciente};
         console.log(newConsultData)
         const option = "consultas";

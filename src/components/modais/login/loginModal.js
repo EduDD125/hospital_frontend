@@ -7,7 +7,7 @@ export default function LoginModal({setIsModalLoginOpen}) {
 
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
-    const {login, data, loading, error} = useLogin();
+    const {login, data, loading, error, setError} = useLogin();
     const navigate = useNavigate();
 
 
@@ -21,6 +21,7 @@ export default function LoginModal({setIsModalLoginOpen}) {
 
         let userData = {email, senha};
 
+        setError("");
         try {
             await login(userData); // Aguarda o login ser processado
         } catch (err) {

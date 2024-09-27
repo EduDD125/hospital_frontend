@@ -32,5 +32,5 @@ export const useCreateUser = () => {
     }
   };
 
-  return { createUser, data, loading, error };
+  return { createUser, data, loading, error, setError };
 };
