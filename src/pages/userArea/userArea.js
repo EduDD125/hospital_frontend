@@ -10,6 +10,7 @@ import ExamTable from "../../components/tables/examTable";
 import DoctorTable from "../../components/tables/doctorTable";
 import PacientTable from "../../components/tables/pacientTable";
 import AppoitmentTable from "../../components/tables/appoitmentTable";
+import UserData from "../../components/painels/userData";
 
 export default function UserArea() {
     const fetchData = useFetchData();
@@ -22,6 +23,7 @@ export default function UserArea() {
 
 
     useEffect(() => {
+      setData([]);
       console.log(option, tipo, userId)
       async function fetchDataFromHook() {
           if(option) {
@@ -42,6 +44,8 @@ export default function UserArea() {
           break;
         case "medicos": setPainel(<Doctor data={item}/>);
           break;
+        case "dadosPessoais": setPainel(<UserData data={item}/>);
+          break;
         case "": setPainel("");
           break
         }
@@ -58,6 +62,8 @@ export default function UserArea() {
           break;
         case "medicos": setPainel(<Doctor data={item}/>);
           break;
+        case "dadosPessoais": setPainel(<UserData data={item}/>);
+          break;
         }
     },[item])
 
@@ -73,10 +79,11 @@ export default function UserArea() {
                     {option === "dadosPessoais" ?
                         <>
                           <p>Dados pessoais</p>
+                          {painel}
                         </>
                         :
                         <>
-                          {option==="exames" || option==="consultas"  ? <ControlPainel option={option}/> : <></>}
+                          {(option==="exames" || option==="consultas") && tipo === "admin"  ? <ControlPainel option={option}/> : <></>}
 
 
                           {option === "exames" && <ExamTable data={data} option={option} setItem={setItem}/>}
