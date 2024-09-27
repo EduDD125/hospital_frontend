@@ -26,7 +26,7 @@ export default function SignInModal({ setIsModalSignInOpen }) {
         setTipoUsuario(event.target.value);
     }
 
-    function handleFormSubmit(event) {
+    async function handleFormSubmit(event) {
         event.preventDefault();
 
         let userData = {};
@@ -49,7 +49,7 @@ export default function SignInModal({ setIsModalSignInOpen }) {
             return;
         }
 
-        createUser(userData, tipoUsuario);
+        await createUser(userData, tipoUsuario);
         if (data) {
             console.log(data);
             handleClose();
