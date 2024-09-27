@@ -44,8 +44,6 @@ export default function UserArea() {
           break;
         case "medicos": setPainel(<Doctor data={item}/>);
           break;
-        case "dadosPessoais": setPainel(<UserData data={item}/>);
-          break;
         case "": setPainel("");
           break
         }
@@ -62,8 +60,6 @@ export default function UserArea() {
           break;
         case "medicos": setPainel(<Doctor data={item}/>);
           break;
-        case "dadosPessoais": setPainel(<UserData data={item}/>);
-          break;
         }
     },[item])
 
@@ -76,24 +72,16 @@ export default function UserArea() {
                     <p>Escolha uma das opções na barra de navegação.</p>
                   :
                     <>
-                    {option === "dadosPessoais" ?
-                        <>
-                          <p>Dados pessoais</p>
-                          {painel}
-                        </>
-                        :
-                        <>
-                          {(option==="exames" || option==="consultas") && tipo === "admin"  ? <ControlPainel option={option}/> : <></>}
+                      {(option==="exames" || option==="consultas") && tipo === "admin"  ? <ControlPainel option={option}/> : <></>}
 
 
-                          {option === "exames" && <ExamTable data={data} option={option} setItem={setItem}/>}
-                          {option === "consultas" && <AppoitmentTable data={data} option={option} setItem={setItem}/>}
-                          {option === "medicos" && <DoctorTable data={data} option={option} setItem={setItem}/>}
-                          {option === "pacientes" && <PacientTable data={data} option={option} setItem={setItem}/>}
+                      {option === "exames" && <ExamTable data={data} option={option} setItem={setItem}/>}
+                      {option === "consultas" && <AppoitmentTable data={data} option={option} setItem={setItem}/>}
+                      {option === "medicos" && <DoctorTable data={data} option={option} setItem={setItem}/>}
+                      {option === "pacientes" && <PacientTable data={data} option={option} setItem={setItem}/>}
+                      {option === "dadosPessoais" && <UserData data={data}/>}
 
-                          {Array.isArray(data) && data.length> 0 && painel}
-                        </>
-                    }
+                      {Array.isArray(data) && data.length> 0 && painel}
                     
                   </>
                 }

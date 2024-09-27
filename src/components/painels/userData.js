@@ -56,69 +56,69 @@ export default function UserData({data}) {
 
     console.log("data: ", data);
 
-    return(
-        <div className="item__container">
-            <div className="item__title">
-                <h3>Dados Pessoais</h3>
-            </div>
-            {data == "" ? 
-            <form onSubmit={(e) => handleEdition(e)}>
-                <label>nome:
-                    <input type="text" name="nome" required value={nome} onChange={(e) => setNome(e.target.value)} />
-                </label>
-
-                <label>email:
-                    <input type="email" name="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
-                </label>
-
-                <label>sexo:
-                    <select name="sexo" id="sexo" value={sexo} onChange={(e) => setSexo(e.target.value)} required>
-                        <option value="">Selecione...</option>
-                        <option value="feminino">feminino</option>
-                        <option value="masculino">masculino</option>
-                    </select>
-                </label>
-
-                <label>data de nascimento:
-                    <input type="date" value={dataNascimento} onChange={(e) => setDataNascimento(e.target.value)} />
-                </label>
-                {tipo() == "medico" && 
-                    <>
-                        <label>CRI:
-                            <input type="text" name="CRI" value={CRI} onChange={(e) => setCpf(e.target.value)} required />
-                        </label>
-
-                        <label>especialidad:
-                            <input type="text" name="especialidade" value={especialidade} onChange={(e) => setEstadoCivil(e.target.value)} required />
-                        </label>
-                    </>
-                }
-                {tipo() == "paciente" && 
-                    <>
-                        <label>CPF:
-                            <input type="text" name="cpf" value={CPF} onChange={(e) => setCpf(e.target.value)} required />
-                        </label>
-
-                        <label>estado civil:
-                            <input type="text" name="estado-civil" value={estadoCivil} onChange={(e) => setEstadoCivil(e.target.value)} required />
-                        </label>
-                    </>
-                }   
-
-                {error && <p className="error-message">Não doi possível editar os dados</p>}
-                        
-                <div className="button-area">
-                    <button type="button" onClick={handleRestore}>restaurar</button>
-                    {!loading ?
-                            <button type="submit" >salvar edição</button>
-                        :
-                            <button type="submit" readonly>Carregando...</button>
-                        }
+    if (data)
+        return(
+            <div className="item__container">
+                <div className="item__title">
+                    <h3>Dados Pessoais</h3>
                 </div>
-            </form>
-            :
-            <p>Clique em um item da tabela para detalha-lo.</p>
-            }
-        </div>
+                <form onSubmit={(e) => handleEdition(e)}>
+                    <label>nome:
+                        <input type="text" name="nome" required value={nome} onChange={(e) => setNome(e.target.value)} />
+                    </label>
+
+                    <label>email:
+                        <input type="email" name="email" required value={email} readOnly />
+                    </label>
+
+                    <label>sexo:
+                        <select name="sexo" id="sexo" value={sexo} onChange={(e) => setSexo(e.target.value)} required>
+                            <option value="">Selecione...</option>
+                            <option value="feminino">feminino</option>
+                            <option value="masculino">masculino</option>
+                        </select>
+                    </label>
+
+                    <label>data de nascimento:
+                        <input type="date" value={dataNascimento} onChange={(e) => setDataNascimento(e.target.value)} />
+                    </label>
+                    {tipo() == "medico" && 
+                        <>
+                            <label>CRI:
+                                <input type="text" name="CRI" value={CRI} readOnly required />
+                            </label>
+
+                            <label>especialidad:
+                                <input type="text" name="especialidade" value={especialidade} onChange={(e) => setEstadoCivil(e.target.value)} required />
+                            </label>
+                        </>
+                    }
+                    {tipo() == "paciente" && 
+                        <>
+                            <label>CPF:
+                                <input type="text" name="cpf" value={CPF} readOnly required />
+                            </label>
+
+                            <label>estado civil:
+                                <input type="text" name="estado-civil" value={estadoCivil} onChange={(e) => setEstadoCivil(e.target.value)} required />
+                            </label>
+                        </>
+                    }   
+
+                    {error && <p className="error-message">Não doi possível editar os dados</p>}
+                            
+                    <div className="button-area">
+                        <button type="button" onClick={handleRestore}>restaurar</button>
+                        {!loading ?
+                                <button type="submit" >salvar edição</button>
+                            :
+                                <button type="submit" readonly>Carregando...</button>
+                            }
+                    </div>
+                </form>
+            </div>
+        );
+    return (
+        <p>carregando...</p>
     );
 }
