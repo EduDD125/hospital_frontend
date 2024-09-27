@@ -25,22 +25,10 @@ export default function UserNavbar({tipo, setOption}) {
         setOption("dadosPessoais")
     }
     
-    if (tipo == "paciente")
+    if (tipo === "paciente" ||tipo === "medico")
         return (
             <nav className="nav">
                 <div className="nav__buttons-container">
-                    <NavButton text="Exames" tipo="exames" action={seeUserExams}/>
-                    <NavButton text="Consultas" tipo="consultas" action={seeUserAppoitments}/>
-                </div>
-                <NavButton text={userName} tipo="user_section" action={seeUserData}/>
-            </nav>
-        );
-    else if (tipo === "medico")
-        return (
-            <nav className="nav">
-                <div className="nav__buttons-container">
-                    <NavButton text="Dados pessoais" tipo="dadosUsuario" action={seeUserData}/>
-                    <NavButton text="Pacientes" tipo="pacientes" action={seePacients}/>
                     <NavButton text="Exames" tipo="exames" action={seeUserExams}/>
                     <NavButton text="Consultas" tipo="consultas" action={seeUserAppoitments}/>
                 </div>
