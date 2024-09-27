@@ -13,7 +13,7 @@ export default function AddExamModal({setIsExamModalOpen}) {
     const [pacienteDisponiveis, setPacienteDisponiveis] = useState([]);
     const [dataHorario, setData] = useState("");
     const [nomeExame, setNomeExame] = useState("");
-    const [resultado, setResultado] = useState("");
+    const [resultado, setResultado] = useState("--");
     const fetchData = useFetchData();
     const saveData = useSaveData();
 
