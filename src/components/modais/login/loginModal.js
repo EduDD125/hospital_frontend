@@ -7,7 +7,7 @@ export default function LoginModal({setIsModalLoginOpen}) {
 
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
-    const {login, data, error} = useLogin();
+    const {login, data, loading, error} = useLogin();
     const navigate = useNavigate();
 
 
@@ -34,7 +34,7 @@ export default function LoginModal({setIsModalLoginOpen}) {
         } else if (error) {
             console.log("Login falhou: ", error); // Exibe erro se houver
         }
-    },[data,error, navigate])
+    },[data, error, navigate])
 
     return (
         <div className="login-modal__backgroud" onClick={() => {handleClose()}}>
@@ -49,9 +49,15 @@ export default function LoginModal({setIsModalLoginOpen}) {
                     <label> senha:
                         <input type="password" name="senha" onChange={(e) => setSenha(e.target.value)} required />
                     </label>
+                    
+                    {error && <p className="error-message">{error}</p>}
                     <div className="button-area">
                         <button onClick={handleClose}>cancel</button>
-                        <button type="submit">login</button>
+                        {!loading ?
+                            <button type="submit" >login</button>
+                        :
+                            <button type="submit" readonly>Submitting</button>
+                        }
                     </div>
                 </form>
             </div>

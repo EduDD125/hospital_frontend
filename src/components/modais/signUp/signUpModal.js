@@ -16,7 +16,7 @@ export default function SignInModal({ setIsModalSignInOpen }) {
     const [CPF, setCPF] = useState("");
     const [estadoCivil, setEstadoCivil] = useState("");
 
-    const { createUser, data, error } = useCreateUser();
+    const { createUser, data, loading, error } = useCreateUser();
 
     function handleClose() {
         setIsModalSignInOpen(false);
@@ -61,9 +61,9 @@ export default function SignInModal({ setIsModalSignInOpen }) {
         <div className="signin-modal__background" onClick={() => handleClose()}>
             <div className="signin-modal__container" onClick={e => e.stopPropagation()}>
                 <div className="modal-title">
-                    <h2>Sign in</h2>
+                    <h2>Sign Up</h2>
                 </div>
-                    <form onSubmit={handleFormSubmit} className="signin-modal__form">
+                    <form onSubmit={(e) => handleFormSubmit(e)} className="signin-modal__form">
                         <label>nome:
                             <input type="text" name="nome" required value={nome} onChange={(e) => setNome(e.target.value)} />
                         </label>
@@ -139,11 +139,15 @@ export default function SignInModal({ setIsModalSignInOpen }) {
                                 </label>
                             </>
                         )}
-                        
+                        {error && <p className="error-message">{error}</p>}
 
                         <div className="button-area">
                             <button type="button" onClick={handleClose}>cancel</button>
-                            <button type="submit">sign in</button>
+                            {!loading ?
+                                <button type="submit" >Sing Up</button>
+                            :
+                                <button type="submit" readonly>Submitting</button>
+                            }
                         </div>
                     </form>
             </div>
