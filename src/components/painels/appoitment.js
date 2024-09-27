@@ -4,6 +4,7 @@ import useEditData from "../../hooks/entities/editData";
 
 export default function Appointment({data}) {
     
+    const [id, setId] = useState(data.id);
     const [idMedico, setIdMedico] = useState(data.idMedico);
     const [idPaciente, setIdPaciente] = useState(data.idPaciente);
     const [medico, setMedico] = useState("");
@@ -11,29 +12,26 @@ export default function Appointment({data}) {
     const [dataHorario, setDataHorario] = useState(data.dataHorario);
     const editData = useEditData();
 
-   console.log(idMedico, idPaciente, dataHorario, medico, paciente);
+   console.log(id, idMedico, idPaciente, dataHorario, medico, paciente);
     
     useEffect( () => {
+        setId(data.id);
         setIdMedico(data.idMedico);
         setIdPaciente(data.idPaciente);
-        //setMedico(data.medico.nome);
-        //setPaciente(data.paciente.nome);
+        if (data.medico) setMedico(data.medico.nome);
+        if (data.paciente) setPaciente(data.paciente.nome);
         setDataHorario(data.dataHorario);
     },[data] )
     
 
     function handleRestore() {
-        setIdMedico(data.idMedico);
-        setIdPaciente(data.idPaciente);
-        //setMedico(data.medico.nome);
-        //setPaciente(data.paciente.nome);
         setDataHorario(data.dataHorario);
     }
 
     async function handleEdition(event) {
         event.preventDefault();
 
-        const newConsultData = {idMedico, idPaciente, dataHorario, medico, paciente};
+        const newConsultData = {id, idMedico, idPaciente, dataHorario, medico, paciente};
         console.log(newConsultData)
         const option = "consultas";
         const response = await editData(option, tipo(), data.id, newConsultData);
@@ -50,11 +48,15 @@ export default function Appointment({data}) {
             {data !== "" && data.medico && data.paciente? 
             <form onSubmit={(e) => handleEdition(e)}>
                 <label>medico:
-                    <input type="text" name="medico" required value={medico} onChange={(e) => setMedico(e.target.value)} />
+                    <input type="text" name="medico" required value={medico} readOnly />
                 </label>
 
                 <label>paciente:
-                    <input type="email" name="paciente" required value={paciente} onChange={(e) => setPaciente(e.target.value)} />
+                    <input type="text" name="paciente" required value={paciente} readOnly />
+                </label>
+
+                <label>data:
+                    <input type="text" name="dataHorario" required value={dataHorario} onChange={(e) => setPaciente(e.target.value)} />
                 </label>
 
                 <div className="button-area">
