@@ -16,8 +16,8 @@ export default function Exam({data}) {
         setId(data.id);
         setIdMedico(data.idMedico);
         setIdPaciente(data.idPaciente);
-        setMedico(data.idMedico);
-        setPaciente(data.idPaciente);
+        if (data.medico) setMedico(data.medico.nome);
+        if (data.paciente) setPaciente(data.paciente.nome);
         setResultado(data.resultado);
         setDataHorario(data.dataHorario);
 
