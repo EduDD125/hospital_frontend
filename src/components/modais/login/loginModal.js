@@ -7,7 +7,7 @@ export default function LoginModal({setIsModalLoginOpen}) {
 
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
-    const {login, data, loading, error} = useLogin();
+    const [login, data, loading, error] = useLogin();
     const navigate = useNavigate();
 
 
@@ -50,7 +50,7 @@ export default function LoginModal({setIsModalLoginOpen}) {
                         <input type="password" name="senha" onChange={(e) => setSenha(e.target.value)} required />
                     </label>
                     
-                    {error && <p className="error-message">{error}</p>}
+                    {error && <p className="error-message">{error.message}</p>}
                     <div className="button-area">
                         <button onClick={handleClose}>cancel</button>
                         {!loading ?

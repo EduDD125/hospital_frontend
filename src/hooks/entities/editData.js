@@ -5,7 +5,7 @@ export default function useEditData() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-  const editDate = async  (option, tipo, itemId, newItem) => {
+  const editData = async  (option, tipo, itemId, newItem) => {
 
         let endpoint = "";
 
@@ -41,5 +41,5 @@ export default function useEditData() {
         }
     }
     
-    return {editDate, loading, error};
+    return {editData, loading, error};
 }

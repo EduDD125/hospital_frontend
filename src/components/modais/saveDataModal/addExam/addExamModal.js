@@ -13,7 +13,6 @@ export default function AddExamModal({setIsExamModalOpen}) {
     const [pacienteDisponiveis, setPacienteDisponiveis] = useState([]);
     const [dataHorario, setData] = useState("");
     const [nomeExame, setNomeExame] = useState("");
-    const [resultado, setResultado] = useState("--");
     const fetchData = useFetchData();
     const saveData = useSaveData();
 
@@ -36,7 +35,7 @@ export default function AddExamModal({setIsExamModalOpen}) {
     async function handleAddition(e) {
         e.preventDefault()
 
-        let novoExame = {idMedico, idPaciente, dataHorario, nomeExame, resultado};
+        let novoExame = {idMedico, idPaciente, dataHorario, nomeExame};
 
         try {
             console.log("adicionando ", novoExame);

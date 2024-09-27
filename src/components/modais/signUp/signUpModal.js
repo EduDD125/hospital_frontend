@@ -139,7 +139,7 @@ export default function SignInModal({ setIsModalSignInOpen }) {
                                 </label>
                             </>
                         )}
-                        {error && <p className="error-message">{error}</p>}
+                        {error && <p className="error-message">{error.message}</p>}
 
                         <div className="button-area">
                             <button type="button" onClick={handleClose}>cancel</button>
