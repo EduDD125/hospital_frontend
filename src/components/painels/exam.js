@@ -60,7 +60,7 @@ export default function Exam({data}) {
                 </label>
 
                         
-                {error && <p>{error.message}</p>}
+                {error && <p>Não doi possível editar os dados</p>}
                         
                 <div className="button-area">
                     <button type="button" onClick={handleRestore}>restaurar</button>

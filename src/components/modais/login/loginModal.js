@@ -50,7 +50,7 @@ export default function LoginModal({setIsModalLoginOpen}) {
                         <input type="password" name="senha" onChange={(e) => setSenha(e.target.value)} required />
                     </label>
                     
-                    {error && <p className="error-message">{error.message}</p>}
+                    {error && <p className="error-message">Não doi possível editar os dados</p>}
                     <div className="button-area">
                         <button onClick={handleClose}>cancel</button>
                         {!loading ?

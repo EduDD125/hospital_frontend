@@ -102,7 +102,7 @@ export default function UserData({data}) {
                     </>
                 }   
 
-                {error && <p className="error-message">{error}</p>}
+                {error && <p className="error-message">Não doi possível editar os dados</p>}
                         
                 <div className="button-area">
                     <button type="button" onClick={handleRestore}>restaurar</button>

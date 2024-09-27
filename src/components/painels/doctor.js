@@ -68,7 +68,7 @@ export default function Doctor({data}) {
                     <input type="text" name="especialidade" value={especialidade} onChange={(e) => setEspecialidade(e.target.value)} required />
                 </label>
 
-                {error && <p>{error.message}</p>}
+                {error && <p>Não doi possível editar os dados</p>}
                         
                 <div className="button-area">
                     <button type="button" onClick={handleRestore}>restaurar</button>

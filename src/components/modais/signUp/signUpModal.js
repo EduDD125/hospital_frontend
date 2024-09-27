@@ -139,7 +139,7 @@ export default function SignInModal({ setIsModalSignInOpen }) {
                                 </label>
                             </>
                         )}
-                        {error && <p className="error-message">{error.message}</p>}
+                        {error && <p className="error-message">Não doi possível editar os dados</p>}
 
                         <div className="button-area">
                             <button type="button" onClick={handleClose}>cancel</button>
