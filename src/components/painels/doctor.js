@@ -8,7 +8,7 @@ export default function Doctor({data}) {
     const [CRI, setCri] = useState(data.CRI);
     const [dataNascimento, setDataNascimento] = useState(data.dataNascimento)
     const [especialidade, setEspecialidade] = useState(data.especialidade);
-    const editData = useEditData();
+    const {editData, loading, error} = useEditData();
     
     useEffect( () => {
         setNome(data.nome);
@@ -61,16 +61,22 @@ export default function Doctor({data}) {
                     <input type="date" value={dataNascimento} onChange={(e) => setDataNascimento(e.target.value)} />
                 </label>
                         <label>CRI:
-                    <input type="text" name="cri" value={CRI} onChange={(e) => setCri(e.target.value)} required />
+                    <input type="text" name="CRI" value={CRI} readOnly required />
                 </label>
 
                 <label>especialidade:
                     <input type="text" name="especialidade" value={especialidade} onChange={(e) => setEspecialidade(e.target.value)} required />
                 </label>
+
+                {error && <p>{error.message}</p>}
                         
                 <div className="button-area">
                     <button type="button" onClick={handleRestore}>restaurar</button>
-                    <button type="submit">salvar edição</button>
+                    {loading ?
+                        <button readonly>Editando...</button>
+                    :
+                        <button type="submit">salvar edição</button>
+                    }
                 </div>
             </form>
             :

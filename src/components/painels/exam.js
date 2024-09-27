@@ -10,7 +10,7 @@ export default function Exam({data}) {
     const [paciente, setPaciente] = useState(data.idPaciente);
     const [dataHorario, setDataHorario] = useState(data.dataHorario);
     const [resultado, setResultado] = useState(data.resultado);
-    const editData = useEditData();
+    const {editData, loading, error} = useEditData();
     
     useEffect( () => {
         setId(data.id);
@@ -59,9 +59,16 @@ export default function Exam({data}) {
                     <input type="text" name="resultado" value={resultado} onChange={(e) => setResultado(e.target.value)} required />
                 </label>
 
+                        
+                {error && <p>{error.message}</p>}
+                        
                 <div className="button-area">
                     <button type="button" onClick={handleRestore}>restaurar</button>
-                    <button type="submit">salvar edição</button>
+                    {loading ?
+                        <button readonly>Editando...</button>
+                    :
+                        <button type="submit">salvar edição</button>
+                    }
                 </div>
             </form>
             :

@@ -10,7 +10,7 @@ export default function Appointment({data}) {
     const [medico, setMedico] = useState("");
     const [paciente, setPaciente] = useState("");
     const [dataHorario, setDataHorario] = useState(data.dataHorario);
-    const editData = useEditData();
+    const {editData, loading, error} = useEditData();
 
    console.log(id, idMedico, idPaciente, dataHorario, medico, paciente);
     
@@ -59,9 +59,16 @@ export default function Appointment({data}) {
                     <input type="text" name="dataHorario" required value={dataHorario} onChange={(e) => setPaciente(e.target.value)} />
                 </label>
 
+                        
+                {error && <p>{error.message}</p>}
+                        
                 <div className="button-area">
                     <button type="button" onClick={handleRestore}>restaurar</button>
-                    <button type="submit">salvar edição</button>
+                    {loading ?
+                        <button readonly>Editando...</button>
+                    :
+                        <button type="submit">salvar edição</button>
+                    }
                 </div>
             </form>
             :

@@ -9,7 +9,7 @@ export default function Pacient({data}) {
     const [dataNascimento, setDataNascimento] = useState(data.dataNascimento)
     const [CPF, setCpf] = useState(data.CPF);
     const [estadoCivil, setEstadoCivil] = useState(data.estadoCivil);
-    const editData = useEditData();
+    const {editData, loading, error} = useEditData();
     
     useEffect( () => {
         setNome(data.nome);
@@ -54,7 +54,7 @@ export default function Pacient({data}) {
                 </label>
 
                 <label>email:
-                    <input type="email" name="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <input type="email" name="email" required value={email} readOnly/>
                 </label>
 
                 <label>sexo:
@@ -69,16 +69,22 @@ export default function Pacient({data}) {
                     <input type="date" value={dataNascimento} onChange={(e) => setDataNascimento(e.target.value)} />
                 </label>
                         <label>CPF:
-                    <input type="text" name="cpf" value={CPF} onChange={(e) => setCpf(e.target.value)} required />
+                    <input type="text" name="cpf" value={CPF} readOnly required />
                 </label>
 
                 <label>estado civil:
                     <input type="text" name="estado-civil" value={estadoCivil} onChange={(e) => setEstadoCivil(e.target.value)} required />
                 </label>
                         
+                {error && <p>{error.message}</p>}
+                        
                 <div className="button-area">
                     <button type="button" onClick={handleRestore}>restaurar</button>
-                    <button type="submit">salvar edição</button>
+                    {loading ?
+                        <button readonly>Editando...</button>
+                    :
+                        <button type="submit">salvar edição</button>
+                    }
                 </div>
             </form>
             :
