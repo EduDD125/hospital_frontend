@@ -41,41 +41,4 @@ export default function Appointment({data}) {
     }
 
     console.log("data: ", data);
-
-    return(
-        <div className="item__container">
-            <div className="item__title">
-                <h3>Dados Exame:</h3>
-            </div>
-            {data !== "" && data.medico && data.paciente? 
-            <form onSubmit={(e) => handleEdition(e)}>
-                <label>medico:
-                    <input type="text" name="medico" required value={medico} readOnly />
-                </label>
-
-                <label>paciente:
-                    <input type="text" name="paciente" required value={paciente} readOnly />
-                </label>
-
-                <label>data:
-                    <input type="text" name="dataHorario" required value={dataHorario} onChange={(e) => setPaciente(e.target.value)} />
-                </label>
-
-                        
-                {error && <p>Não doi possível editar os dados</p>}
-                        
-                <div className="button-area">
-                    <button type="button" onClick={handleRestore}>restaurar</button>
-                    {loading ?
-                        <button readonly>Editando...</button>
-                    :
-                        <button type="submit">salvar edição</button>
-                    }
-                </div>
-            </form>
-            :
-            <p>Clique em um item da tabela para detalha-lo.</p>
-            }
-        </div>
-    );
 }

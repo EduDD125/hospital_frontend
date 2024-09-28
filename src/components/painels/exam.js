@@ -33,9 +33,9 @@ export default function Exam({data}) {
 
         setError("");
 
-        const newExamData = {id, idMedico, idPaciente, dataHorario, medico, paciente};
+        const newExamData = {resultado};
         console.log(newExamData)
-        const option = "consultas";
+        const option = "exames";
         const response = await editData(option, tipo(), data.id, newExamData);
         console.log(response);
     }
@@ -67,7 +67,7 @@ export default function Exam({data}) {
                 <div className="button-area">
                     <button type="button" onClick={handleRestore}>restaurar</button>
                     {loading ?
-                        <button readonly>Editando...</button>
+                        <button readOnly>Editando...</button>
                     :
                         <button type="submit">salvar edição</button>
                     }

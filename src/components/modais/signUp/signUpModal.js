@@ -159,7 +159,7 @@ export default function SignInModal({ setIsModalSignInOpen }) {
                             {!loading ?
                                 <button type="submit" >Sing Up</button>
                             :
-                                <button type="submit" readonly>Submitting</button>
+                                <button type="submit" readOnly>Submitting</button>
                             }
                         </div>
                     </form>

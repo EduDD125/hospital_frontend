@@ -25,7 +25,7 @@ export default function HomepageNavbar() {
 
             <div className="nav__buttons-container">
                 <NavButton text="Login" action={handleLogin}/>
-                <NavButton text="Sign in" action={handleSignIn}/>
+                <NavButton text="Sign up" action={handleSignIn}/>
             </div>
 
             {isModalLoginOpen ?

@@ -76,7 +76,7 @@ export default function Doctor({data}) {
                 <div className="button-area">
                     <button type="button" onClick={handleRestore}>restaurar</button>
                     {loading ?
-                        <button readonly>Editando...</button>
+                        <button readOnly>Editando...</button>
                     :
                         <button type="submit">salvar edição</button>
                     }

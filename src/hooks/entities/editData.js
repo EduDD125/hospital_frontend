@@ -12,7 +12,7 @@ export default function useEditData() {
         console.log("option: ", option, "tipo: ", tipo, "itemId: ", itemId, "newItem: ", newItem)
         if (tipo === "admin") endpoint = `${option}/${itemId}`;
         else if (option === "dadosPessoais") endpoint = `${tipo}s/${itemId}`;
-        else if (option === "exames" || option === "consultas") endpoint = `${option}/${tipo}s/${itemId}`;
+        else if (option === "exames" || option === "consultas") endpoint = `${option}/${itemId}`;
         else console.log("caso indefinido!!");
 
         console.log(endpoint)

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import DeleteButton from "../buttons/deleteButton";
+import "./table.css";
 
 export default function AppoitmentTable ({data, setItem, option}) {
     const [tableItensList, setTableItensList] = useState([]);
@@ -20,17 +21,15 @@ export default function AppoitmentTable ({data, setItem, option}) {
 
     if (Array.isArray(data) && data.length > 0) {
         return(
-            <table>
+            <table className="table_style">
                 <thead>
-                    <th key={0}></th>
-                    <th key={1}>Paciente</th>
-                    <th key={2}>Médico</th>
-                    <th key={3}>Data e horário</th>
+                    <th key={0}>Paciente</th>
+                    <th key={1}>Médico</th>
+                    <th key={2}>Data e horário</th>
                 </thead>
                 <tbody>
                     {data.map((item, index) => (
                         <tr key={index} onClick={() => setItem(item)}>
-                            <td><DeleteButton entityType={option} id={item.id} onDelete={handleDelete}/></td>
                             <td>{(item.paciente && item.paciente.nome)&& item.paciente.nome}</td>
                             <td>{(item.medico && item.medico.nome) && item.medico.nome}</td>
                             <td>{item.dataHorario&& item.dataHorario}</td>

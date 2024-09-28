@@ -62,7 +62,6 @@ export default function DynamicTable({data, setItem, option}) {
                 <tbody>
                     {data.map((item, index) => (
                         <tr key={index} onClick={() => setItem(item)}>
-                            <td><DeleteButton entityType={option} id={item.id} onDelete={handleDelete}/></td>
                             <td>{item.dataHorario}</td>
                             <td></td>
                             <td></td>

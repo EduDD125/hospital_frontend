@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import DeleteButton from "../buttons/deleteButton";
+import "./table.css";
 
 export default function DoctorTable ({data, setItem, option}) {
     const [tableItensList, setTableItensList] = useState([]);
@@ -20,7 +21,7 @@ export default function DoctorTable ({data, setItem, option}) {
 
     if (Array.isArray(data) && data.length > 0) {
         return(
-            <table>
+            <table className="table_style">
                 <thead>
                     <th key={0}></th>
                     <th key={1}>Nome</th>

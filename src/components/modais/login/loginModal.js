@@ -57,7 +57,7 @@ export default function LoginModal({setIsModalLoginOpen}) {
                         {!loading ?
                             <button type="submit" >login</button>
                         :
-                            <button type="submit" readonly>Submitting</button>
+                            <button type="submit" readOnly>Submitting</button>
                         }
                     </div>
                 </form>

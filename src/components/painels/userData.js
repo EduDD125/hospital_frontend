@@ -2,11 +2,21 @@ import { useEffect, useState } from "react";
 import useEditData from "../../hooks/entities/editData";
 import {tipo} from "../../hooks/getUserType"
 
+function formatDateToInput(date) {
+    const d = new Date(date);
+    const day = String(d.getDate()).padStart(2, '0');
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const year = d.getFullYear();
+    return `${year}-${month}-${day}`;
+}
+
 export default function UserData({data}) {
+
+
     const [nome, setNome] = useState(data.nome);
     const [email, setEmail] = useState(data.email);
     const [sexo, setSexo] = useState(data.sexo);
-    const [dataNascimento, setDataNascimento] = useState(data.dataNascimento)
+    const [dataNascimento, setDataNascimento] = useState(data.dataNascimento);
     const [CPF, setCpf] = useState(data.CPF);
     const [CRI, setCRI] = useState(data.CRI);
     const [estadoCivil, setEstadoCivil] = useState(data.estadoCivil);
@@ -17,7 +27,7 @@ export default function UserData({data}) {
         setNome(data.nome);
         setEmail(data.email);
         setSexo(data.sexo);
-        setDataNascimento(data.dataNascimento)
+        setDataNascimento(formatDateToInput(data.dataNascimento))
         setCpf(data.CPF);
         setCRI(data.CRI);
         setEstadoCivil(data.estadoCivil);
@@ -29,7 +39,7 @@ export default function UserData({data}) {
         setNome(data.nome);
         setEmail(data.email);
         setSexo(data.sexo);
-        setDataNascimento(data.dataNascimento)
+        setDataNascimento(new Date(data.dataNascimento))
         setCpf(data.CPF);
         setCRI(data.CRI);
         setEstadoCivil(data.estadoCivil);
@@ -112,7 +122,7 @@ export default function UserData({data}) {
                         {!loading ?
                                 <button type="submit" >salvar edição</button>
                             :
-                                <button type="submit" readonly>Carregando...</button>
+                                <button type="submit" readOnly>Carregando...</button>
                             }
                     </div>
                 </form>
