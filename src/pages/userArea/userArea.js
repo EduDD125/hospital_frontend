@@ -36,7 +36,9 @@ export default function UserArea() {
   
       setItem("");
       switch (option) {
-        case "exames": setPainel(<Exam data={item}/>);
+        case "exames":
+          if(tipo === "paciente" || tipo === "medico") break;
+          setPainel(<Exam data={item}/>);
           break;
         case "consultas": setPainel(<Appointment data={item}/>);
           break;
