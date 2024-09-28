@@ -2,18 +2,25 @@ import React, { useState, useEffect } from "react";
 import "./userNavbarStyle.css";
 import NavButton from "../subcomponents/navButton";
 import { getUserName } from "../../../hooks/entities/getUserName";
+import { getDoctorName } from "../../../hooks/entities/getDoctorName";
 
 export default function UserNavbar({ tipo, setOption }) {
     const id = localStorage.getItem("id");
+    const role = localStorage.getItem("role");
     const [userName, setUserName] = useState("");
 
     useEffect(() => {
         async function fetchUserName() {
-            const name = await getUserName(id);
-            setUserName(name);
+            if (role === "medico") {
+                const name = await getDoctorName(id);
+                setUserName(name);
+            } else if (role === "paciente") {
+                const name = await getUserName(id);
+                setUserName(name);
+            }
         }
         fetchUserName();
-    }, [id]);
+    }, [id, role]);
 
     function seeUserExams() {
         setOption("exames");
