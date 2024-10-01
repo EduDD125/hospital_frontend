@@ -48,7 +48,7 @@ export default function UserArea() {
           break;
         case "medicos": setPainel(<Doctor data={item}/>);
           break;
-        case "logs": setPainel("<Doctor data={item}/>");
+        case "logs": setPainel("");
           break;
         default: setPainel("");
           break;
@@ -67,6 +67,8 @@ export default function UserArea() {
         case "pacientes": setPainel(<Pacient data={item}/>);
           break;
         case "medicos": setPainel(<Doctor data={item}/>);
+          break;
+        case "logs": setPainel(<Doctor data={item}/>);
           break;
         default: setPainel("");
           break;
