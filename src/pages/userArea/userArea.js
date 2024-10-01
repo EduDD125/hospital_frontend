@@ -37,6 +37,7 @@ export default function UserArea() {
   
       setItem("");
       localStorage.setItem("item", "");
+      localStorage.setItem("painel", "");
       localStorage.setItem("option", option);
       switch (option) {
         case "exames":
