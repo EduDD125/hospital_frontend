@@ -12,7 +12,7 @@ import PacientTable from "../../components/tables/pacientTable";
 import AppoitmentTable from "../../components/tables/appoitmentTable";
 import UserData from "../../components/painels/userData";
 import LogTable from "../../components/tables/logTable";
-import { Circles } from 'react-loading-icons'
+import { Bars } from 'react-loading-icons'
 
 export default function UserArea() {
     const {fetchData, loading} = useFetchData();
@@ -48,6 +48,8 @@ export default function UserArea() {
           break;
         case "medicos": setPainel(<Doctor data={item}/>);
           break;
+        case "logs": setPainel("<Doctor data={item}/>");
+          break;
         case "": setPainel("");
           break
         }
@@ -73,7 +75,7 @@ export default function UserArea() {
             <UserNavbar tipo={tipo} setOption={setOption} option={option}/>
             <main>
                 {loading ?
-                    <Circles />
+                    <p>Carregando..</p>
                   :
                     <>
                         {!option ?
