@@ -19,7 +19,7 @@ form {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    overflow: scroll;
+    overflow-y: scroll;
 }
 
 label {

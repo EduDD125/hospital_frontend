@@ -32,5 +32,5 @@
 }
 
 form {
-    overflow: scroll;
+    overflow-y: scroll;
 }

@@ -4,7 +4,7 @@
     margin: 20px 0;
     font-size: 18px;
     text-align: left;
-    overflow: scroll;
+    overflow-y: scroll;
 }
 
 .table_style th, .table_style td {
