@@ -1,6 +1,8 @@
+import { useState } from "react";
 import apiClient from "../../axios/apiClient"
 
 export default function useFetchData() {
+    const [loading, setIfLoading] = useState()
 
     async function fetchData(option, tipo, userId) {
 
@@ -16,6 +18,7 @@ export default function useFetchData() {
       console.log(option, tipo, userId)
 
         try {
+            setIfLoading(true);
             const response = await apiClient.get(endpoint);
             console.log(response);
             return response.data;
@@ -32,10 +35,12 @@ export default function useFetchData() {
                 // Outro tipo de erro ocorreu
                 console.log("Erro desconhecido: ", error.message);
               }
+        } finally {
+          setIfLoading(false)
         }
               
     }
     
-    return fetchData;
+    return {fetchData, loading};
 
 }
