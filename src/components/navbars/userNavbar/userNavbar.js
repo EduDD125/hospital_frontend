@@ -42,6 +42,10 @@ export default function UserNavbar({ tipo, setOption }) {
         setOption("dadosPessoais");
     }
 
+    function seeLogs() {
+        setOption("logs");
+    }
+
     if (tipo === "paciente" || tipo === "medico")
         return (
             <nav className="nav">
@@ -60,6 +64,7 @@ export default function UserNavbar({ tipo, setOption }) {
                     <NavButton text="Pacientes" tipo="pacientes" action={seePacients} />
                     <NavButton text="Exames" tipo="exames" action={seeUserExams} />
                     <NavButton text="Consultas" tipo="consultas" action={seeUserAppoitments} />
+                    <NavButton text="Logs" tipo="logs" action={seeLogs} />
                 </div>
             </nav>
         );

@@ -1,6 +1,6 @@
 import "./navButtonStyle.css"
 import { IoIosNotifications } from "react-icons/io";
-import { FaUserDoctor } from "react-icons/fa6";
+import { FaUserDoctor, FaInfo } from "react-icons/fa6";
 import { IoPerson } from "react-icons/io5";
 import { LuStethoscope } from "react-icons/lu";
 import { ImLab } from "react-icons/im";
@@ -46,6 +46,15 @@ export default function NavButton( {text, tipo, action}) {
             <button className="nav-button" onClick={action}>
                 <p>{text}</p>
                 <IoIosNotifications />
+            </button>
+        )
+    }
+
+    else if (tipo === "logs") {
+        return (
+            <button className="nav-button" onClick={action}>
+                <FaInfo />
+                <p>{text}</p>
             </button>
         )
     }

@@ -11,6 +11,7 @@ import DoctorTable from "../../components/tables/doctorTable";
 import PacientTable from "../../components/tables/pacientTable";
 import AppoitmentTable from "../../components/tables/appoitmentTable";
 import UserData from "../../components/painels/userData";
+import LogTable from "../../components/tables/logTable";
 
 export default function UserArea() {
     const fetchData = useFetchData();
@@ -81,6 +82,7 @@ export default function UserArea() {
                       {option === "consultas" && <AppoitmentTable data={data} option={option} setItem={setItem}/>}
                       {option === "medicos" && <DoctorTable data={data} option={option} setItem={setItem}/>}
                       {option === "pacientes" && <PacientTable data={data} option={option} setItem={setItem}/>}
+                      {option === "logs" && <LogTable data={data} option={option} setItem={setItem}/>}
                       {option === "dadosPessoais" && <UserData data={data}/>}
 
                       {Array.isArray(data) && data.length> 0 && painel}
