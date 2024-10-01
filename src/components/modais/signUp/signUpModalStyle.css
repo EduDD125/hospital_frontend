@@ -36,7 +36,6 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
-    overflow-x: scroll;
 }
 
 .signin-modal__form label {
