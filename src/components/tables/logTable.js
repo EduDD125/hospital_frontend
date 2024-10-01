@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import DeleteButton from "../buttons/deleteButton";
 import "./table.css";
 
 export default function LogTable ({data, setItem, option}) {
