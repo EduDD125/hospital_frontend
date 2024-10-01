@@ -12,7 +12,6 @@ import PacientTable from "../../components/tables/pacientTable";
 import AppoitmentTable from "../../components/tables/appoitmentTable";
 import UserData from "../../components/painels/userData";
 import LogTable from "../../components/tables/logTable";
-import { Bars } from 'react-loading-icons'
 
 export default function UserArea() {
     const {fetchData, loading} = useFetchData();
@@ -37,6 +36,8 @@ export default function UserArea() {
       fetchDataFromHook(); // Chama a função de busca
   
       setItem("");
+      localStorage.setItem("item", "");
+      localStorage.setItem("option", option);
       switch (option) {
         case "exames":
           if(tipo === "paciente" || tipo === "medico") break;
@@ -53,10 +54,13 @@ export default function UserArea() {
         case "": setPainel("");
           break
         }
+        localStorage.setItem("painel", painel);
 
     },[option])
 
     useEffect(() => {
+
+      localStorage.setItem("item", item);
       switch (option) {
         case "exames": setPainel(<Exam data={item}/>);
           break;
