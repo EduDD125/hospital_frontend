@@ -26,6 +26,7 @@ export default function AddExamModal({setIsExamModalOpen}) {
         }
 
         fetchDataFromHook();
+        console.log("foi");
     },[])
 
     function handleClose() {

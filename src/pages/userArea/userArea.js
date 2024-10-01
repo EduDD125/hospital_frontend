@@ -16,7 +16,7 @@ import LogTable from "../../components/tables/logTable";
 export default function UserArea() {
     const {fetchData, loading} = useFetchData();
     const [option, setOption] = useState("");
-    const [painel, setPainel] = useState(<></>); 
+    const [painel, setPainel] = useState(""); 
     const [item, setItem] = useState("");
     const [data, setData] = useState("");
     const tipo = localStorage.getItem("role")
@@ -37,9 +37,6 @@ export default function UserArea() {
       fetchDataFromHook(); // Chama a função de busca
   
       setItem("");
-      localStorage.setItem("item", "");
-      localStorage.setItem("painel", "");
-      localStorage.setItem("option", option);
       switch (option) {
         case "exames":
           if(tipo === "paciente" || tipo === "medico") break;
@@ -62,7 +59,6 @@ export default function UserArea() {
 
     useEffect(() => {
 
-      localStorage.setItem("item", item);
       switch (option) {
         case "exames": setPainel(<Exam data={item}/>);
           break;

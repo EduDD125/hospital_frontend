@@ -26,6 +26,8 @@ export default function AddAppoitmentModal({setIsAppoitmentModalOpen}) {
         }
 
         fetchDataFromHook();
+        
+        console.log("foi");
     },[])
 
 
