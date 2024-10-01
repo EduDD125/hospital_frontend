@@ -12,7 +12,7 @@ export default function AddAppoitmentModal({setIsAppoitmentModalOpen}) {
     const [medicosDisponiveis, setMedicoDisponiveis] = useState([]);
     const [pacienteDisponiveis, setPacienteDisponiveis] = useState([]);
     const [dataNaoFormatada, setData] = useState("");
-    const fetchData = useFetchData();
+    const {fetchData, loading} = useFetchData();
     const saveData = useSaveData()
 
 
