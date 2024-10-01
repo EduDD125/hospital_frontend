@@ -21,7 +21,6 @@ export default function LogTable ({data, setItem, option}) {
                     <th key={1}>nome</th>
                     <th key={1}>tipo</th>
                     <th key={2}>data</th>
-                    id: true, nome: true, dataHorario: true, role: true
                 </thead>
                 <tbody>
                     {data.map((item, index) => (
