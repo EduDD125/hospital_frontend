@@ -73,11 +73,11 @@ export default function UserArea() {
             <UserNavbar tipo={tipo} setOption={setOption} option={option}/>
             <main>
                 {loading ?
-                    <p>Carregado ...</p> 
+                    <Circles />
                   :
                     <>
                         {!option ?
-                            <Circles />
+                            <p>Escolha uma das opções na barra de navegação.</p>
                           :
                             <>
                               {(option==="exames" || option==="consultas") && tipo === "admin"  ? <ControlPainel option={option}/> : <></>}
