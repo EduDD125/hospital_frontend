@@ -18,8 +18,8 @@ export default function LogTable ({data, setItem, option}) {
                 <thead>
                     <th key={1}>id</th>
                     <th key={1}>nome</th>
-                    <th key={1}>tipo</th>
-                    <th key={2}>data</th>
+                    <th key={1}>data</th>
+                    <th key={2}>tipo</th>
                 </thead>
                 <tbody>
                     {data.map((item, index) => (
