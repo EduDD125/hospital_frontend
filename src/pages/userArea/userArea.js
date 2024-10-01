@@ -23,6 +23,7 @@ export default function UserArea() {
     const userId = localStorage.getItem("id");
 
 
+
     useEffect(() => {
       setData([]);
       console.log(option, tipo, userId)
@@ -52,8 +53,8 @@ export default function UserArea() {
           break;
         case "logs": setPainel("<Doctor data={item}/>");
           break;
-        case "": setPainel("");
-          break
+        default: setPainel("");
+          break;
         }
         localStorage.setItem("painel", painel);
 
@@ -70,6 +71,8 @@ export default function UserArea() {
         case "pacientes": setPainel(<Pacient data={item}/>);
           break;
         case "medicos": setPainel(<Doctor data={item}/>);
+          break;
+        default: setPainel("");
           break;
         }
     },[item])
