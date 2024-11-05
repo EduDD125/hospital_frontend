@@ -50,8 +50,6 @@ export default function UserNavbar({ tipo, setOption }) {
         return (
             <nav className="nav">
                 <div className="nav__buttons-container">
-                    <NavButton text="Exames" tipo="exames" action={seeUserExams} />
-                    <NavButton text="Consultas" tipo="consultas" action={seeUserAppoitments} />
                 </div>
                 <NavButton text={userName} tipo="user_section" action={seeUserData} />
             </nav>
@@ -62,9 +60,6 @@ export default function UserNavbar({ tipo, setOption }) {
                 <div className="nav__buttons-container">
                     <NavButton text="Médicos" tipo="medicos" action={seeDoctors} />
                     <NavButton text="Pacientes" tipo="pacientes" action={seePacients} />
-                    <NavButton text="Exames" tipo="exames" action={seeUserExams} />
-                    <NavButton text="Consultas" tipo="consultas" action={seeUserAppoitments} />
-                    <NavButton text="Logs" tipo="logs" action={seeLogs} />
                 </div>
             </nav>
         );
