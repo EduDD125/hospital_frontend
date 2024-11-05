@@ -21,7 +21,7 @@ export default function useFetchData() {
             setIfLoading(true);
             const response = await apiClient.get(endpoint);
             console.log(response);
-            return response.data;
+            return response.data.data;
         } catch (error) {
             console.log(`Erro ao buscar ${option}:`, error);
             if (error.response) {
