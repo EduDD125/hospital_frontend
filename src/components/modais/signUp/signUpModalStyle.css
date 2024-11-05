@@ -107,3 +107,31 @@
     font-size: 14px;
     text-align: center;
 }
+
+/* Estilo para destacar o campo com erro */
+.input-error {
+    border: 1px solid #e74c3c; /* Borda vermelha para indicar erro */
+    background-color: #fbeaea; /* Fundo ligeiramente rosado */
+}
+
+/* Estilo para a mensagem de erro */
+.error-message {
+    color: #e74c3c; /* Texto vermelho */
+    font-size: 0.9em; /* Tamanho da fonte um pouco menor */
+    margin-top: 4px;
+    margin-bottom: 10px;
+    padding-left: 5px;
+    display: block; /* Certifica-se que a mensagem de erro fica abaixo do input */
+}
+
+/* Estilo adicional para a área de botões em caso de erro */
+.button-area .error-message {
+    margin-bottom: 15px;
+    font-weight: bold; /* Deixa a mensagem mais destacada */
+}
+
+/* Efeito de transição para suavizar a mudança ao erro */
+.input-error,
+.error-message {
+    transition: all 0.2s ease;
+}
