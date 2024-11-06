@@ -12,6 +12,7 @@ import PacientTable from "../../components/tables/pacientTable";
 import AppoitmentTable from "../../components/tables/appoitmentTable";
 import UserData from "../../components/painels/userData";
 import LogTable from "../../components/tables/logTable";
+import {refreshTableContext} from './../../contexts/appContext'
 
 export default function UserArea() {
     const {fetchData, loading} = useFetchData();
@@ -21,6 +22,8 @@ export default function UserArea() {
     const [data, setData] = useState("");
     const tipo = localStorage.getItem("role")
     const userId = localStorage.getItem("id");
+
+    const [refreshTable, setRefreshTable] = useState(false);
 
 
 
@@ -60,20 +63,30 @@ export default function UserArea() {
     useEffect(() => {
 
       switch (option) {
-        case "exames": setPainel(<Exam data={item}/>);
+        case "exames": setPainel(<Exam data={item} setData={setItem}/>);
           break;
-        case "consultas": setPainel(<Appointment data={item}/>);
+        case "consultas": setPainel(<Appointment data={item} setData={setItem}/>);
           break;
-        case "pacientes": setPainel(<Pacient data={item}/>);
+        case "pacientes": setPainel(<Pacient data={item} setData={setItem}/>);
           break;
-        case "medicos": setPainel(<Doctor data={item}/>);
-          break;
-        case "logs": setPainel(<Doctor data={item}/>);
+        case "medicos": setPainel(<Doctor data={item} setData={setItem}/>);
           break;
         default: setPainel("");
           break;
         }
     },[item])
+
+    useEffect(()=>{
+      async function fetchDataFromHook() {
+          if(option) {
+              const result = await fetchData(option, tipo, userId);
+              setData(result);
+          }
+      }
+
+      fetchDataFromHook(); // Chama a função de busca
+      console.log("dados atualizados")
+    },[refreshTable])
 
 
     return (
@@ -83,7 +96,7 @@ export default function UserArea() {
                 {loading ?
                     <p>Carregando..</p>
                   :
-                    <>
+                    <refreshTableContext.Provider value={{refreshTable, setRefreshTable}}>
                         {!option ?
                             <p>Escolha uma das opções na barra de navegação.</p>
                           :
@@ -91,18 +104,19 @@ export default function UserArea() {
                               {(option==="exames" || option==="consultas") && tipo === "admin"  ? <ControlPainel option={option}/> : <></>}
 
 
-                              {option === "exames" && <ExamTable data={data} option={option} setItem={setItem}/>}
-                              {option === "consultas" && <AppoitmentTable data={data} option={option} setItem={setItem}/>}
-                              {option === "medicos" && <DoctorTable data={data} option={option} setItem={setItem}/>}
-                              {option === "pacientes" && <PacientTable data={data} option={option} setItem={setItem}/>}
-                              {option === "logs" && <LogTable data={data} option={option} setItem={setItem}/>}
-                              {option === "dadosPessoais" && <UserData data={data}/>}
+                                {option === "exames" && <ExamTable data={data} option={option} setItem={setItem}/>}
+                                {option === "consultas" && <AppoitmentTable data={data} option={option} setItem={setItem}/>}
+                                {option === "medicos" && <DoctorTable data={data} option={option} setItem={setItem}/>}
+                                {option === "pacientes" && <PacientTable data={data} option={option} setItem={setItem}/>}
+                                {option === "logs" && <LogTable data={data} option={option} setItem={setItem}/>}
+                                {option === "dadosPessoais" && <UserData data={data}/>}
+
 
                               {Array.isArray(data) && data.length> 0 && painel}
                             
                             </>
                         }
-                     </>
+                     </refreshTableContext.Provider>
                   }
             </main>
         </div>

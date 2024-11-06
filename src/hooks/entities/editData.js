@@ -22,7 +22,6 @@ export default function useEditData() {
             const response = await apiClient.put(endpoint, newItem)
             console.log(response);
             setLoading(false);
-            window.location.reload(false);
             return response;
 
         } catch (error) {

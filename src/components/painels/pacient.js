@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import useEditData from "../../hooks/entities/editData";
 import { tipo } from "../../hooks/getUserType";
+import { refreshTableContext } from "../../contexts/appContext";
 
 export default function Pacient({ data }) {
     const [nome, setNome] = useState(data.nome);
@@ -11,6 +12,8 @@ export default function Pacient({ data }) {
     const [estadoCivil, setEstadoCivil] = useState(data.estadoCivil);
     const { editData, loading, error, setError } = useEditData();
     const [errors, setErrors] = useState({});
+
+    const {refreshTable, setRefreshTable} = useContext(refreshTableContext)
 
     useEffect(() => {
         setNome(data.nome);
@@ -53,7 +56,8 @@ export default function Pacient({ data }) {
         const newPacientData = { nome, email, sexo, dataNascimento, CPF, estadoCivil };
         const option = "pacientes";
         const response = await editData(option, tipo(), data.id, newPacientData);
-        console.log(response);
+        console.log("editado:", response);
+        setRefreshTable(!refreshTable);
     }
 
     return (

@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import DeleteButton from "../buttons/deleteButton";
 import "./table.css";
+import { refreshTableContext } from "../../contexts/appContext";
 
 export default function ExamTable ({data, setItem, option}) {
     const [tableItensList, setTableItensList] = useState([]);
+    const [refreshTable, setRefreshTable] = useContext(refreshTableContext)
 
     useEffect(() => {
         if(data && data.length > 0) {

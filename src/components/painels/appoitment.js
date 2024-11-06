@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { tipo } from "../../hooks/getUserType";
 import useEditData from "../../hooks/entities/editData";
+import { refreshTableContext } from "../../contexts/appContext";
 
 export default function Appointment({data}) {
     
@@ -11,6 +12,9 @@ export default function Appointment({data}) {
     const [paciente, setPaciente] = useState("");
     const [dataHorario, setDataHorario] = useState(data.dataHorario);
     const {editData, loading, error, setError } = useEditData();
+
+    const {refreshTable, setRefreshTable} = useContext(refreshTableContext)
+
 
    console.log(id, idMedico, idPaciente, dataHorario, medico, paciente);
     
@@ -37,7 +41,8 @@ export default function Appointment({data}) {
         console.log(newConsultData)
         const option = "consultas";
         const response = await editData(option, tipo(), data.id, newConsultData);
-        console.log(response);
+        console.log("editado:", response);
+        setRefreshTable(!refreshTable);
     }
 
     console.log("data: ", data);
