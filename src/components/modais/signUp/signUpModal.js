@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./signUpModalStyle.css";
 import { useCreateUser } from "../../../hooks/signUp/useSignUp";
 
@@ -67,11 +67,18 @@ export default function SignInModal({ setIsModalSignInOpen }) {
             : { nome, CRI, sexo, dataNascimento, especialidade, email, senha };
     
         setError("");
-        const response = await createUser(userData, tipoUsuario);
-        if (response.success) {
+        try {
+            await createUser(userData, tipoUsuario);
+        } catch (err) {
+            console.log("err:", err);
+        }
+    }
+
+    useEffect(() => {
+        if (data && data.success) {
             handleClose();
-        } else {
-            switch (response.error.code) {
+        } else if (error) {
+            switch (error.code) {
                 case "EMAIL_IN_USE":
                     setErrors((prevErrors) => ({ ...prevErrors, email: "Este email já está em uso." }));
                     break;
@@ -86,7 +93,7 @@ export default function SignInModal({ setIsModalSignInOpen }) {
                     setError("Erro no servidor. Tente novamente mais tarde.");
             }
         }
-    }
+    },[data])
     
 
     return (
