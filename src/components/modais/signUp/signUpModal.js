@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./signUpModalStyle.css";
 import { useCreateUser } from "../../../hooks/signUp/useSignUp";
 
@@ -15,6 +15,24 @@ export default function SignInModal({ setIsModalSignInOpen }) {
     const [CPF, setCPF] = useState("");
     const [estadoCivil, setEstadoCivil] = useState("");
 
+    {/* dados da API via CEP*/}
+    const [cep, setCep] = useState('');
+    const [viaCEPdata, setViaCEPdata] = useState('');
+    const [logradouro, setLogradouro] = useState('');
+    const [complemento, setComplemento] = useState('');
+    const [unidade, setUnidade] = useState(0);
+    const [bairro, setBairro] = useState('');
+    const [localidade, setLocalidade] = useState('');
+    const [uf, setUf] = useState('');
+    const [estado, setEstado] = useState('');
+    const [regiao, setRegiao] = useState('');
+    const [ibge, setIbge] = useState('');
+    const [gia, setGia] = useState('');
+    const [ddd, setDdd] = useState('');
+    const [siafi, setSiafi] = useState('');
+
+    const [viaCEPError, setViaCEPError] = useState(null);
+
     const [errors, setErrors] = useState({});
     const { createUser, data, loading, error, setError } = useCreateUser();
 
@@ -26,6 +44,57 @@ export default function SignInModal({ setIsModalSignInOpen }) {
         setTipoUsuario(event.target.value);
     }
 
+    async function handleFetch(e) {
+        const cepValue = e.target.value;
+        setCep(cepValue)
+        setViaCEPError(null); // Limpa o erro anterior
+        setViaCEPdata(null); // Limpa os dados anteriores
+
+        try {
+            const response = await fetch(`https://viacep.com.br/ws/${cepValue}/json/`);
+            if (!response.ok) {
+                throw new Error('CEP não encontrado');
+            }
+            const jsonData = await response.json();
+            console.log("cep search response:", response)
+            setViaCEPdata(jsonData);
+        } catch (error) {
+            setViaCEPError(error.message);
+        }
+    };
+
+    useEffect( () => {
+        if (viaCEPdata) {
+          setLogradouro(viaCEPdata.logradouro);
+          setComplemento(viaCEPdata.complemento);
+          setUnidade(viaCEPdata.unidade);
+          setBairro(viaCEPdata.bairro);
+          setLocalidade(viaCEPdata.localidade);
+          setUf(viaCEPdata.uf);
+          setEstado(viaCEPdata.estado);
+          setRegiao(viaCEPdata.regiao);
+          setIbge(viaCEPdata.ibge);
+          setGia(viaCEPdata.gia);
+          setDdd(viaCEPdata.ddd);
+          setSiafi(viaCEPdata.siafi);
+          return;
+        }
+        setLogradouro("");
+        setComplemento("");
+        setUnidade(0);
+        setBairro("");
+        setLocalidade("");
+        setUf("");
+        setEstado("");
+        setRegiao("");
+        setIbge("");
+        setGia("");
+        setDdd("");
+        setSiafi("");
+        setViaCEPError(null);
+  
+      },[viaCEPdata]);
+
     function validateFields() {
         let newErrors = {};
 
@@ -34,6 +103,7 @@ export default function SignInModal({ setIsModalSignInOpen }) {
         if (!sexo) newErrors.sexo = "Sexo é obrigatório.";
         if (!dataNaoTratada) newErrors.dataNaoTratada = "Data de nascimento é obrigatória.";
         if (!tipoUsuario) newErrors.tipoUsuario = "Tipo de usuário é obrigatório.";
+        if (!cep) newErrors.cep = "CEP de usuário é obrigatório.";
 
         if (tipoUsuario === "medico") {
             if (!CRI) newErrors.CRI = "CRI é obrigatório para médicos.";
@@ -63,12 +133,12 @@ export default function SignInModal({ setIsModalSignInOpen }) {
         });
     
         userData = tipoUsuario === "paciente" 
-            ? { nome, CPF, sexo, dataNascimento, estadoCivil, email, senha }
-            : { nome, CRI, sexo, dataNascimento, especialidade, email, senha };
+            ? { nome, CPF, sexo, dataNascimento, estadoCivil, email, senha, cep }
+            : { nome, CRI, sexo, dataNascimento, especialidade, email, senha, cep };
     
         setError("");
         const response = await createUser(userData, tipoUsuario);
-        if (response.success) {
+        if (response.status === 200) {
             handleClose();
         } else {
             switch (response.error.code) {
@@ -90,12 +160,13 @@ export default function SignInModal({ setIsModalSignInOpen }) {
     
 
     return (
-        <div className="signin-modal__background" onClick={() => handleClose()}>
-            <div className="signin-modal__container" onClick={(e) => e.stopPropagation()}>
+        <div className="signup-modal__background" onClick={() => handleClose()}>
+            <div className="signup-modal__container" onClick={(e) => e.stopPropagation()}>
                 <div className="modal-title">
                     <h2>Sign Up</h2>
                 </div>
-                <form onSubmit={(e) => handleFormSubmit(e)} className="signin-modal__form">
+                <form onSubmit={(e) => handleFormSubmit(e)} className="signup-modal__form">
+                    
                     <label>nome:
                         <input
                             type="text"
@@ -218,6 +289,31 @@ export default function SignInModal({ setIsModalSignInOpen }) {
                             </label>
                         </>
                     )}
+
+                    <div className="cep-infos">
+                        <label>CEP:
+                            <input type="text" value={cep} onChange={(e) => handleFetch(e)} 
+                            className={errors.cep ? "input-error" : ""}/>
+                            {errors.cep && <p className="error-message">{errors.cep}</p>}
+                        </label>
+
+                        <label>Logradouro:
+                            <input type="text" value={logradouro} onChange={(e) => setLogradouro(e.target.value)} />
+                        </label>
+
+                        <label>Bairro:
+                            <input type="text" value={bairro} onChange={(e) => setBairro(e.target.value)} />
+                        </label>
+
+                        <label>UF:
+                            <input type="text" value={uf} onChange={(e) => setUf(e.target.value)} />
+                        </label>
+
+                        <label>Estado:
+                            <input type="text" value={estado} onChange={(e) => setEstado(e.target.value)} />
+                        </label>
+
+                    </div>
 
                     <label>senha:
                         <input

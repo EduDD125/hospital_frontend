@@ -23,7 +23,7 @@ export const useCreateUser = () => {
       console.log("endpoint: ", endpoint, " \n", "userdata: ", userData);
       const response = await apiClient.post(endpoint, userData);
       setData(response.data);
-      console.log("data: ", data)
+      console.log("data: ", response.data)
       setLoading(false);
     } catch (err) {
       console.log(err)
