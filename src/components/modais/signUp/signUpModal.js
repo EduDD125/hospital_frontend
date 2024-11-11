@@ -19,17 +19,9 @@ export default function SignInModal({ setIsModalSignInOpen }) {
     const [cep, setCep] = useState('');
     const [viaCEPdata, setViaCEPdata] = useState('');
     const [logradouro, setLogradouro] = useState('');
-    const [complemento, setComplemento] = useState('');
-    const [unidade, setUnidade] = useState(0);
     const [bairro, setBairro] = useState('');
-    const [localidade, setLocalidade] = useState('');
     const [uf, setUf] = useState('');
     const [estado, setEstado] = useState('');
-    const [regiao, setRegiao] = useState('');
-    const [ibge, setIbge] = useState('');
-    const [gia, setGia] = useState('');
-    const [ddd, setDdd] = useState('');
-    const [siafi, setSiafi] = useState('');
 
     const [viaCEPError, setViaCEPError] = useState(null);
 
@@ -66,31 +58,15 @@ export default function SignInModal({ setIsModalSignInOpen }) {
     useEffect( () => {
         if (viaCEPdata) {
           setLogradouro(viaCEPdata.logradouro);
-          setComplemento(viaCEPdata.complemento);
-          setUnidade(viaCEPdata.unidade);
           setBairro(viaCEPdata.bairro);
-          setLocalidade(viaCEPdata.localidade);
           setUf(viaCEPdata.uf);
           setEstado(viaCEPdata.estado);
-          setRegiao(viaCEPdata.regiao);
-          setIbge(viaCEPdata.ibge);
-          setGia(viaCEPdata.gia);
-          setDdd(viaCEPdata.ddd);
-          setSiafi(viaCEPdata.siafi);
           return;
         }
         setLogradouro("");
-        setComplemento("");
-        setUnidade(0);
         setBairro("");
-        setLocalidade("");
         setUf("");
         setEstado("");
-        setRegiao("");
-        setIbge("");
-        setGia("");
-        setDdd("");
-        setSiafi("");
         setViaCEPError(null);
   
       },[viaCEPdata]);
@@ -133,11 +109,11 @@ export default function SignInModal({ setIsModalSignInOpen }) {
         });
     
         userData = tipoUsuario === "paciente" 
-            ? { nome, CPF, sexo, dataNascimento, estadoCivil, email, senha, cep }
-            : { nome, CRI, sexo, dataNascimento, especialidade, email, senha, cep };
+            ? { nome, CPF, sexo, dataNascimento, estadoCivil, email, senha, cep, logradouro, bairro, uf, estado }
+            : { nome, CRI, sexo, dataNascimento, especialidade, email, senha, cep, logradouro, bairro, uf, estado };
     
         setError("");
-        const response = await createUser(userData, tipoUsuario);
+        await createUser(userData, tipoUsuario);
         if (response.status === 200) {
             handleClose();
         } else {
