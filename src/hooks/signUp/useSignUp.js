@@ -25,6 +25,7 @@ export const useCreateUser = () => {
       setData(response.data);
       console.log("data: ", response.data)
       setLoading(false);
+      return response
     } catch (err) {
       console.log(err)
       setError(err.response ? err.response.data : 'Erro ao criar paciente');
