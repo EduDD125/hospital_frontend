@@ -159,7 +159,7 @@ export default function SignInModal({ setIsModalSignInOpen }) {
                             className={errors.tipoUsuario ? "input-error" : ""}
                         >
                             <option value="">Selecione...</option>
-                            <option value="paciente">paciente</option>
+                            {/*<option value="paciente">paciente</option>*/}
                             <option value="medico">médico</option>
                         </select>
                         {errors.tipoUsuario && <p className="error-message">{errors.tipoUsuario}</p>}
