@@ -9,7 +9,7 @@ export default function useDeleteData() {
         console.log("endpoint: ", endpoint);
 
         try {
-            const response = await apiClient.delete("https://hospital-backend-j5hu.onrender.com/" + endpoint);
+            const response = await apiClient.delete(endpoint);
             console.log(response);
             return response.data;
         } catch (error) {
