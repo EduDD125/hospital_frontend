@@ -23,13 +23,15 @@ export default function DoctorTable ({data, setItem, option}) {
         return(
             <table className="table_style">
                 <thead>
-                    <th key={0}></th>
-                    <th key={1}>Nome</th>
-                    <th key={2}>CRI</th>
-                    <th key={3}>Sexo</th>
-                    <th key={4}>Especialidade</th>
-                    <th key={5}>Data de Nascimnento</th>
-                    <th key={6}>Email</th>
+                    <tr>
+                        <th key={0}></th>
+                        <th key={1}>Nome</th>
+                        <th key={2}>CRI</th>
+                        <th key={3}>Sexo</th>
+                        <th key={4}>Especialidade</th>
+                        <th key={5}>Data de Nascimnento</th>
+                        <th key={6}>Email</th>
+                    </tr>
                 </thead>
                 <tbody>
                     {data.map((item, index) => (
