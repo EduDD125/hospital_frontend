@@ -16,7 +16,7 @@ export default function SignInModal({ setIsModalSignInOpen }) {
     const [estadoCivil, setEstadoCivil] = useState("");
 
     const [errors, setErrors] = useState({});
-    const { createUser, data, loading, error, setError } = useCreateUser();
+    const { createUser, loading, error, setError } = useCreateUser();
 
     function handleClose() {
         setIsModalSignInOpen(false);
@@ -68,32 +68,34 @@ export default function SignInModal({ setIsModalSignInOpen }) {
     
         setError("");
         try {
-            await createUser(userData, tipoUsuario);
+            const response = await createUser(userData, tipoUsuario);
+
+            if (response && response.status === 200) {
+                handleClose();
+            } else if (error) {
+                handleErrors(error);
+            }
         } catch (err) {
             console.log("err:", err);
         }
     }
 
-    useEffect(() => {
-        if (data && data.success) {
-            handleClose();
-        } else if (error) {
-            switch (error.code) {
-                case "EMAIL_IN_USE":
-                    setErrors((prevErrors) => ({ ...prevErrors, email: "Este email já está em uso." }));
-                    break;
-                case "CPF_IN_USE":
-                    setErrors((prevErrors) => ({ ...prevErrors, CPF: "Este CPF já está em uso." }));
-                    break;
-                case "EMPTY_FIELDS":
-                    setError("Todos os campos são obrigatórios.");
-                    break;
-                case "SERVER_ERROR":
-                default:
-                    setError("Erro no servidor. Tente novamente mais tarde.");
-            }
+    function handleErrors(error) {
+        switch (error.code) {
+            case "EMAIL_IN_USE":
+                setErrors((prevErrors) => ({ ...prevErrors, email: "Este email já está em uso." }));
+                break;
+            case "CPF_IN_USE":
+                setErrors((prevErrors) => ({ ...prevErrors, CPF: "Este CPF já está em uso." }));
+                break;
+            case "EMPTY_FIELDS":
+                setError("Todos os campos são obrigatórios.");
+                break;
+            case "SERVER_ERROR":
+            default:
+                setError("Erro no servidor. Tente novamente mais tarde.");
         }
-    },[data])
+    }
     
 
     return (
