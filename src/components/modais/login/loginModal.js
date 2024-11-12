@@ -1,67 +1,118 @@
 import { useEffect, useState } from "react";
-import "./loginModalStyle.css"
+import "./loginModalStyle.css";
 import { useLogin } from "../../../hooks/login/useLogin";
 import { useNavigate } from "react-router-dom";
 
-export default function LoginModal({setIsModalLoginOpen}) {
-
+export default function LoginModal({ setIsModalLoginOpen }) {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
-    const {login, data, loading, error, setError} = useLogin();
+    const [errors, setErrors] = useState({});
+    const { login, loading, error, setError } = useLogin();
     const navigate = useNavigate();
 
-
-
     function handleClose() {
-        setIsModalLoginOpen(false);
+        if (!error) {
+            setIsModalLoginOpen(false);
+        }
+    }
+
+    function validateEmailFormat(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    function validateFields() {
+        const newErrors = {};
+
+        if (!email) {
+            newErrors.email = "Email é obrigatório.";
+        } else if (!validateEmailFormat(email)) {
+            newErrors.email = "Formato de email inválido.";
+        }
+
+        if (!senha) newErrors.senha = "Senha é obrigatória.";
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
     }
 
     async function handleLogin(e) {
-        e.preventDefault()
+        e.preventDefault();
 
-        let userData = {email, senha};
+        if (!validateFields()) return;
 
         setError("");
-        try {
-            await login(userData); // Aguarda o login ser processado
-        } catch (err) {
-            console.log(error || err); // Captura e exibe erros
+        const userData = { email, senha };
+
+        const response = await login(userData);
+
+
+        if (response && response.status === 200) {
+            navigate("/user");
+        } else if (error) {
+            console.log("error")
+
+            setErrors((prevErrors) => ({
+                ...prevErrors,
+                server: error,
+            }));
         }
     }
 
-    useEffect(() => {
-        if (data) {
-            navigate("/user"); // Redireciona se login bem-sucedido
-        } else if (error) {
-            console.log("Login falhou: ", error); // Exibe erro se houver
-        }
-    },[data, error, navigate])
+    function handleInputChange(setValue, field) {
+        return (e) => {
+            setValue(e.target.value);
+            if (errors[field]) {
+                setErrors((prevErrors) => {
+                    const newErrors = { ...prevErrors };
+                    delete newErrors[field];
+                    return newErrors;
+                });
+            }
+        };
+    }
 
     return (
-        <div className="login-modal__backgroud" onClick={() => {handleClose()}}>
-            <div className="login-modal__container" onClick={e => e.stopPropagation()}>
-            <div className="modal-title">
+        <div className="login-modal__background" onClick={handleClose}>
+            <div className="login-modal__container" onClick={(e) => e.stopPropagation()}>
+                <div className="modal-title">
                     <h2>Login</h2>
                 </div>
-                <form onSubmit={(e) => handleLogin(e)}>
-                    <label> email:
-                        <input type="text" name="email" onChange={(e) => setEmail(e.target.value)} required />
+                <form onSubmit={handleLogin}>
+                    <label>
+                        Email:
+                        <input
+                            type="text"
+                            name="email"
+                            onChange={handleInputChange(setEmail, "email")}
+                            className={errors.email ? "input-error" : ""}
+                        />
+                        {errors.email && <p className="error-message">{errors.email}</p>}
                     </label>
-                    <label> senha:
-                        <input type="password" name="senha" onChange={(e) => setSenha(e.target.value)} required />
+
+                    <label>
+                        Senha:
+                        <input
+                            type="password"
+                            name="senha"
+                            onChange={handleInputChange(setSenha, "senha")}
+                            className={errors.senha ? "input-error" : ""}
+                        />
+                        {errors.senha && <p className="error-message">{errors.senha}</p>}
                     </label>
-                    
-                    {error && <p className="error-message">Não doi possível editar os dados</p>}
+
+                    {errors.server && <p className="error-message">{errors.server}</p>}
+
                     <div className="button-area">
-                        <button onClick={handleClose}>cancel</button>
-                        {!loading ?
-                            <button type="submit" >login</button>
-                        :
-                            <button type="submit" readOnly>Submitting</button>
-                        }
+                        <button type="button" onClick={handleClose}>Cancel</button>
+                        {!loading ? (
+                            <button type="submit">Login</button>
+                        ) : (
+                            <button type="submit" readOnly>Submitting...</button>
+                        )}
                     </div>
                 </form>
             </div>
         </div>
-    )
+    );
 }
