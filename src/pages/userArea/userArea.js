@@ -85,6 +85,7 @@ export default function UserArea() {
       }
 
       fetchDataFromHook(); // Chama a função de busca
+      setPainel("");
       console.log("dados atualizados")
     },[refreshTable])
 
