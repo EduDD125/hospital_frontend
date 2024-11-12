@@ -1,4 +1,4 @@
-.signin-modal__background {
+.signup-modal__background {
     position: absolute;
     z-index: 1;
     top: 0;
@@ -11,10 +11,10 @@
     align-items: center;
 }
 
-.signin-modal__container {
+.signup-modal__container {
     width: 40vw;
     max-width: 600px;
-    padding: 20px;
+    padding: 20px 10px 20px 20px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -31,40 +31,46 @@
     text-align: center;
 }
 
-.signin-modal__form {
+.signup-modal__form {
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: 15px;
+    max-height: 70vh;
+    overflow: scroll;
 }
 
-.signin-modal__form label {
+.signup-modal__form label {
     display: flex;
     flex-direction: column;
     font-size: 16px;
     color: #555;
 }
 
-.signin-modal__form input,
-.signin-modal__form select {
+.signup-modal__form input,
+.signup-modal__form select {
     padding: 10px;
     margin-top: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
-    width: 100%;
+    max-width: 95%;
+    box-sizing: border-box;
 }
 
-.signin-modal__form input:focus,
-.signin-modal__form select:focus {
+.signup-modal__form input:focus,
+.signup-modal__form select:focus {
     border-color: #007bff;
     outline: none;
 }
 
 .button-area {
     display: flex;
+    width: auto;
     justify-content: space-between;
     margin-top: 20px;
+    margin-right: 20px;
+    box-sizing: content-box;
 }
 
 .button-area button {

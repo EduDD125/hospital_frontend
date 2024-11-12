@@ -99,12 +99,12 @@ export default function SignInModal({ setIsModalSignInOpen }) {
     
 
     return (
-        <div className="signin-modal__background" onClick={() => handleClose()}>
-            <div className="signin-modal__container" onClick={(e) => e.stopPropagation()}>
+        <div className="signup-modal__background" onClick={() => handleClose()}>
+            <div className="signup-modal__container" onClick={(e) => e.stopPropagation()}>
                 <div className="modal-title">
                     <h2>Sign Up</h2>
                 </div>
-                <form onSubmit={(e) => handleFormSubmit(e)} className="signin-modal__form">
+                <form onSubmit={(e) => handleFormSubmit(e)} className="signup-modal__form">
                     <label>nome:
                         <input
                             type="text"
