@@ -40,13 +40,6 @@ export default function Doctor({ data }) {
         return Object.keys(newErrors).length === 0;
     }
 
-    function formatDateToDDMMYYYY(isoDate) {
-        if (!isoDate) return ""; // Verifica se a data existe
-    
-        const [year, month, day] = isoDate.split("-");
-        return `${day}/${month}/${year}`;
-    }
-
     function handleRestore() {
         setNome(data.nome);
         setSexo(data.sexo);
@@ -62,11 +55,7 @@ export default function Doctor({ data }) {
 
         if (!validateFields()) return;
 
-        const correntFormatDate = formatDateToDDMMYYYY(dataNascimento)
-        console.log("correntFormatDate:", correntFormatDate)
-        console.log("dataNascimento:", dataNascimento)
-
-        const newDoctorData = { nome, sexo, correntFormatDate, especialidade };
+        const newDoctorData = { nome, sexo, dataNascimento, especialidade };
         const option = "medicos";
         const response = await editData(option, tipo(), data.id, newDoctorData);
         console.log("editado:", response);

@@ -13,6 +13,23 @@ export default function DoctorTable ({data, setItem, option}) {
         }
     },[data])
 
+    
+
+    function formatDateToDDMMYYYY(date) {
+        // Expressão regular para verificar o formato "dd/mm/yyyy"
+        const ddmmyyyyRegex = /^\d{2}\/\d{2}\/\d{4}$/;
+    
+        // Se a data já estiver no formato "dd/mm/yyyy", retorne-a como está
+        if (ddmmyyyyRegex.test(date)) {
+            return date;
+        }
+    
+        // Caso contrário, formate a data do formato ISO "yyyy-mm-dd" para "dd/mm/yyyy"
+        const [year, month, day] = date.split("-");
+        return `${day}/${month}/${year}`;
+    }
+    
+
     function handleDelete(id) {
         setTableItensList(prevItems => prevItems.filter(item => item.id !== id));
         console.log(tableItensList.length);
@@ -41,7 +58,7 @@ export default function DoctorTable ({data, setItem, option}) {
                             <td>{item.CRI}</td>
                             <td>{item.sexo}</td>
                             <td>{item.especialidade}</td>
-                            <td>{item.dataNascimento}</td>
+                            <td>{formatDateToDDMMYYYY(item.dataNascimento)}</td>
                             <td>{item.email}</td>
                         </tr>
                     ))}
