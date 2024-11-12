@@ -21,7 +21,6 @@ export default function useEditData() {
         try {
             const response = await apiClient.put(endpoint, newItem)
             console.log(response);
-            setLoading(false);
             return response;
 
         } catch (error) {
@@ -37,6 +36,8 @@ export default function useEditData() {
                 // Outro tipo de erro ocorreu
                 console.log("Erro desconhecido: ", error.message);
             }
+        } finally {
+          setLoading(false);
         }
     }
     

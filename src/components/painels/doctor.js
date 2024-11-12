@@ -7,10 +7,14 @@ export default function Doctor({ data }) {
     const [nome, setNome] = useState(data.nome);
     const [sexo, setSexo] = useState(data.sexo);
     const [CRI, setCri] = useState(data.CRI);
-    const [dataNascimento, setDataNascimento] = useState(data.dataNascimento);
+    const [dataNascimento, setDataNascimento] = useState(
+        data.dataNascimento ? new Date(data.dataNascimento).toISOString().split('T')[0] : ''
+    );
     const [especialidade, setEspecialidade] = useState(data.especialidade);
     const { editData, loading, error, setError } = useEditData();
     const [errors, setErrors] = useState({});
+
+    console.log("data de nascimento:", dataNascimento)
 
     const {refreshTable, setRefreshTable} = useContext(refreshTableContext)
 
@@ -19,7 +23,9 @@ export default function Doctor({ data }) {
         setSexo(data.sexo);
         setCri(data.CRI);
         setEspecialidade(data.especialidade);
-        setDataNascimento(data.dataNascimento);
+        setDataNascimento(data.dataNascimento ? new Date(data.dataNascimento).toISOString().split('T')[0] : '');
+        setError("");
+        setErrors("");
     }, [data]);
 
     function validateFields() {
@@ -32,6 +38,13 @@ export default function Doctor({ data }) {
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
+    }
+
+    function formatDateToDDMMYYYY(isoDate) {
+        if (!isoDate) return ""; // Verifica se a data existe
+    
+        const [year, month, day] = isoDate.split("-");
+        return `${day}/${month}/${year}`;
     }
 
     function handleRestore() {
@@ -49,11 +62,15 @@ export default function Doctor({ data }) {
 
         if (!validateFields()) return;
 
-        const newDoctorData = { nome, sexo, dataNascimento, especialidade };
+        const correntFormatDate = formatDateToDDMMYYYY(dataNascimento)
+        console.log("correntFormatDate:", correntFormatDate)
+        console.log("dataNascimento:", dataNascimento)
+
+        const newDoctorData = { nome, sexo, correntFormatDate, especialidade };
         const option = "medicos";
         const response = await editData(option, tipo(), data.id, newDoctorData);
         console.log("editado:", response);
-        setRefreshTable(!refreshTable);
+        if (response && response.status === 200) setRefreshTable(!refreshTable);
     }
 
     return (
@@ -108,17 +125,21 @@ export default function Doctor({ data }) {
                     </label>
 
                     <label>especialidade:
-                        <input
-                            type="text"
+                        <select
                             name="especialidade"
                             value={especialidade}
                             onChange={(e) => setEspecialidade(e.target.value)}
                             className={errors.especialidade ? "input-error" : ""}
-                        />
+                        >
+                            <option value="">Selecione...</option>
+                            <option value="cardiologista">cardiologista</option>
+                            <option value="urologia">urologia</option>
+                            <option value="neurologia">neurologia</option>
+                        </select>
                         {errors.especialidade && <p className="error-message">{errors.especialidade}</p>}
                     </label>
 
-                    {error && <p className="error-message">{error}</p>}
+                    {error && <p className="error-message">{error.response.data.message}</p>}
 
                     <div className="button-area">
                         <button type="button" onClick={handleRestore}>restaurar</button>
