@@ -1,6 +1,9 @@
+import { refreshTableContext } from "../../contexts/appContext";
 import apiClient from "../../axios/apiClient"
+import { useContext } from "react";
 
 export default function useDeleteData() {
+    const {refreshTable, setRefreshTable} = useContext(refreshTableContext)
 
     async function deleteData( itemType, itemId) {
 
@@ -11,6 +14,7 @@ export default function useDeleteData() {
         try {
             const response = await apiClient.delete(endpoint);
             console.log(response);
+            if (response && response.status === 200) setRefreshTable(!refreshTable);
             return response.data;
         } catch (error) {
             console.log(`Erro ao delete ${itemType}:`, error);

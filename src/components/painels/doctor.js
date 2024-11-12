@@ -1,7 +1,6 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useEditData from "../../hooks/entities/editData";
 import { tipo } from "../../hooks/getUserType";
-import { refreshTableContext } from "../../contexts/appContext";
 
 export default function Doctor({ data }) {
     const [nome, setNome] = useState(data.nome);
@@ -15,8 +14,6 @@ export default function Doctor({ data }) {
     const [errors, setErrors] = useState({});
 
     console.log("data de nascimento:", dataNascimento)
-
-    const {refreshTable, setRefreshTable} = useContext(refreshTableContext)
 
     useEffect(() => {
         setNome(data.nome);
@@ -59,7 +56,6 @@ export default function Doctor({ data }) {
         const option = "medicos";
         const response = await editData(option, tipo(), data.id, newDoctorData);
         console.log("editado:", response);
-        if (response && response.status === 200) setRefreshTable(!refreshTable);
     }
 
     return (

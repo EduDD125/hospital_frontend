@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { refreshTableContext } from "../../contexts/appContext";
+import { useState, useContext } from "react";
 import apiClient from "../../axios/apiClient";
 
 export default function useEditData() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const {refreshTable, setRefreshTable} = useContext(refreshTableContext)
+
 
   const editData = async  (option, tipo, itemId, newItem) => {
 
@@ -20,7 +23,8 @@ export default function useEditData() {
         setLoading(true);
         try {
             const response = await apiClient.put(endpoint, newItem)
-            console.log(response);
+            console.log(response);        
+            if (response && response.status === 200) setRefreshTable(!refreshTable);
             return response;
 
         } catch (error) {
