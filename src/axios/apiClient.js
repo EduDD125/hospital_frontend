@@ -1,8 +1,7 @@
 import axios from "axios"
 
 const apiClient = axios.create({
-    baseURL: 'https://hospital-backend-j5hu.onrender.com',
-    //baseURL: 'http://localhost:3000',
+    baseURL: process.env.REACT_APP_BACKEND_LINK,
     timeout: 10000,
     headers: {
         'Content-Type': 'application/json',
