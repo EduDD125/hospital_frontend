@@ -256,30 +256,6 @@ export default function SignInModal({ setIsModalSignInOpen }) {
                         </>
                     )}
 
-                    <div className="cep-infos">
-                        <label>CEP:
-                            <input type="text" value={cep} onChange={(e) => handleFetch(e)} 
-                            className={errors.cep ? "input-error" : ""}/>
-                            {errors.cep && <p className="error-message">{errors.cep}</p>}
-                        </label>
-
-                        <label>Logradouro:
-                            <input type="text" value={logradouro} onChange={(e) => setLogradouro(e.target.value)} />
-                        </label>
-
-                        <label>Bairro:
-                            <input type="text" value={bairro} onChange={(e) => setBairro(e.target.value)} />
-                        </label>
-
-                        <label>UF:
-                            <input type="text" value={uf} onChange={(e) => setUf(e.target.value)} />
-                        </label>
-
-                        <label>Estado:
-                            <input type="text" value={estado} onChange={(e) => setEstado(e.target.value)} />
-                        </label>
-
-                    </div>
 
                     <label>senha:
                         <input

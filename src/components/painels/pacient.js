@@ -21,7 +21,6 @@ export default function Pacient({ data }) {
         setSexo(data.sexo);
         setDataNascimento(data.dataNascimento);
         setCpf(data.CPF);
-        setCep(data.cep);
         setEstadoCivil(data.estadoCivil);
     }, [data]);
 
