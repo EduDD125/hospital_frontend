@@ -1,8 +1,9 @@
+import { refreshTableContext } from "../../contexts/appContext";
 import useEditData from "../../hooks/entities/editData";
 import { tipo } from "../../hooks/getUserType";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
-export default function Exam({data}) {
+export default function Exam({data, setData}) {
     const [id, setId] = useState(data.id);
     const [idMedico, setIdMedico] = useState(data.idMedico);
     const [idPaciente, setIdPaciente] = useState(data.idPaciente);
@@ -11,6 +12,9 @@ export default function Exam({data}) {
     const [dataHorario, setDataHorario] = useState(data.dataHorario);
     const [resultado, setResultado] = useState(data.resultado);
     const {editData, loading, error, setError} = useEditData();
+
+    const {refreshTable, setRefreshTable} = useContext(refreshTableContext)
+
     
     useEffect( () => {
         setId(data.id);
@@ -37,7 +41,8 @@ export default function Exam({data}) {
         console.log(newExamData)
         const option = "exames";
         const response = await editData(option, tipo(), data.id, newExamData);
-        console.log(response);
+        console.log("editado:", response);
+        setRefreshTable(!refreshTable);
     }
 
     console.log("data: ", data);

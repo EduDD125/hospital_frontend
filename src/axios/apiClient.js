@@ -29,7 +29,8 @@ apiClient.interceptors.response.use(
     },
     function (error) {
         if (error.response && error.response.status === 401) {
-            window.location.href = "/";
+            console.log("error.response:", error.response);
+            //window.location.href = "/";
         }
         return Promise.reject(error)
     }

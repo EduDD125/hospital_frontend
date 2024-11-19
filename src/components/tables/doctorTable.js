@@ -13,6 +13,23 @@ export default function DoctorTable ({data, setItem, option}) {
         }
     },[data])
 
+    
+
+    function formatDateToDDMMYYYY(date) {
+        // Expressão regular para verificar o formato "dd/mm/yyyy"
+        const ddmmyyyyRegex = /^\d{2}\/\d{2}\/\d{4}$/;
+    
+        // Se a data já estiver no formato "dd/mm/yyyy", retorne-a como está
+        if (ddmmyyyyRegex.test(date)) {
+            return date;
+        }
+    
+        // Caso contrário, formate a data do formato ISO "yyyy-mm-dd" para "dd/mm/yyyy"
+        const [year, month, day] = date.split("-");
+        return `${day}/${month}/${year}`;
+    }
+    
+
     function handleDelete(id) {
         setTableItensList(prevItems => prevItems.filter(item => item.id !== id));
         console.log(tableItensList.length);
@@ -23,13 +40,15 @@ export default function DoctorTable ({data, setItem, option}) {
         return(
             <table className="table_style">
                 <thead>
-                    <th key={0}></th>
-                    <th key={1}>Nome</th>
-                    <th key={2}>CRI</th>
-                    <th key={3}>Sexo</th>
-                    <th key={4}>Especialidade</th>
-                    <th key={5}>Data de Nascimnento</th>
-                    <th key={6}>Email</th>
+                    <tr>
+                        <th key={0}></th>
+                        <th key={1}>Nome</th>
+                        <th key={2}>CRI</th>
+                        <th key={3}>Sexo</th>
+                        <th key={4}>Especialidade</th>
+                        <th key={5}>Data de Nascimnento</th>
+                        <th key={6}>Email</th>
+                    </tr>
                 </thead>
                 <tbody>
                     {data.map((item, index) => (
@@ -39,7 +58,7 @@ export default function DoctorTable ({data, setItem, option}) {
                             <td>{item.CRI}</td>
                             <td>{item.sexo}</td>
                             <td>{item.especialidade}</td>
-                            <td>{item.dataNascimento}</td>
+                            <td>{formatDateToDDMMYYYY(item.dataNascimento)}</td>
                             <td>{item.email}</td>
                         </tr>
                     ))}

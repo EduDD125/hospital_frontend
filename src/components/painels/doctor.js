@@ -6,28 +6,36 @@ export default function Doctor({ data }) {
     const [nome, setNome] = useState(data.nome);
     const [sexo, setSexo] = useState(data.sexo);
     const [CRI, setCri] = useState(data.CRI);
-    const [dataNascimento, setDataNascimento] = useState(data.dataNascimento);
+    const [dataNascimento, setDataNascimento] = useState(
+        data.dataNascimento ? new Date(data.dataNascimento).toISOString().split('T')[0] : ''
+    );
     const [especialidade, setEspecialidade] = useState(data.especialidade);
-    const [cep, setCep] = useState(data.cep);
-    const [logradouro, setLogradouro] = useState(data.logradouro);
-    const [bairro, setBairro] = useState(data.bairro);
-    const [uf, setUf] = useState(data.uf);
-    const [estado, setEstado] = useState(data.estado);
-    const [errors, setErrors] = useState({});
     const { editData, loading, error, setError } = useEditData();
+    const [errors, setErrors] = useState({});
+
+    console.log("data de nascimento:", dataNascimento)
 
     useEffect(() => {
         setNome(data.nome);
         setSexo(data.sexo);
         setCri(data.CRI);
         setEspecialidade(data.especialidade);
-        setDataNascimento(data.dataNascimento);
-        setCep(data.cep);
-        setLogradouro(data.logradouro);
-        setBairro(data.bairro);
-        setUf(data.uf);
-        setEstado(data.estado);
+        setDataNascimento(data.dataNascimento ? new Date(data.dataNascimento).toISOString().split('T')[0] : '');
+        setError("");
+        setErrors("");
     }, [data]);
+
+    function validateFields() {
+        let newErrors = {};
+
+        if (!nome) newErrors.nome = "Nome é obrigatório.";
+        if (!sexo) newErrors.sexo = "Sexo é obrigatório.";
+        if (!dataNascimento) newErrors.dataNascimento = "Data de nascimento é obrigatória.";
+        if (!especialidade) newErrors.especialidade = "Especialidade é obrigatória.";
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    }
 
     function handleRestore() {
         setNome(data.nome);
@@ -35,41 +43,19 @@ export default function Doctor({ data }) {
         setCri(data.CRI);
         setDataNascimento(data.dataNascimento);
         setEspecialidade(data.especialidade);
-        setCep(data.cep);
-        setLogradouro(data.logradouro);
-        setBairro(data.bairro);
-        setUf(data.uf);
-        setEstado(data.estado);
-    }
-
-    function validateFields() {
-        const newErrors = {};
-
-        if (!nome) newErrors.nome = "Nome é obrigatório.";
-        if (!sexo) newErrors.sexo = "Sexo é obrigatório.";
-        if (!dataNascimento) newErrors.dataNascimento = "Data de nascimento é obrigatória.";
-        if (!CRI) newErrors.CRI = "CRI é obrigatório.";
-        if (!especialidade) newErrors.especialidade = "Especialidade é obrigatória.";
-        if (!cep) newErrors.cep = "CEP é obrigatório.";
-        if (!logradouro) newErrors.logradouro = "Logradouro é obrigatório.";
-        if (!bairro) newErrors.bairro = "Bairro é obrigatório.";
-        if (!uf) newErrors.uf = "UF é obrigatório.";
-        if (!estado) newErrors.estado = "Estado é obrigatório.";
-
-        setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
+        setErrors({});
     }
 
     async function handleEdition(event) {
         event.preventDefault();
-
         setError("");
+
         if (!validateFields()) return;
 
-        const newDoctorData = { nome, sexo, dataNascimento, CRI, especialidade, cep, logradouro, bairro, uf, estado };
+        const newDoctorData = { nome, sexo, dataNascimento, especialidade };
         const option = "medicos";
         const response = await editData(option, tipo(), data.id, newDoctorData);
-        console.log(response);
+        console.log("editado:", response);
     }
 
     return (
@@ -79,7 +65,7 @@ export default function Doctor({ data }) {
             </div>
             {data !== "" ? (
                 <form onSubmit={(e) => handleEdition(e)}>
-                    <label>Nome:
+                    <label>nome:
                         <input
                             type="text"
                             name="nome"
@@ -90,10 +76,9 @@ export default function Doctor({ data }) {
                         {errors.nome && <p className="error-message">{errors.nome}</p>}
                     </label>
 
-                    <label>Sexo:
+                    <label>sexo:
                         <select
                             name="sexo"
-                            id="sexo"
                             value={sexo}
                             onChange={(e) => setSexo(e.target.value)}
                             className={errors.sexo ? "input-error" : ""}
@@ -105,7 +90,7 @@ export default function Doctor({ data }) {
                         {errors.sexo && <p className="error-message">{errors.sexo}</p>}
                     </label>
 
-                    <label>Data de nascimento:
+                    <label>data de nascimento:
                         <input
                             type="date"
                             value={dataNascimento}
@@ -121,91 +106,37 @@ export default function Doctor({ data }) {
                             name="CRI"
                             value={CRI}
                             readOnly
-                            className={errors.CRI ? "input-error" : ""}
                         />
-                        {errors.CRI && <p className="error-message">{errors.CRI}</p>}
                     </label>
 
-                    <label>Especialidade:
-                        <input
-                            type="text"
+                    <label>especialidade:
+                        <select
                             name="especialidade"
                             value={especialidade}
                             onChange={(e) => setEspecialidade(e.target.value)}
                             className={errors.especialidade ? "input-error" : ""}
-                        />
+                        >
+                            <option value="">Selecione...</option>
+                            <option value="cardiologista">cardiologista</option>
+                            <option value="urologia">urologia</option>
+                            <option value="neurologia">neurologia</option>
+                        </select>
                         {errors.especialidade && <p className="error-message">{errors.especialidade}</p>}
                     </label>
 
-                    {/* Campos de endereço */}
-                    <label>CEP:
-                        <input
-                            type="text"
-                            name="cep"
-                            value={cep}
-                            onChange={(e) => setCep(e.target.value)}
-                            className={errors.cep ? "input-error" : ""}
-                        />
-                        {errors.cep && <p className="error-message">{errors.cep}</p>}
-                    </label>
-
-                    <label>Logradouro:
-                        <input
-                            type="text"
-                            name="logradouro"
-                            value={logradouro}
-                            onChange={(e) => setLogradouro(e.target.value)}
-                            className={errors.logradouro ? "input-error" : ""}
-                        />
-                        {errors.logradouro && <p className="error-message">{errors.logradouro}</p>}
-                    </label>
-
-                    <label>Bairro:
-                        <input
-                            type="text"
-                            name="bairro"
-                            value={bairro}
-                            onChange={(e) => setBairro(e.target.value)}
-                            className={errors.bairro ? "input-error" : ""}
-                        />
-                        {errors.bairro && <p className="error-message">{errors.bairro}</p>}
-                    </label>
-
-                    <label>UF:
-                        <input
-                            type="text"
-                            name="uf"
-                            value={uf}
-                            onChange={(e) => setUf(e.target.value)}
-                            className={errors.uf ? "input-error" : ""}
-                        />
-                        {errors.uf && <p className="error-message">{errors.uf}</p>}
-                    </label>
-
-                    <label>Estado:
-                        <input
-                            type="text"
-                            name="estado"
-                            value={estado}
-                            onChange={(e) => setEstado(e.target.value)}
-                            className={errors.estado ? "input-error" : ""}
-                        />
-                        {errors.estado && <p className="error-message">{errors.estado}</p>}
-                    </label>
-
-                    {error && <p className="error-message">{error}</p>}
+                    {error && <p className="error-message">{error.response.data.message}</p>}
 
                     <div className="button-area">
-                        <button type="button" onClick={handleRestore}>Restaurar</button>
+                        <button type="button" onClick={handleRestore}>restaurar</button>
                         {loading ? (
-                            <button readOnly>Editando...</button>
+                            <button disabled>Editando...</button>
                         ) : (
-                            <button type="submit">Salvar edição</button>
+                            <button type="submit">salvar edição</button>
                         )}
                     </div>
                 </form>
             ) : (
-                <p>Clique em um item da tabela para detalhá-lo.</p>
+                <p>Clique em um item da tabela para detalha-lo.</p>
             )}
         </div>
     );

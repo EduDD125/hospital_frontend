@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./signUpModalStyle.css";
 import { useCreateUser } from "../../../hooks/signUp/useSignUp";
 
@@ -26,7 +26,7 @@ export default function SignInModal({ setIsModalSignInOpen }) {
     const [viaCEPError, setViaCEPError] = useState(null);
 
     const [errors, setErrors] = useState({});
-    const { createUser, data, loading, error, setError } = useCreateUser();
+    const { createUser, loading, error, setError } = useCreateUser();
 
     function handleClose() {
         setIsModalSignInOpen(false);
@@ -34,6 +34,16 @@ export default function SignInModal({ setIsModalSignInOpen }) {
 
     function handleTypeSelection(event) {
         setTipoUsuario(event.target.value);
+    }
+
+    function validateEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    function validateEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
     }
 
     async function handleFetch(e) {
@@ -73,11 +83,18 @@ export default function SignInModal({ setIsModalSignInOpen }) {
 
     function validateFields() {
         let newErrors = {};
+        const today = new Date();
+        const birthDate = new Date(dataNaoTratada);
 
         if (!nome) newErrors.nome = "Nome é obrigatório.";
-        if (!email) newErrors.email = "Email é obrigatório.";
+        if (!email) {
+            newErrors.email = "Email é obrigatório.";
+        } else if (!validateEmail(email)) {
+            newErrors.email = "Formato de email inválido.";
+        }
         if (!sexo) newErrors.sexo = "Sexo é obrigatório.";
         if (!dataNaoTratada) newErrors.dataNaoTratada = "Data de nascimento é obrigatória.";
+        else if (birthDate > today) newErrors.dataNaoTratada = "Data de nascimento não pode ser uma data futura.";
         if (!tipoUsuario) newErrors.tipoUsuario = "Tipo de usuário é obrigatório.";
         if (!cep) newErrors.cep = "CEP de usuário é obrigatório.";
 
@@ -98,51 +115,64 @@ export default function SignInModal({ setIsModalSignInOpen }) {
 
     async function handleFormSubmit(event) {
         event.preventDefault();
-    
+
         if (!validateFields()) return;
-    
+
         let userData = {};
         let dataNascimento = new Date(dataNaoTratada).toLocaleDateString("pt-BR", {
             day: "2-digit",
             month: "2-digit",
             year: "numeric",
         });
-    
-        userData = tipoUsuario === "paciente"
-            ? { nome, CPF, sexo, dataNascimento, estadoCivil, email, senha, cep, logradouro, bairro, uf, estado }
-            : { nome, CRI, sexo, dataNascimento, especialidade, email, senha, cep, logradouro, bairro, uf, estado };
-    
+
+        userData = tipoUsuario === "paciente" 
+            ? { nome, CPF, sexo, dataNascimento, estadoCivil, email, senha }
+            : { nome, CRI, sexo, dataNascimento, especialidade, email, senha };
+
         setError("");
-        
         try {
             const response = await createUser(userData, tipoUsuario);
-    
+
             if (response && response.status === 200) {
-                handleClose(); // Feche o modal imediatamente após uma resposta bem-sucedida
+                handleClose();
+            } else if (error) {
+                handleErrors(error);
             }
-        } catch (error) {
-            if (error.response) {
-                switch (error.response.data.code) {
-                    case "EMAIL_IN_USE":
-                        setErrors((prevErrors) => ({ ...prevErrors, email: "Este email já está em uso." }));
-                        break;
-                    case "CPF_IN_USE":
-                        setErrors((prevErrors) => ({ ...prevErrors, CPF: "Este CPF já está em uso." }));
-                        break;
-                    case "EMPTY_FIELDS":
-                        setError("Todos os campos são obrigatórios.");
-                        break;
-                    case "SERVER_ERROR":
-                    default:
-                        setError("Erro no servidor. Tente novamente mais tarde.");
-                }
-            } else {
-                setError("Erro de conexão. Tente novamente mais tarde.");
-            }
+        } catch (err) {
+            console.log("err:", err);
         }
     }
-    
-    
+
+    function handleErrors(error) {
+        switch (error.code) {
+            case "EMAIL_IN_USE":
+                setErrors((prevErrors) => ({ ...prevErrors, email: "Este email já está em uso." }));
+                break;
+            case "CPF_IN_USE":
+                setErrors((prevErrors) => ({ ...prevErrors, CPF: "Este CPF já está em uso." }));
+                break;
+            case "EMPTY_FIELDS":
+                setError("Todos os campos são obrigatórios.");
+                break;
+            case "SERVER_ERROR":
+            default:
+                setError("Erro no servidor. Tente novamente mais tarde.");
+        }
+    }
+
+    function handleInputChange(setValue, fieldName) {
+        return (event) => {
+            const value = event.target.value;
+            setValue(value);
+            if (value) {
+                setErrors((prevErrors) => {
+                    const newErrors = { ...prevErrors };
+                    delete newErrors[fieldName];
+                    return newErrors;
+                });
+            }
+        };
+    }
 
     return (
         <div className="signup-modal__background" onClick={() => handleClose()}>
@@ -151,13 +181,12 @@ export default function SignInModal({ setIsModalSignInOpen }) {
                     <h2>Sign Up</h2>
                 </div>
                 <form onSubmit={(e) => handleFormSubmit(e)} className="signup-modal__form">
-                    
                     <label>nome:
                         <input
                             type="text"
                             name="nome"
                             value={nome}
-                            onChange={(e) => setNome(e.target.value)}
+                            onChange={handleInputChange(setNome, "nome")}
                             className={errors.nome ? "input-error" : ""}
                         />
                         {errors.nome && <p className="error-message">{errors.nome}</p>}
@@ -168,7 +197,7 @@ export default function SignInModal({ setIsModalSignInOpen }) {
                             type="email"
                             name="email"
                             value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            onChange={handleInputChange(setEmail, "email")}
                             className={errors.email ? "input-error" : ""}
                         />
                         {errors.email && <p className="error-message">{errors.email}</p>}
@@ -179,7 +208,7 @@ export default function SignInModal({ setIsModalSignInOpen }) {
                             name="sexo"
                             id="sexo"
                             value={sexo}
-                            onChange={(e) => setSexo(e.target.value)}
+                            onChange={handleInputChange(setSexo, "sexo")}
                             className={errors.sexo ? "input-error" : ""}
                         >
                             <option value="">Selecione...</option>
@@ -193,7 +222,7 @@ export default function SignInModal({ setIsModalSignInOpen }) {
                         <input
                             type="date"
                             value={dataNaoTratada}
-                            onChange={(e) => setDataNaoTratada(e.target.value)}
+                            onChange={handleInputChange(setDataNaoTratada, "dataNaoTratada")}
                             className={errors.dataNaoTratada ? "input-error" : ""}
                         />
                         {errors.dataNaoTratada && <p className="error-message">{errors.dataNaoTratada}</p>}
@@ -203,12 +232,15 @@ export default function SignInModal({ setIsModalSignInOpen }) {
                         <select
                             name="user_type"
                             id="user_type"
-                            onChange={handleTypeSelection}
+                            onChange={(e) => {
+                                handleTypeSelection(e);
+                                handleInputChange(setTipoUsuario, "tipoUsuario")(e);
+                            }}
                             value={tipoUsuario}
                             className={errors.tipoUsuario ? "input-error" : ""}
                         >
                             <option value="">Selecione...</option>
-                            <option value="paciente">paciente</option>
+                            {/*<option value="paciente">paciente</option>*/}
                             <option value="medico">médico</option>
                         </select>
                         {errors.tipoUsuario && <p className="error-message">{errors.tipoUsuario}</p>}
@@ -221,7 +253,7 @@ export default function SignInModal({ setIsModalSignInOpen }) {
                                     type="text"
                                     name="CRI"
                                     value={CRI}
-                                    onChange={(e) => setCRI(e.target.value)}
+                                    onChange={handleInputChange(setCRI, "CRI")}
                                     className={errors.CRI ? "input-error" : ""}
                                 />
                                 {errors.CRI && <p className="error-message">{errors.CRI}</p>}
@@ -231,7 +263,7 @@ export default function SignInModal({ setIsModalSignInOpen }) {
                                 <select
                                     name="especialidade"
                                     value={especialidade}
-                                    onChange={(e) => setEspecialidade(e.target.value)}
+                                    onChange={handleInputChange(setEspecialidade, "especialidade")}
                                     className={errors.especialidade ? "input-error" : ""}
                                 >
                                     <option value="">Selecione...</option>
@@ -251,7 +283,7 @@ export default function SignInModal({ setIsModalSignInOpen }) {
                                     type="text"
                                     name="CPF"
                                     value={CPF}
-                                    onChange={(e) => setCPF(e.target.value)}
+                                    onChange={handleInputChange(setCPF, "CPF")}
                                     className={errors.CPF ? "input-error" : ""}
                                 />
                                 {errors.CPF && <p className="error-message">{errors.CPF}</p>}
@@ -261,7 +293,7 @@ export default function SignInModal({ setIsModalSignInOpen }) {
                                 <select
                                     name="estado-civil"
                                     value={estadoCivil}
-                                    onChange={(e) => setEstadoCivil(e.target.value)}
+                                    onChange={handleInputChange(setEstadoCivil, "estadoCivil")}
                                     className={errors.estadoCivil ? "input-error" : ""}
                                 >
                                     <option value="">Selecione...</option>
@@ -305,7 +337,7 @@ export default function SignInModal({ setIsModalSignInOpen }) {
                             type="password"
                             name="senha"
                             value={senha}
-                            onChange={(e) => setSenha(e.target.value)}
+                            onChange={handleInputChange(setSenha, "senha")}
                             className={errors.senha ? "input-error" : ""}
                         />
                         {errors.senha && <p className="error-message">{errors.senha}</p>}
@@ -316,7 +348,7 @@ export default function SignInModal({ setIsModalSignInOpen }) {
                             type="password"
                             name="confirm_senha"
                             value={confirmsenha}
-                            onChange={(e) => setConfirmsenha(e.target.value)}
+                            onChange={handleInputChange(setConfirmsenha, "confirmsenha")}
                             className={errors.confirmsenha ? "input-error" : ""}
                         />
                         {errors.confirmsenha && <p className="error-message">{errors.confirmsenha}</p>}
