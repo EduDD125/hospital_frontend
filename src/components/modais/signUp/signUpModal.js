@@ -15,16 +15,6 @@ export default function SignInModal({ setIsModalSignInOpen }) {
     const [CPF, setCPF] = useState("");
     const [estadoCivil, setEstadoCivil] = useState("");
 
-    {/* dados da API via CEP*/}
-    const [cep, setCep] = useState('');
-    const [viaCEPdata, setViaCEPdata] = useState('');
-    const [logradouro, setLogradouro] = useState('');
-    const [bairro, setBairro] = useState('');
-    const [uf, setUf] = useState('');
-    const [estado, setEstado] = useState('');
-
-    const [viaCEPError, setViaCEPError] = useState(null);
-
     const [errors, setErrors] = useState({});
     const { createUser, loading, error, setError } = useCreateUser();
 
@@ -41,46 +31,6 @@ export default function SignInModal({ setIsModalSignInOpen }) {
         return emailRegex.test(email);
     }
 
-    function validateEmail(email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-    }
-
-    async function handleFetch(e) {
-        const cepValue = e.target.value;
-        setCep(cepValue)
-        setViaCEPError(null); // Limpa o erro anterior
-        setViaCEPdata(null); // Limpa os dados anteriores
-
-        try {
-            const response = await fetch(`https://viacep.com.br/ws/${cepValue}/json/`);
-            if (!response.ok) {
-                throw new Error('CEP não encontrado');
-            }
-            const jsonData = await response.json();
-            console.log("cep search response:", response)
-            setViaCEPdata(jsonData);
-        } catch (error) {
-            setViaCEPError(error.message);
-        }
-    };
-
-    useEffect( () => {
-        if (viaCEPdata) {
-          setLogradouro(viaCEPdata.logradouro);
-          setBairro(viaCEPdata.bairro);
-          setUf(viaCEPdata.uf);
-          setEstado(viaCEPdata.estado);
-          return;
-        }
-        setLogradouro("");
-        setBairro("");
-        setUf("");
-        setEstado("");
-        setViaCEPError(null);
-  
-      },[viaCEPdata]);
-
     function validateFields() {
         let newErrors = {};
         const today = new Date();
@@ -96,7 +46,6 @@ export default function SignInModal({ setIsModalSignInOpen }) {
         if (!dataNaoTratada) newErrors.dataNaoTratada = "Data de nascimento é obrigatória.";
         else if (birthDate > today) newErrors.dataNaoTratada = "Data de nascimento não pode ser uma data futura.";
         if (!tipoUsuario) newErrors.tipoUsuario = "Tipo de usuário é obrigatório.";
-        if (!cep) newErrors.cep = "CEP de usuário é obrigatório.";
 
         if (tipoUsuario === "medico") {
             if (!CRI) newErrors.CRI = "CRI é obrigatório para médicos.";
