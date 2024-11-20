@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 const pexelClient = axios.create({
-    baseURL: 'https://api.pexels.com/v1/collections/featured?per_page=1',
+    //baseURL: 'https://api.pexels.com/v1/collections/featured?per_page=1',
+    baseURL: 'https://api.pexels.com/v1/collections/1zj9ora?per_page=1',
     timeout: 10000,
     headers: {
         'Content-Type': 'application/json'
@@ -10,7 +11,7 @@ const pexelClient = axios.create({
 
 pexelClient.interceptors.request.use(
     function (config) {
-        if(process.env.local.REACT_APP_YOUR_API_KEY_PEXELS) {
+        if(process.env.REACT_APP_YOUR_API_KEY_PEXELS) {
             console.log("Chave existente!!!!!!!! Delete esse log")
             console.log(process.env.REACT_APP_YOUR_API_KEY_PEXELS)
             config.headers.Authorization = process.env.REACT_APP_YOUR_API_KEY_PEXELS;      

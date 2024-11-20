@@ -3,62 +3,68 @@ import { useState, useEffect } from "react";
 import pexelClient from './../../axios/pexelClient.js'
 
 export default function EditUserAvatarModal({setIsOpen}) {
-        var userAvatar = localStorage.getItem("userAvatar")
-        const [photoIndex, setPhotoByIndex] = useState();
+        var userAvatar = localStorage.getItem("userAvatar");
+
+        const [photos, setPhotos] = useState([]);
+        const [photoIndex, setPhotoIndex] = useState(null);
         const [errors, setErrors] = useState("");
 
-        var photos = [ ]
-
-        useEffect( async () => {
-            try {
-                const response = await pexelClient.get();
-                if (!response) throw new Error("Estamos com problemas em exibir as fotos. Tente mais tarde");
-                if (response && response.data.lenght === 0) throw new Error("Coleção de fotos vazia. Preencha coleção no site Pexels.");
-                console.log(response);
-                photos = response.data;               
-            } catch ( error ) {
-                   console.log(error);
-                   setErrors(error.message);
-            }
-        }, [] );
-       
-        useEffect( () => {
-            if(!errors) {
-                userAvatar = { 
-                index: photoIndex,
-                url: photos[photoIndex].url
+        useEffect(() => {
+            const fetchPhotos = async () => {
+                try {
+                    const response = await pexelClient.get('');
+                    if (!response || response.data.media.length === 0) {
+                        throw new Error("Coleção de fotos vazia ou problemas ao carregar as imagens.");
+                    }
+                    setPhotos(response.data.media); // Salva as fotos no estado
+                } catch (error) {
+                    console.error(error);
+                    setErrors(error.message);
                 }
-                localStorage.setItem("userAvatar", userAvatar);
-                return;
+            };
+    
+            fetchPhotos();
+        }, []);
+       
+        useEffect(() => {
+            if (photoIndex !== null && photos.length > 0) {
+                const selectedAvatar = {
+                    index: photoIndex,
+                    url: photos[photoIndex].src.large,
+                };
+                localStorage.setItem("userAvatar", JSON.stringify(selectedAvatar));
             }
-            console.log("error ocurreu!!! me deleta e remove o return")
-        }, [photoIndex, errors] );
-
-
-
-
-     if (!errors) {
+        }, [photoIndex, photos]);
+    
+        if (errors) {
+            return <p className="error">{errors}</p>;
+        }
+    
         return (
-                <div className="edit-avatar-modal__background">
-                   <div className="edit-avatar-modal__container">
-                       <h3 className="edit-avatar-modal__title">Escolha sua foto</h3>
-                        <div className="edit-avatar-modal__photos-container">
-                            { photos.map( (photo, index) => {
-                                <img key={index} 
-                                        href={photo.url}           
-                                        onClick={(index) =>
-                                        setPhotoByIndex(index) }
-                                        className={index === photoIndex ? 'photo-selected   edit-avatar-modal_photo' : 'edit-avatar-modal_photo'}
-                                />
-                            })}
-                            { userAvatar.url === "" && <p className="warning"> escolha uma foto para seu usuário </p> }
-                        </div>
+            <div className="edit-avatar-modal__background">
+                <div className="edit-avatar-modal__container">
+                    <h3 className="edit-avatar-modal__title">Escolha sua foto</h3>
+                    <div className="edit-avatar-modal__photos-container">
+                        {photos.map((photo, index) => (
+                            <img
+                                key={index}
+                                src={photo.src.medium}
+                                alt={photo.alt || `Imagem ${index}`}
+                                onClick={() => setPhotoIndex(index)}
+                                className={
+                                    index === photoIndex
+                                        ? "photo-selected edit-avatar-modal__photo"
+                                        : "edit-avatar-modal__photo"
+                                }
+                            />
+                        ))}
                     </div>
+                    {photoIndex === null && (
+                        <p className="warning">Escolha uma foto para seu usuário</p>
+                    )}
+                    <button onClick={() => setIsOpen(false)}>Fechar</button>
                 </div>
+            </div>
         );
-    }
-
-    return (
-        <p className="error"> {errors} </p>
-    );
+    
 }
