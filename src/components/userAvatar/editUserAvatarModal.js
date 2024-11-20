@@ -1,4 +1,4 @@
-import "editUserAvatarModalStyle.css";
+import "./editUserAvatarModalStyle.css";
 import { useState, useEffect } from "react";
 import pexelClient from './../../axios/pexelClient.js'
 

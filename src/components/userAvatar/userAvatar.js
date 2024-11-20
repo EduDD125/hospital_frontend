@@ -1,4 +1,4 @@
-import "userAvatarStyle.css"
+import "./userAvatarStyle.css"
 
 export default function UserAvatar() {
         const userAvatar = localStorage.getItem("userAvatar")
