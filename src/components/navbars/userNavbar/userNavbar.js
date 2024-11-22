@@ -3,7 +3,6 @@ import "./userNavbarStyle.css";
 import NavButton from "../subcomponents/navButton";
 import { getUserName } from "../../../hooks/entities/getUserName";
 import { getDoctorName } from "../../../hooks/entities/getDoctorName";
-import UserAvatar from "../../userAvatar/userAvatar";
 
 export default function UserNavbar({ tipo, setOption }) {
     const id = localStorage.getItem("id");
@@ -54,7 +53,6 @@ export default function UserNavbar({ tipo, setOption }) {
                     <NavButton text="Exames" tipo="exames" action={seeUserExams} />
                     <NavButton text="Consultas" tipo="consultas" action={seeUserAppoitments} />
                 </div>
-                <UserAvatar />
                 <NavButton text={userName} tipo="user_section" action={seeUserData} />
             </nav>
         );

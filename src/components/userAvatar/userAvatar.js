@@ -1,4 +1,5 @@
 import "./userAvatarStyle.css"
+import { FaUser } from "react-icons/fa6";
 
 export default function UserAvatar() {
         const storedUserAvatar = localStorage.getItem("userAvatar");
@@ -7,9 +8,9 @@ export default function UserAvatar() {
         return (
             <div className="user-avatar__photo-container">
                 {userAvatar && userAvatar.url ? (
-                    <img src={userAvatar.url} alt="User Avatar" />
+                    <img src={userAvatar.url} alt="User Avatar" className="user-avatar__photo"/>
                 ) : (
-                    <p>Sem foto de perfil</p>
+                    <FaUser />
                 )}
             </div>
         );

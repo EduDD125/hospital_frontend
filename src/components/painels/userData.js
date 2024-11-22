@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useEditData from "../../hooks/entities/editData";
 import {tipo} from "../../hooks/getUserType"
-import EditUserAvatarModal from "../userAvatar/editUserAvatarModal";
+import EditUserAvatar from "../userAvatar/editUserAvatar";
 
 function formatDateToInput(date) {
     const d = new Date(date);
@@ -146,7 +146,7 @@ export default function UserData({data}) {
                         <input type="text" name="cep" value={estado} onChange={(e) => setLogradouro(e.target.value)} required />
                     </label>
 
-                    <EditUserAvatarModal/>
+                    <EditUserAvatar />
 
                     {error && <p className="error-message">Não foi possível editar os dados</p>}
                             

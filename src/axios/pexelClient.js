@@ -1,8 +1,7 @@
 import axios from 'axios'
 
 const pexelClient = axios.create({
-    //baseURL: 'https://api.pexels.com/v1/collections/featured?per_page=1',
-    baseURL: 'https://api.pexels.com/v1/collections/1zj9ora?per_page=1',
+    baseURL: 'https://api.pexels.com/v1/collections/3l0htmr?per_page=20&sort=desc',
     timeout: 10000,
     headers: {
         'Content-Type': 'application/json'

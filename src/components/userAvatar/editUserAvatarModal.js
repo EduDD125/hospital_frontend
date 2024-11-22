@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import pexelClient from './../../axios/pexelClient.js'
 
 export default function EditUserAvatarModal({setIsOpen}) {
-        var userAvatar = localStorage.getItem("userAvatar");
+        const storedUserAvatar = localStorage.getItem("userAvatar");
+        const userAvatar = storedUserAvatar ? JSON.parse(storedUserAvatar) : null;
 
         const [photos, setPhotos] = useState([]);
         const [photoIndex, setPhotoIndex] = useState(null);
@@ -35,33 +36,33 @@ export default function EditUserAvatarModal({setIsOpen}) {
                 localStorage.setItem("userAvatar", JSON.stringify(selectedAvatar));
             }
         }, [photoIndex, photos]);
+
+        console.log("photos:", photos)
     
         if (errors) {
             return <p className="error">{errors}</p>;
         }
     
         return (
-            <div className="edit-avatar-modal__background">
-                <div className="edit-avatar-modal__container">
+            <div className="edit-avatar-modal__background" onClick={() => setIsOpen(false)}>
+                <div className="edit-avatar-modal__container" onClick={(event) => event.stopPropagation()}>
                     <h3 className="edit-avatar-modal__title">Escolha sua foto</h3>
                     <div className="edit-avatar-modal__photos-container">
                         {photos.map((photo, index) => (
-                            <img
-                                key={index}
-                                src={photo.src.medium}
-                                alt={photo.alt || `Imagem ${index}`}
-                                onClick={() => setPhotoIndex(index)}
-                                className={
-                                    index === photoIndex
-                                        ? "photo-selected edit-avatar-modal__photo"
-                                        : "edit-avatar-modal__photo"
-                                }
-                            />
+                                <img
+                                    src={photo.src.medium}
+                                    alt={photo.alt || `Imagem ${index}`}
+                                    onClick={() => setPhotoIndex(index)}
+                                    className={
+                                        (photo.src.medium === userAvatar.url)
+                                            ? "photo-selected  edit-avatar-modal__photo"
+                                            : `edit-avatar-modal__photo `
+                                    }
+                                />
                         ))}
                     </div>
-                    {photoIndex === null && (
-                        <p className="warning">Escolha uma foto para seu usuário</p>
-                    )}
+                    <p className="warning">Clique nas fotos para selecionar nova foto de perfil</p>
+
                     <button onClick={() => setIsOpen(false)}>Fechar</button>
                 </div>
             </div>

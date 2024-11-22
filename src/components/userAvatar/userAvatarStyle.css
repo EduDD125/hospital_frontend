@@ -7,7 +7,7 @@
     padding: 0 8px;
 }
 
-.user-avatar__photo-container img {
+.user-avatar__photo-container .user-avatar__photo {
     border-radius: 50%;
     height: 60px; /* Tamanho padrão */
     width: 60px;
@@ -19,14 +19,14 @@
 
 /* Ajustes para telas menores */
 @media (max-width: 768px) {
-    .user-avatar__photo-container img {
+    .user-avatar__photo-container .user-avatar__photo {
         height: 32px; /* Reduz o tamanho do avatar */
         width: 32px;
     }
 }
 
 @media (max-width: 480px) {
-    .user-avatar__photo-container img {
+    .user-avatar__photo-container .user-avatar__photo {
         height: 24px; /* Ainda menor em telas muito pequenas */
         width: 24px;
     }
