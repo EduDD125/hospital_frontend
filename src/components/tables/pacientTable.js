@@ -36,7 +36,7 @@ export default function PacientTable ({data, setItem, option}) {
                     {data.map((item, index) => (
                         <tr key={index} onClick={() => setItem(item)}>
                             <td><DeleteButton entityType={option} id={item.id} onDelete={handleDelete}/></td>
-                            <td>{item.userAvatarUrl ? <img src={item.userAvatarUrl}/> : <FaUser />} {item.nome}</td>
+                            <td className="td-user-photo">{item?.imagem?.url ? <img className="user-photo" src={item?.imagem?.url} /> : <FaUser className="user-photo"/>} {item.nome}</td>
                             <td>{item.CPF}</td>
                             <td>{item.sexo}</td>
                             <td>{item.estadoCivil}</td>

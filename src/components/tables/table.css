@@ -12,6 +12,14 @@
     border: 1px solid #ddd;
 }
 
+.td-user-photo {
+    display: flex;
+    flex-direction: row;
+    justify-content:start;
+    align-items: center;
+    gap: 20px;
+}
+
 .table_style thead {
     background-color: #f2f2f2;
 }
@@ -30,6 +38,14 @@
 }
 
 .user-photo {
-    width: 50px;
-    height: 50px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: #000000 solid 2px;
+}
+
+p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
