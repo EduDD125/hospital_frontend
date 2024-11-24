@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import DeleteButton from "../buttons/deleteButton";
 import "./table.css";
+import { FaUser } from "react-icons/fa";
 
 export default function DoctorTable ({data, setItem, option}) {
     const [tableItensList, setTableItensList] = useState([]);
@@ -35,7 +36,7 @@ export default function DoctorTable ({data, setItem, option}) {
                     {data.map((item, index) => (
                         <tr key={index} onClick={() => setItem(item)}>
                             <td><DeleteButton entityType={option} id={item.id} onDelete={handleDelete}/></td>
-                            <td>{item.nome}</td>
+                            <td>{item.userAvatarUrl ? <img className="user-photo" src={item.userAvatarUrl}/> : <FaUser />} {item.nome}</td>
                             <td>{item.CRI}</td>
                             <td>{item.sexo}</td>
                             <td>{item.especialidade}</td>
