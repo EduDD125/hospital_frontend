@@ -1,22 +1,25 @@
 import React, { useState, useEffect } from "react";
 import "./userNavbarStyle.css";
 import NavButton from "../subcomponents/navButton";
-import { getUserName } from "../../../hooks/entities/getUserName";
-import { getDoctorName } from "../../../hooks/entities/getDoctorName";
+import { getPacientData } from "../../../hooks/entities/getPacientData";
+import { getDoctorData } from "../../../hooks/entities/getDoctorData";
 
 export default function UserNavbar({ tipo, setOption }) {
     const id = localStorage.getItem("id");
     const role = localStorage.getItem("role");
     const [userName, setUserName] = useState("");
+    const [userAvatarUrl, setUserAvatarUrl] = useState("");
 
     useEffect(() => {
         async function fetchUserName() {
             if (role === "medico") {
-                const name = await getDoctorName(id);
+                const { name, userAvatarUrl } = await getDoctorData(id);
                 setUserName(name);
+                setUserAvatarUrl(userAvatarUrl);
             } else if (role === "paciente") {
-                const name = await getUserName(id);
+                const { name, userAvatarUrl } = await getPacientData(id);
                 setUserName(name);
+                setUserAvatarUrl(userAvatarUrl);
             }
         }
         fetchUserName();
@@ -55,7 +58,7 @@ export default function UserNavbar({ tipo, setOption }) {
                     <NavButton text="Consultas" tipo="consultas" action={seeAppoitments} />
                     */}
                 </div>
-                <NavButton text={userName} tipo="user_section" action={seeUserData} />
+                <NavButton text={userName} tipo="user_section" action={seeUserData} userAvatarUrl={userAvatarUrl}/>
             </nav>
         );
     else if (tipo === "admin")

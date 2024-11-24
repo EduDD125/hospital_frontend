@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import DeleteButton from "../buttons/deleteButton";
 import "./table.css";
-import { refreshTableContext } from "../../contexts/appContext";
+import { FaUser } from "react-icons/fa";
 
 export default function ExamTable ({data, setItem, option}) {
     const [tableItensList, setTableItensList] = useState([]);
@@ -33,8 +33,8 @@ export default function ExamTable ({data, setItem, option}) {
                     {data.map((item, index) => (
                         <tr key={index} onClick={() => setItem(item)}>
                             <td>{item.nomeExame}</td>
-                            <td>{(item.paciente && item.paciente.nome)&& item.paciente.nome}</td>
-                            <td>{(item.medico && item.medico.nome) && item.medico.nome}</td>
+                            <td> <div className="td-user-photo">{item?.medico?.imagem?.url ? <img className="user-photo" src={item?.medico?.imagem?.url} /> : <FaUser className="user-photo"/>} {item?.medico?.nome} </div></td>
+                            <td> <div className="td-user-photo">{item?.paciente?.imagem?.url ? <img className="user-photo" src={item?.paciente?.imagem?.url} /> : <FaUser className="user-photo"/>} {item?.paciente?.nome}</div></td>
                             <td>{item.dataHorario}</td>
                             <td>{item.resultado}</td>
                         </tr>

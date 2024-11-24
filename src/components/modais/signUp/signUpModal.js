@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./signUpModalStyle.css";
 import { useCreateUser } from "../../../hooks/signUp/useSignUp";
+import { useCreateAddress } from "../../../hooks/signUp/useSignUp";
 
 export default function SignInModal({ setIsModalSignInOpen }) {
     const [nome, setNome] = useState("");
@@ -16,7 +17,8 @@ export default function SignInModal({ setIsModalSignInOpen }) {
     const [estadoCivil, setEstadoCivil] = useState("");
 
     const [errors, setErrors] = useState({});
-    const { createUser, loading, error, setError } = useCreateUser();
+    const { createUser, data, loading, error, setError } = useCreateUser();
+    const { createAddress, addData, addLoading, addError, addSetError} = useCreateAddress();
 
     function handleClose() {
         setIsModalSignInOpen(false);
@@ -68,24 +70,31 @@ export default function SignInModal({ setIsModalSignInOpen }) {
         if (!validateFields()) return;
 
         let userData = {};
+        let addressData = {};
         let dataNascimento = new Date(dataNaoTratada).toLocaleDateString("pt-BR", {
             day: "2-digit",
             month: "2-digit",
             year: "numeric",
         });
-
-        userData = tipoUsuario === "paciente" 
-            ? { nome, CPF, sexo, dataNascimento, estadoCivil, email, senha }
+    
+        userData = tipoUsuario === "paciente"
+            ? { nome, CPF, sexo, dataNascimento, estadoCivil, email, senha}
             : { nome, CRI, sexo, dataNascimento, especialidade, email, senha };
-
+    
+        addressData = {cep, logradouro, bairro, estado}   
         setError("");
         try {
             const response = await createUser(userData, tipoUsuario);
+            const userId = response.data.id;
 
             if (response && response.status === 200) {
-                handleClose();
-            } else if (error) {
-                handleErrors(error);
+                try {
+                    createAddress(addressData, userId, tipoUsuario);
+
+                } catch (error) {
+                    setError("Erro ao cadastrar endereço.");
+                }
+                handleClose(); // Feche o modal imediatamente após uma resposta bem-sucedida
             }
         } catch (err) {
             console.log("err:", err);

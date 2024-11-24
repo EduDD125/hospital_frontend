@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import useEditData from "../../hooks/entities/editData";
 import {tipo} from "../../hooks/getUserType"
+import EditUserAvatar from "../userAvatar/editUserAvatar";
 
 function formatDateToInput(date) {
     const d = new Date(date);
@@ -21,6 +22,14 @@ export default function UserData({data}) {
     const [CRI, setCRI] = useState(data.CRI);
     const [estadoCivil, setEstadoCivil] = useState(data.estadoCivil);
     const [especialidade, setEspecialidade] = useState(data.especialidade);
+    const [userImagemUrl, setUserImagemUrl] = useState(data?.imagem?.url);
+
+
+    const [cep, setCep] = useState(data?.endereco?.cep);
+    const [bairro, setBairro] = useState(data?.endereco?.bairro);
+    const [logradouro, setLogradouro] = useState(data?.endereco?.logradouro);
+    const [estado, setEstado] = useState(data?.endereco?.estado);
+
     const {editData, loading, error, setError} = useEditData();
     
     useEffect( () => {
@@ -31,7 +40,12 @@ export default function UserData({data}) {
         setCpf(data.CPF);
         setCRI(data.CRI);
         setEstadoCivil(data.estadoCivil);
-        setEspecialidade(data.especialidade)
+        setEspecialidade(data.especialidade);
+        setUserImagemUrl(data?.imagem?.url);
+        setCep(data?.endereco?.cep)
+        setBairro(data?.endereco?.bairro)
+        setLogradouro(data?.endereco?.logradouro)
+        setEstado(data?.endereco?.estado)
     },[data] )
     
 
@@ -43,7 +57,12 @@ export default function UserData({data}) {
         setCpf(data.CPF);
         setCRI(data.CRI);
         setEstadoCivil(data.estadoCivil);
-        setEspecialidade(data.especialidade)
+        setEspecialidade(data.especialidade);
+        setUserImagemUrl(data?.imagem?.url);
+        setCep(data?.endereco?.cep)
+        setBairro(data?.endereco?.bairro)
+        setLogradouro(data?.endereco?.logradouro)
+        setEstado(data?.endereco?.estado)
     }
 
     async function handleEdition(event) {
@@ -55,8 +74,8 @@ export default function UserData({data}) {
         console.log(dataNascimento)
 
         let newUserData = {};
-        if (tipo() == "paciente") newUserData = {nome, email, sexo, dataNascimento, CPF, estadoCivil};
-        if (tipo() == "medico") newUserData = {nome, email, sexo, dataNascimento, CRI, especialidade};
+        if (tipo() == "paciente") newUserData = {nome, email, sexo, dataNascimento, CPF, estadoCivil, endereco:{cep,bairro,logradouro,estado}};
+        if (tipo() == "medico") newUserData = {nome, email, sexo, dataNascimento, CRI, especialidade, endereco:{cep,bairro,logradouro,estado}};
 
         const option = `dadosPessoais`;
 
@@ -73,15 +92,15 @@ export default function UserData({data}) {
                     <h3>Dados Pessoais</h3>
                 </div>
                 <form onSubmit={(e) => handleEdition(e)}>
-                    <label>nome:
+                    <label>Nome:
                         <input type="text" name="nome" required value={nome} onChange={(e) => setNome(e.target.value)} />
                     </label>
 
-                    <label>email:
+                    <label>Email:
                         <input type="email" name="email" required value={email} readOnly />
                     </label>
 
-                    <label>sexo:
+                    <label>Sexo:
                         <select name="sexo" id="sexo" value={sexo} onChange={(e) => setSexo(e.target.value)} required>
                             <option value="">Selecione...</option>
                             <option value="feminino">feminino</option>
@@ -89,7 +108,7 @@ export default function UserData({data}) {
                         </select>
                     </label>
 
-                    <label>data de nascimento:
+                    <label>Data de Nascimento:
                         <input type="date" value={dataNascimento} onChange={(e) => setDataNascimento(e.target.value)} />
                     </label>
                     {tipo() == "medico" && 
@@ -98,7 +117,7 @@ export default function UserData({data}) {
                                 <input type="text" name="CRI" value={CRI} readOnly required />
                             </label>
 
-                            <label>especialidad:
+                            <label>Especialidade:
                                 <input type="text" name="especialidade" value={especialidade} onChange={(e) => setEstadoCivil(e.target.value)} required />
                             </label>
                         </>
@@ -109,13 +128,30 @@ export default function UserData({data}) {
                                 <input type="text" name="cpf" value={CPF} readOnly required />
                             </label>
 
-                            <label>estado civil:
+                            <label>Estado Civil:
                                 <input type="text" name="estado-civil" value={estadoCivil} onChange={(e) => setEstadoCivil(e.target.value)} required />
                             </label>
                         </>
                     }   
+                    <label>CEP:
+                        <input type="text" name="cep" value={cep} onChange={(e) => setCep(e.target.value)} required />
+                    </label>
 
-                    {error && <p className="error-message">Não doi possível editar os dados</p>}
+                    <label>Bairro:
+                        <input type="text" name="cep" value={bairro} onChange={(e) => setBairro(e.target.value)} required />
+                    </label>
+
+                    <label>Logradouro:
+                        <input type="text" name="cep" value={logradouro} onChange={(e) => setLogradouro(e.target.value)} required />
+                    </label>
+
+                    <label>Estado:
+                        <input type="text" name="cep" value={estado} onChange={(e) => setLogradouro(e.target.value)} required />
+                    </label>
+                    
+                    <EditUserAvatar userAvatarUrl={userImagemUrl}/>
+
+                    {error && <p className="error-message">Não foi possível editar os dados</p>}
                             
                     <div className="button-area">
                         <button type="button" onClick={handleRestore}>restaurar</button>

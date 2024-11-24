@@ -1,11 +1,11 @@
 import "./navButtonStyle.css"
-import { IoIosNotifications } from "react-icons/io";
 import { FaUserDoctor, FaInfo } from "react-icons/fa6";
 import { IoPerson } from "react-icons/io5";
 import { LuStethoscope } from "react-icons/lu";
 import { ImLab } from "react-icons/im";
+import UserAvatar from './../../userAvatar/userAvatar'
 
-export default function NavButton( {text, tipo, action}) {
+export default function NavButton( {text, tipo, action, userAvatarUrl}) {
 
     if (tipo == "medicos") {
         return (
@@ -45,7 +45,7 @@ export default function NavButton( {text, tipo, action}) {
         return (
             <button className="nav-button" onClick={action}>
                 <p>{text}</p>
-                <IoIosNotifications />
+                <UserAvatar userAvatarUrl={userAvatarUrl}/>
             </button>
         )
     }
