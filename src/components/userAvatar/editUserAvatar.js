@@ -1,22 +1,18 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { FaUser } from "react-icons/fa6";
 import "./editUserAvatarStyle.css"
 import EditAvatarModal from './editUserAvatarModal'
 
-export default function EditUserAvatar() {
-        const [isOpen, setIsOpen] = useState(false)
-        const storedUserAvatar = localStorage.getItem("userAvatar")
-        const userAvatar = storedUserAvatar ? JSON.parse(storedUserAvatar) : null;
+export default function EditUserAvatar({userAvatarUrl}) {
+        const [isOpen, setIsOpen] = useState(false); 
 
-        console.log(userAvatar)
-
-       return (
+        return (
                 <div className="edit-user-avatar__photo-container">
-                        {userAvatar && userAvatar.url ? 
+                        {userAvatarUrl ? 
                                 <div className="edit-user-avatar__edit-photo-container"
                                         onClick={() => setIsOpen(true)}
                                 >
-                                        <img src={userAvatar.url} className="edit-user-avatar__edit-photo"/>
+                                        <img src={userAvatarUrl} className="edit-user-avatar__edit-photo"/>
                                         <p>Escolha uma nova foto de perfil</p>
                                 </div>
                         :

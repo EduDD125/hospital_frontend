@@ -11,8 +11,6 @@ const pexelClient = axios.create({
 pexelClient.interceptors.request.use(
     function (config) {
         if(process.env.REACT_APP_YOUR_API_KEY_PEXELS) {
-            console.log("Chave existente!!!!!!!! Delete esse log")
-            console.log(process.env.REACT_APP_YOUR_API_KEY_PEXELS)
             config.headers.Authorization = process.env.REACT_APP_YOUR_API_KEY_PEXELS;      
             return config;
         }

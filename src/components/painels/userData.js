@@ -22,6 +22,7 @@ export default function UserData({data}) {
     const [CRI, setCRI] = useState(data.CRI);
     const [estadoCivil, setEstadoCivil] = useState(data.estadoCivil);
     const [especialidade, setEspecialidade] = useState(data.especialidade);
+    const [userImagemUrl, setUserImagemUrl] = useState(data?.imagem?.url);
 
 
     const [cep, setCep] = useState(data?.endereco?.cep);
@@ -39,7 +40,8 @@ export default function UserData({data}) {
         setCpf(data.CPF);
         setCRI(data.CRI);
         setEstadoCivil(data.estadoCivil);
-        setEspecialidade(data.especialidade)
+        setEspecialidade(data.especialidade);
+        setUserImagemUrl(data?.imagem?.url);
         setCep(data?.endereco?.cep)
         setBairro(data?.endereco?.bairro)
         setLogradouro(data?.endereco?.logradouro)
@@ -55,7 +57,8 @@ export default function UserData({data}) {
         setCpf(data.CPF);
         setCRI(data.CRI);
         setEstadoCivil(data.estadoCivil);
-        setEspecialidade(data.especialidade)
+        setEspecialidade(data.especialidade);
+        setUserImagemUrl(data?.imagem?.url);
         setCep(data?.endereco?.cep)
         setBairro(data?.endereco?.bairro)
         setLogradouro(data?.endereco?.logradouro)
@@ -145,8 +148,8 @@ export default function UserData({data}) {
                     <label>Estado:
                         <input type="text" name="cep" value={estado} onChange={(e) => setLogradouro(e.target.value)} required />
                     </label>
-
-                    <EditUserAvatar />
+                    
+                    {data.imagem && <EditUserAvatar userAvatarUrl={userImagemUrl}/>}
 
                     {error && <p className="error-message">Não foi possível editar os dados</p>}
                             

@@ -1,10 +1,12 @@
 import apiClient from "../../axios/apiClient"
 
-export async function getDoctorName(userId) {
+export async function getDoctorData(userId) {
     const endpoint = `medicos/${userId}`;
     try {
         const response = await apiClient.get(endpoint);
-        return response.data.nome;
+        const data = { name: response.data.nome, userAvatarUrl: response.data.imagem.url};
+        console.log("user data")
+        return data;
     } catch (error) {
         console.log(`Erro ao buscar nome do medico:`, error);
         if (error.response) {
