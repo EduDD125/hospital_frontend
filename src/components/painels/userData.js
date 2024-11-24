@@ -149,7 +149,7 @@ export default function UserData({data}) {
                         <input type="text" name="cep" value={estado} onChange={(e) => setLogradouro(e.target.value)} required />
                     </label>
                     
-                    {data.imagem && <EditUserAvatar userAvatarUrl={userImagemUrl}/>}
+                    <EditUserAvatar userAvatarUrl={userImagemUrl}/>
 
                     {error && <p className="error-message">Não foi possível editar os dados</p>}
                             

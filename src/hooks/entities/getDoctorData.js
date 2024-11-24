@@ -4,7 +4,8 @@ export async function getDoctorData(userId) {
     const endpoint = `medicos/${userId}`;
     try {
         const response = await apiClient.get(endpoint);
-        const data = { name: response.data.nome, userAvatarUrl: response.data.imagem.url};
+        console.log("response: ", response);
+        const data = { name: response.data.nome, userAvatarUrl: response.data.imagem?.url};
         console.log("user data")
         return data;
     } catch (error) {
